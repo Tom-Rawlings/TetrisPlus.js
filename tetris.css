@@ -1,0 +1,116 @@
+html, body{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+	overflow: hidden;
+}
+
+table, td{
+	border: 1px solid black;
+}
+
+td{
+	width: 10px;
+	height: 10px;
+}
+
+#tetrisBoard{
+	width: 100px;
+	height: 100px;
+
+	/*All 0 for centre*/
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+  	
+	margin: auto;
+
+}
+
+#testing{
+	display: none;
+}
+
+#greyOverlay{
+	position: absolute;
+	background-color: #777777;
+	opacity: 0.5;
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+
+#overlay{
+	font-size: 97vh;
+	width: 100%;
+	height: 1em;
+	position: relative;
+	z-index: 100;
+}
+
+#score{
+	position: absolute;
+	font-family: arial;
+	color: black;
+	font-size: 2vh;
+	padding: 2vh 0 0 2vh;
+}
+
+#centreMessageParent{
+	position: absolute;
+	width: 100%;
+    font-size: 10vh;
+	display: inline-block;
+    line-height: 97vh;
+    vertical-align: middle;
+}
+
+#centreMessage{
+	color: white;
+	font-family: arial;
+    width: 100%;
+    text-align: center;
+    font-size: 10vh;
+    display: inline-block;
+    line-height: 10vh;
+    background-color: crimson;
+}
+
+#touchButtonsParent{
+	position: relative;
+	left: 16vh;
+	top: 80vh;
+	width: 15vh;
+	height: 15vh;
+}
+
+.touchButtons{
+	width: 5vh;
+	height: 5vh;
+	position: absolute;
+	background-color: coral;
+	opacity: 0.3;
+}
+
+#touchButtonLeft{
+	top: 5vh;
+}
+
+#touchButtonRight{
+	top: 5vh;
+	left: 10vh;
+}
+
+#touchButtonUp{
+	left: 5vh;
+}
+
+#touchButtonDown{
+	top: 10vh;
+	left: 5vh;
+}
