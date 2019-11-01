@@ -23,6 +23,7 @@
     
       var canvas = document.getElementById("canvas");
       var ctx = canvas.getContext("2d");
+      var blocks = [];
       var i, x, y;
 
       var boardWidth = 10;
@@ -31,7 +32,7 @@
       //--Relative sizes--
       var squareSizeRelative = 10;
       var frameSizeRelative = 1;
-      var gapSizeRelative = 1;
+      var gapSizeRelative = 0.5;
       var canvasHeightRelative = squareSizeRelative*boardHeight + gapSizeRelative*(boardHeight+1); 
       var canvasWidthRelative = squareSizeRelative*boardWidth + gapSizeRelative*(boardWidth+1); 
 
@@ -43,6 +44,8 @@
 
       var verticalPadding = 0.05;
       var canvasScaleMultiplier = 1;
+
+      var xCoord, yCoord;
 
       createBoard();
 
@@ -57,29 +60,51 @@
         frameSize = frameSizeRelative * canvasScaleMultiplier;
         gapSize = gapSizeRelative * canvasScaleMultiplier;
 
-        /*
-        ctx.beginPath();
-        ctx.lineWidth = "10";
-        ctx.strokeStyle = "blue";
-        ctx.rect(50, 50, 150, 150);
-        ctx.stroke();
-        ctx.fillStyle = "red";
-        ctx.fill();
-        */
+        class Block{
+          constructor(xCoord, yCoord, colour){
+            this.xCoord = xCoord;
+            this.yCoord = yCoord;
+            this.colour = colour;
+          }
+
+          setColour(colour){
+            this.colour = colour;
+          }
+
+          getColour(){
+            return this.colour;
+          }
+
+          draw(){
+            ctx.fillStyle = this.colour;
+            ctx.fillRect(this.xCoord, this.yCoord, squareSize, squareSize);
+          }
+
+        }
+
         ctx.lineWidth = "1";
         ctx.strokeStyle = "blue";
         ctx.fillStyle = "#4c5a61";
 
         //*
-        for(y = 0; y < 20; y++){
-          for(x = 0; x < 10; x++){
+        for(x = 0; x < 10; x++){
+          blocks.push([]);
+          for(y = 0; y < 20; y++){
             ctx.beginPath();
-            ctx.fillRect((squareSize+gapSize)*x + gapSize, ((squareSize+gapSize)*19)-(y*(squareSize+gapSize)) + gapSize, squareSize, squareSize);
-            //ctx.stroke();
-            //ctx.fill();
+            xCoord = (squareSize+gapSize)*x + gapSize;
+            yCoord = ((squareSize+gapSize)*19)-(y*(squareSize+gapSize)) + gapSize;
+            
+            blocks[x].push(new Block(xCoord, yCoord, "#4c5a61"));
+            ctx.fillRect(xCoord, yCoord, squareSize, squareSize);
+
           }
         }
         //*/
+      }
+
+      function changeColour(x, y){
+        blocks[x][y].setColour("#37ccca");
+        blocks[x][y].draw();
       }
       
 
