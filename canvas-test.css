@@ -30,3 +30,12 @@ html, body{
 	background-color: crimson;
 
 }
+
+#canvas{
+  /*width: 50vh;*/
+  /*height: 50vh;*/
+  background-color: white;
+  margin: 0 auto;
+  display: block;
+  border: 2px solid #333333;
+}

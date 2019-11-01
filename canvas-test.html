@@ -3,29 +3,94 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>Page Title</title>
+		<title>Canvas Test</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="canvas-test.css">
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
 
 	</head>
 
 	<body>
-    <a href="link" title="Remove">Home</a>
 
-    <div class="centre-horizontally">
-      This is centered horizontally
+    <canvas id="canvas" width="50vh" height="50vh">
 
-    </div>
-        <div class="centre-vertically-parent">
-            <div class="centre-vertically-child">
-              This is centered vertically
-            </div>
-        </div>
-    </div>
-
+    </canvas>
 
     </div>
+
+    <script>
+    
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+      var i, x, y;
+
+      var boardWidth = 10;
+      var boardHeight = 20;
+
+      //--Relative sizes--
+      var squareSizeRelative = 10;
+      var frameSizeRelative = 1;
+      var gapSizeRelative = 1;
+      var canvasHeightRelative = squareSizeRelative*boardHeight + gapSizeRelative*(boardHeight+1); 
+      var canvasWidthRelative = squareSizeRelative*boardWidth + gapSizeRelative*(boardWidth+1); 
+
+      var boardWidthRelative = frameSize*2 + squareSize*10 + gapSize*11; 
+      //--Actual sizes--
+      var squareSize;
+      var frameSize;
+      var gapSize;
+
+      var verticalPadding = 0.05;
+      var canvasScaleMultiplier = 1;
+
+      createBoard();
+
+      function createBoard(){
+        canvas.height = window.innerHeight-(verticalPadding*window.innerHeight*2);
+        canvasScaleMultiplier = canvas.height/canvasHeightRelative;
+        canvas.width = canvasWidthRelative * canvasScaleMultiplier;
+        canvas.style.marginTop = verticalPadding*window.innerHeight + "px";
+
+
+        squareSize = squareSizeRelative * canvasScaleMultiplier;
+        frameSize = frameSizeRelative * canvasScaleMultiplier;
+        gapSize = gapSizeRelative * canvasScaleMultiplier;
+
+        /*
+        ctx.beginPath();
+        ctx.lineWidth = "10";
+        ctx.strokeStyle = "blue";
+        ctx.rect(50, 50, 150, 150);
+        ctx.stroke();
+        ctx.fillStyle = "red";
+        ctx.fill();
+        */
+        ctx.lineWidth = "1";
+        ctx.strokeStyle = "blue";
+        ctx.fillStyle = "#4c5a61";
+
+        //*
+        for(y = 0; y < 20; y++){
+          for(x = 0; x < 10; x++){
+            ctx.beginPath();
+            ctx.fillRect((squareSize+gapSize)*x + gapSize, ((squareSize+gapSize)*19)-(y*(squareSize+gapSize)) + gapSize, squareSize, squareSize);
+            //ctx.stroke();
+            //ctx.fill();
+          }
+        }
+        //*/
+      }
+      
+
+      $(window).resize(function(){
+        createBoard();
+      });
+  
+    </script>
+  
+
+
   </body>
 
 </html>
