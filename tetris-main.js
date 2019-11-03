@@ -7,26 +7,37 @@ game = {
 		var previousTime = game.lastUpdateTime();
 
 		//Process input
-		if (Key.getKeyDown(Key.UP)){
-			rotatePiece();
+		if(!isPaused){
+			if (Key.getKeyDown(Key.UP)){
+				rotatePiece();
+			}
+			if (Key.getKeyDown(Key.LEFT)){
+				movePieceLeft();
+			}
+			if (Key.getKeyDown(Key.DOWN)){
+				movePieceDown();
+			}
+			if (Key.getKeyDown(Key.RIGHT)){
+				movePieceRight();
+			}
 		}
-		if (Key.getKeyDown(Key.LEFT)){
-			movePieceLeft();
-		}
-		if (Key.getKeyDown(Key.DOWN)){
-			movePieceDown();
-		}
-		if (Key.getKeyDown(Key.RIGHT)){
-			movePieceRight();
+
+		if (Key.getKeyDown(Key.P)){
+			togglePause();
 		}
 		if (Key.getKeyDown(Key.ESCAPE)){
-			clearInterval(instance);
+			game.stop();
 		}
 		Key.clear();
 
 		//Update graphics
+		
 		drawBoard();
-		game.decreaseTickTimer(previousTime);
+		drawScore();
+		if(!isPaused){
+			game.decreaseTickTimer(previousTime);
+		}
+		
 	},
 
 	lastUpdateTime : (function(){
@@ -66,27 +77,28 @@ function start(){
 	}
 	spawnPiece(new Piece(randomBag.getNextLetter()));
 	toggleDebugDisplay();
-	instance = setInterval(game.update, 16.7);
+	instance = setInterval(game.update, (1000/targetFrameRate));
 }
 
 function gameOver(){
-	stopGame();
-	toggleGreyOverlay();
-	$("#centreMessageParent").css("font-size", "25vh");
-	$("#centreMessage").css("font-size", "7vh");
-	$("#centreMessage").html("Game Over<br/>Lines Cleared: " + linesCleared);
+	game.stop();
+	toggleOverlayBackground();
+	overlayTextCentre("Game Over", 19);
 }
 
 function togglePause(){
+	toggleOverlayBackground();
 	if(isPaused){
-		game = setInterval(gameTick, tickRate);
+		//instance = setInterval(game.update, (1000/targetFrameRate));
 		isPaused = false;
-		$("#centreMessage").html("");
+		//$("#centreMessage").html("");
 	}
 	else{
-		clearInterval(game);
+		//clearInterval(instance);
 		isPaused = true;
-		addHtml("#centreMessage", "Paused");
+		overlayTextCentre("Paused", 30);
+		//addHtml("#centreMessage", "Paused");
 	}
-	toggleGreyOverlay();
+	
 }
+

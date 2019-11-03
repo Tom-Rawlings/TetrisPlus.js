@@ -1,8 +1,9 @@
 "use strict";
 /*more changes*/
-var backgroundColour = "#4c5a61";
-var frameColour = "#000000";
+var backgroundColour = "#000000";
+var emptyBlockColour = "#4c5a61";
 var testColour = "#ff00ee";
+var overlayColour = "#000000";
 var boardWidth = 10;
 var boardHeight = 20;
 //--relative sizes--
@@ -26,6 +27,7 @@ var randomBag;
 var currentPiece;
 
 var tickRate = 700;
+var targetFrameRate = 60;
 var gameTime = 0;
 var isPaused = false;
 var useTouch = false;
@@ -133,6 +135,7 @@ var Key = {
   RIGHT: 39,
   DOWN: 40,
   ESCAPE: 27,
+  P: 80,
 
   down: {},
   up: {},

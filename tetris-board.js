@@ -1,6 +1,6 @@
 "use strict";
 var xCoord, yCoord;
-
+var overlayOn = false;
 
 class Block{
 	constructor(xCoord, yCoord, colour){
@@ -64,18 +64,21 @@ function createBoard(){
 
 function drawBoard(){
 	calculateCanvasDimensions();
-
+	canvas.ctx.fillStyle = backgroundColour;
+	canvas.ctx.fillRect(0, 0, canvas.element.width, canvas.element.height);
 	//Make the blocks, activeSquare, and collision maps 
 	for(var x = 0; x < boardWidth; x++){
 		for(var y = 0; y < boardHeight; y++){
 			xCoord = (blockSize+gapSize)*x + gapSize;
 			yCoord = ((blockSize+gapSize)*(boardHeight-1))-(y*(blockSize+gapSize)) + gapSize;
-			canvas.ctx.beginPath();
 			canvas.ctx.fillStyle = blocks[x][y].getColour();
 			canvas.ctx.fillRect(xCoord, yCoord, blockSize, blockSize);
 			blocks[x][y].setXcoord(xCoord);
 			blocks[x][y].setYcoord(yCoord);
 		}
+	}
+	if(overlayOn){
+		drawOverlay();
 	}
 }
 
@@ -87,7 +90,7 @@ function createArrays(){
 		blocks.push( [] );
 		for(var y = 0; y < boardHeight; y++){
 			collisionMap[x].push(false);
-			blocks[x].push(new Block(x, y, backgroundColour));
+			blocks[x].push(new Block(x, y, emptyBlockColour));
 		}
 	}
 }
@@ -119,7 +122,7 @@ function spawnPiece(piece){
 function clearBoard(){
 	for(var x = 0; x < boardWidth; x++){
 		for(var y = 0; y < boardHeight; y++){
-			blocks[x][y].setColour(backgroundColour);
+			blocks[x][y].setColour(emptyBlockColour);
 			collisionMap[x][y] = false;;
 		}
 	}
@@ -127,7 +130,7 @@ function clearBoard(){
 
 function clearPieceFromBoard(){
 	for(var i = 0; i < currentPiece.currentCoords.length; i++){
-		blocks[currentPiece.currentCoords[i].x][currentPiece.currentCoords[i].y].setColour(backgroundColour);
+		blocks[currentPiece.currentCoords[i].x][currentPiece.currentCoords[i].y].setColour(emptyBlockColour);
 	}
 }
 
@@ -284,12 +287,38 @@ $(window).resize(function() {
 }), 1000, false
 )
 
-function toggleGreyOverlay(){
-	ctx.globalAlpha
-	/*
-	if($("#greyOverlay").css("display") == "none")
-		$("#greyOverlay").css("display", "initial");
-	else
-		$("#greyOverlay").css("display", "none");
-	*/
+function drawScore(size){
+	var colour = "#FFFFFF";
+	size = size*canvasScaleMultiplier;
+	console.log("Size = " + size);
+	canvas.ctx.font = `${size}px Arial`;
+	canvas.ctx.fillStyle = colour;
+	canvas.ctx.fillText("Lines Cleared: " + linesCleared, 0, size);
+}
+
+function toggleOverlayBackground(){
+	if(overlayOn){
+		overlayOn = false;
+		drawBoard();
+	}else{
+		drawOverlay();
+		overlayOn = true;
+	}
+}
+
+function drawOverlay(){
+	canvas.ctx.fillStyle = overlayColour;
+	canvas.ctx.globalAlpha = 0.5;
+	canvas.ctx.fillRect(0, 0, canvas.element.width, canvas.element.height);
+	canvas.ctx.globalAlpha = 1.0;
+	console.log("Overlay drawn");
+}
+
+function overlayTextCentre(message, size){
+	var colour = "#FFFFFF";
+	size = size*canvasScaleMultiplier;
+	console.log("Size = " + size);
+	canvas.ctx.font = `${size}px Arial`;
+	canvas.ctx.fillStyle = colour;
+	canvas.ctx.fillText(message, 0, canvas.element.height/2);
 }
