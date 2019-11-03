@@ -264,10 +264,17 @@ function moveLinesDown(startLine){
 
 //-- End of Collision checking
 
-
+var previousResize = Date.now();
+var resizeCounter = 0;
+Helper.debounce(
 $(window).resize(function() {
 	drawBoard();
-});
+	console.log("Resize triggered: " + (Date.now() -previousResize));
+	console.log("Resize count = " + resizeCounter);
+	previousResize = Date.now();
+	resizeCounter++;
+}), 1000, false
+)
 
 function toggleGreyOverlay(){
 	if($("#greyOverlay").css("display") == "none")

@@ -6,7 +6,9 @@ game = {
 	update : function(){
 		var previousTime = game.lastUpdateTime();
 		//Process input
-		if (Key.isDown(Key.UP)){
+		//Single hit keys: up, escape
+
+		if (Key.isDownSingleShot(Key.UP)){
 			rotatePiece();
 		}
 		if (Key.isDown(Key.LEFT)){
@@ -37,7 +39,7 @@ game = {
 			movePieceDown();
 			tickTimer = tickRate;
 		} 
-		console.log("timer = " + tickTimer/1000); 
+		//console.log("timer = " + tickTimer/1000); 
 	},
 
 	stop : function(){

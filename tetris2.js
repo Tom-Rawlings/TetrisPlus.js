@@ -135,72 +135,69 @@ var Key = {
   DOWN: 40,
   ESCAPE: 27,
 
+  singleShot: {},
+  keysDown: {},
+
   isDown: function(keyCode) {
     return this.pressed[keyCode];
+  },
+
+  isDownSingleShot: function(keyCode){
+    if(this.singleShot[keyCode]){
+      delete this.singleShot[keyCode];
+      return true;
+    }
+    else return false;
+
   },
   
   onKeydown: function(event) {
     this.pressed[event.keyCode] = true;
+    if(this.keysDown[event.keyCode] != true){
+      this.singleShot[event.keyCode] = true;
+    }
+    this.keysDown[event.keyCode] = true;
   },
   
   onKeyup: function(event) {
     delete this.pressed[event.keyCode];
+    delete this.keysDown[event.keyCode];
   }
 }
 
 window.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false);
 window.addEventListener('keydown', function(event) { Key.onKeydown(event); }, false);
 
-//document.onkeydown = checkKeyDown;
+var Helper = {};
+Helper.debounce = function(func, wait, immediate) {
 
-/*
-function checkKeyDown(e) {
+  var timeout;
 
-    e = e || window.event;
+  return function() {
 
-    //SPACE
-    if (e.keyCode == '32') {
-      clearPieceFromBoard();
-      spawnPiece(new Piece(randomBag.getNextLetter()));
-    }
+      var context = this,
+          args = arguments; 
 
+      var later = function() {
+          
+          timeout = null;
 
-    //ESCAPE
-    else if (e.keyCode == '27'){
-      togglePause();
-    }
+          if ( !immediate ) {
+              func.apply(context, args);
+          }
+      };
 
+      var callNow = immediate && !timeout;
 
-    if(isPaused)
-      return;
+      clearTimeout(timeout);
 
-    //Arrow Key UP
-    else if (e.keyCode == '38') {
-      currentPiece.rotate();
-    }
+      timeout = setTimeout(later, wait || 200);
 
-    //Arrow Key DOWN
-    else if (e.keyCode == '40') {
-
-      if(movePieceDown()){
-        tickReset();
+      if ( callNow ) { 
+          func.apply(context, args);
       }
-    }
-
-    //Arrow Key LEFT
-    else if (e.keyCode == '37') {
-      if(checkCollisionLeft())
-        currentPiece.moveLeft();
-    }
-
-    //Arrow Key RIGHT
-    else if (e.keyCode == '39') {
-      if(checkCollisionRight())
-        currentPiece.moveRight();
-    }
-
-}
-*/
+  };
+};
 
 
 function addHtml(id, htmlToAdd){
