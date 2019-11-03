@@ -1,6 +1,8 @@
 "use strict";
 var instance;
 var tickTimer = tickRate;
+var frameCounter = 0;
+var frameRate = 0;
 var game;
 game = {
 	update : function(){
@@ -40,7 +42,7 @@ game = {
 		}else{
 			drawPauseState();
 		}
-		
+		frameCounter++;
 	},
 
 	lastUpdateTime : (function(){
@@ -67,6 +69,12 @@ game = {
 };
 
 $(document).ready(start());
+
+var frameCounter = setInterval(clearFrameCounter, 1000);
+function clearFrameCounter(){
+	frameRate = frameCounter;
+	frameCounter = 0;
+} 
 
 //Main Code:
 function start(){
