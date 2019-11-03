@@ -4,15 +4,14 @@ $(document).ready(start());
 
 //Main Code:
 function start(){
-	//toggleDebugDisplay();
+	console.log("start()");
 	randomBag = new RandomBag(pieceArray);
 	createBoard();
 	if(useTouch){
 		setupTouchButton();
 	}
-	//requestAnimationFrame(colourChangeTest);
 	spawnPiece(new Piece(randomBag.getNextLetter()));
-
+	toggleDebugDisplay();
 }
 
 var game = setInterval(gameTick, tickRate);

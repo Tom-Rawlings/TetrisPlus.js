@@ -5,11 +5,11 @@ var isDebugOn = false;
 function toggleDebugDisplay(){
 	if(isDebugOn == false){
 		$("#testing").css("display", "initial");
-		$("#tetrisBoard").css("left", "30%");
+		//$("#tetrisBoard").css("left", "30%");
 		isDebugOn = true;
 	}else{
 		$("#testing").css("display", "none");
-		$("#tetrisBoard").css("left", "0%");
+		//$("#tetrisBoard").css("left", "0%");
 		isDebugOn = false;
 	}
 
@@ -21,13 +21,9 @@ function updateDebugDisplay(){
 
 	//TESTING STUFF
 	debug("document height", $(document).height());
-	debug("boardinner height", $("#"+board.id).height());
-	debug("boardinner width", $("#"+board.id).width());
-	debug("frameSizeActual",frameSizeActual);
-	debug("boardSizeMultiplier", boardSizeMultiplier);
-	debug("unitPixels 2.5",unitPixels(2.5));
-	debug("unitPixels 0.5",unitPixels(0.5));
-	debug("boardInnerWidth", $("#"+boardInner.id).width());
+	debug("canvas height", canvas.height);
+	debug("canvas width", canvas.width);
+	debug("canvasScaleMultiplier", canvasScaleMultiplier);
 	if(currentPiece != null)
 		debug("currentPiece", currentPiece.toString());
 	
@@ -63,9 +59,9 @@ function debugMap(name, map){
 	var falseColour = "#ffffff";
 	var tableHtml = "<table>";
 	addHtml("#testing", name+":<br>");
-	for(var y = gameHeight-1; y >= 0 ; y--){
+	for(var y = boardHeight-1; y >= 0 ; y--){
 		tableHtml += "<tr>";
-		for(var x = 0; x < gameWidth; x++){
+		for(var x = 0; x < boardWidth; x++){
 			if(map[x][y] == true){
 				tableHtml += '<td style="background-color: '+trueColour+'"></td>';
 			}

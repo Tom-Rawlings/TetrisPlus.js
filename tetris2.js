@@ -1,28 +1,26 @@
 "use strict";
 /*more changes*/
-var backgroundColour = "#FFFFFF";
+var backgroundColour = "#4c5a61";
 var frameColour = "#000000";
 var testColour = "#ff00ee";
-var gameWidth = 10;
-var gameHeight = 20;
+var boardWidth = 10;
+var boardHeight = 20;
 //--relative sizes--
-var squareSize = 10;
-var frameSize = 1;
-var gapSize = 1;
-var boardHeightRelative = frameSize*2 + squareSize*20 + gapSize*21; 
-var boardWidthRelative = frameSize*2 + squareSize*10 + gapSize*11; 
-//--Actual sizes--
-var squareSizeActual;
-var frameSizeActual;
-var gapSizeActual;
-var boardHeightActual;
-var boardWidthActual;
+var blockSizeRelative = 10;
+var gapSizeRelative = 0.5;
+var canvasHeightRelative = blockSizeRelative*boardHeight + gapSizeRelative*(boardHeight+1); 
+var canvasWidthRelative = blockSizeRelative*boardWidth + gapSizeRelative*(boardWidth+1);
+var canvasRelativeVerticalMargin = 0.05;
 
-var boardPadding = 20;
-var boardSizeMultiplier = 1.0;
-var board;
-var squares = new Array();
-var collisionMap = new Array();
+//--Actual sizes--
+var blockSize;
+var gapSize;
+
+var canvasScaleMultiplier = 1.0;
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+var blocks = [];
+var collisionMap = [];
 
 var pieceArray = ['I', 'O', 'J', 'L', 'S', 'Z', 'T'];
 var randomBag;
@@ -31,7 +29,7 @@ var currentPiece;
 var tickRate = 700;
 var gameTime = 0;
 var isPaused = false;
-var useTouch = true;
+var useTouch = false;
 var linesCleared = 0;
 
 

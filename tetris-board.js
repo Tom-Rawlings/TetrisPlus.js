@@ -1,121 +1,106 @@
 "use strict";
+var xCoord, yCoord;
 
-class squareDiv{
-	constructor(div, x, y){
-		this.x = x;
-		this.y = y;
-		this.colour;
-		this.div = div;
+
+class Block{
+	constructor(xCoord, yCoord, colour){
+		this.xCoord = xCoord;
+		this.yCoord = yCoord;
+		this.colour = colour;
 	}
 
 	setColour (colour){
 	 	this.colour = colour;
-		$("#"+this.div.id).css("background-color", this.colour);
+		this.draw();
 	}
 
 	getColour(){
 		return this.colour;
 	}
 
+	setXcoord(xCoord){
+		this.xCoord = xCoord;
+	}
+
+	setYcoord(yCoord){
+		this.yCoord = yCoord;
+	}
+
+	draw(){
+		ctx.fillStyle = this.colour;
+		ctx.fillRect(this.xCoord, this.yCoord, blockSize, blockSize);
+	}
+
+}
+
+function calculateCanvasDimensions(){
+	canvas.height = window.innerHeight-(canvasRelativeVerticalMargin*window.innerHeight * 2);
+	canvasScaleMultiplier = canvas.height/canvasHeightRelative;
+
+
+
+
+	blockSize = Math.floor(blockSizeRelative * canvasScaleMultiplier);
+	gapSize = Math.floor(gapSizeRelative * canvasScaleMultiplier);
+	if(gapSize < 1) gapSize = 1;
+	if(blockSize < 1) blockSize = 1;
+
+	canvas.height = blockSize*boardHeight + gapSize*(boardHeight+1); 
+	canvas.width = blockSize*boardWidth + gapSize*(boardWidth+1);
+	canvas.style.marginTop = (window.innerHeight - canvas.height)/2 + "px";
 }
 
 function createBoard(){
-	board = document.getElementById("tetrisBoard");
-	board.innerHTML = "";
-	boardHeightActual = $(document).height() - boardPadding;
-	boardHeightActual = window.innerHeight - boardPadding;
-	console.group("Board Update");
-	console.log(`Board update:\n$(document).height() = ${$(document).height()}\n$(document).height() - boardPadding = ${$(document).height() - boardPadding}\nboardHeightActual = ${boardHeightActual}`);	
-	boardSizeMultiplier = boardHeightActual/boardHeightRelative;
-	console.log(`boardSizeMultiplier = ${boardSizeMultiplier}`);
-	boardWidthActual = boardWidthRelative*boardSizeMultiplier;
-	frameSizeActual = frameSize*boardSizeMultiplier;
-	squareSizeActual = squareSize*boardSizeMultiplier;
-	gapSizeActual = gapSize*boardSizeMultiplier;
 
-	board.style.width = boardWidthActual + "px";
-	board.style.height = boardHeightActual + "px";
-	board.style.backgroundColor = frameColour;
-	board.style.position = "absolute";
+	createArrays();
+	drawBoard();
+	showBoard();
 
-	console.log(`board.style.height = ${board.style.height}`);
-	console.groupEnd("Board Update");
+}
 
-	addHtml("#tetrisBoard", '<div id="boardInner"></div>');
-	//$(document).html('<div id="boardInner"/>');
-	var boardInner = document.getElementById("boardInner");
-	boardInner.style.top =  unitPixels(frameSizeActual);
-	boardInner.style.left =  unitPixels(frameSizeActual);
+function drawBoard(){
+	calculateCanvasDimensions();
 
-
-	boardInner.style.width = unitPixels($("#"+board.id).width() - 2*frameSizeActual);
-	boardInner.style.height = unitPixels($("#"+board.id).height() - 2*frameSizeActual);
-	boardInner.style.backgroundColor = backgroundColour;
-	boardInner.style.position = "absolute";
-
-	//Make the squares, activeSquare, and collision maps 
-	var initialOffset = frameSizeActual + gapSizeActual;
-	for(var x = 0; x < gameWidth; x++){
-		collisionMap.push(new Array());
-		squares.push(new Array());
-		for(var y = 0; y < gameHeight; y++){
-			addHtml("#tetrisBoard", '<div id="square'+x+'-'+y+'" ></div>');
-			var square = document.getElementById("square"+x+"-"+y);
-			square.style.width = unitPixels(squareSizeActual);
-			square.style.height = unitPixels(squareSizeActual);
-			square.style.left = unitPixels((squareSizeActual+gapSizeActual)*x + initialOffset);
-			square.style.top = unitPixels((squareSizeActual+gapSizeActual)*(gameHeight-1-y) + initialOffset);
-			square.style.position = "absolute";
-			
-			squares[x].push(new squareDiv(square, x, y));
-			squares[x][y].setColour(backgroundColour);
-			collisionMap[x].push(false);
+	//Make the blocks, activeSquare, and collision maps 
+	for(var x = 0; x < boardWidth; x++){
+		for(var y = 0; y < boardHeight; y++){
+			xCoord = (blockSize+gapSize)*x + gapSize;
+			yCoord = ((blockSize+gapSize)*(boardHeight-1))-(y*(blockSize+gapSize)) + gapSize;
+			ctx.beginPath();
+			ctx.fillStyle = blocks[x][y].getColour();
+			ctx.fillRect(xCoord, yCoord, blockSize, blockSize);
+			blocks[x][y].setXcoord(xCoord);
+			blocks[x][y].setYcoord(yCoord);
 		}
 	}
+}
 
-	var htmlToAdd = `
-	<div id="overlay">
-		<div id="greyOverlay"></div>
-		<div id="score"></div>
-		<div id="centreMessageParent">
-			<div id="centreMessage"></div>
-		</div>
-		<div id="touchButtonsParent">
-			<div id="touchButtonUp" class="touchButtons"></div>
-			<div id="touchButtonRight" class="touchButtons"></div>
-			<div id="touchButtonDown" class="touchButtons"></div>
-			<div id="touchButtonLeft" class="touchButtons"></div>
-		</div>
-	</div>`;
-
-	if(useTouch){
-		$("#touchButtonsParent").css("display", "initial");
+function createArrays(){
+	blocks = [];
+	collisionMap = [];
+	for(var x = 0; x < boardWidth; x++){
+		collisionMap.push( [] );
+		blocks.push( [] );
+		for(var y = 0; y < boardHeight; y++){
+			collisionMap[x].push(false);
+			blocks[x].push(new Block(x, y, backgroundColour));
+		}
 	}
-	else{
-		$("#touchButtonsParent").css("display", "none");
-	}
+}
 
-	addHtml("#boardInner", htmlToAdd);
-	addHtml("#score", "Lines Cleared: " + linesCleared);
-
-	if(isPaused){
-		toggleGreyOverlay();
-		addHtml("#centreMessage", "Paused");
-	}
-	console.log("boardSizeMultiplier = " + boardSizeMultiplier);
-	console.log("document height = " + $(document).height());
-
-	updateDebugDisplay();
-
+function showBoard(){
+	canvas.style.display = "block";
 }
 
 function spawnPiece(piece){
 	currentPiece = piece;
 
 	if(checkCollisionForPiecePosition(currentPiece.spawnCoords)){
+		/*
 		for(var i = 0; i < currentPiece.spawnCoords.length; i++){
-			squares[currentPiece.spawnCoords[i].x][currentPiece.spawnCoords[i].y].setColour(currentPiece.getColour());
+			blocks[currentPiece.spawnCoords[i].x][currentPiece.spawnCoords[i].y].setColour(currentPiece.getColour());
 		}
+		*/
 		//spawn piece
 		updatePieceOnBoard();
 	}
@@ -128,9 +113,9 @@ function spawnPiece(piece){
 }
 
 function clearBoard(){
-	for(var x = 0; x < gameWidth; x++){
-		for(var y = 0; y < gameHeight; y++){
-			squares[x][y].setColour(backgroundColour);
+	for(var x = 0; x < boardWidth; x++){
+		for(var y = 0; y < boardHeight; y++){
+			blocks[x][y].setColour(backgroundColour);
 			collisionMap[x][y] = false;;
 		}
 	}
@@ -138,13 +123,13 @@ function clearBoard(){
 
 function clearPieceFromBoard(){
 	for(var i = 0; i < currentPiece.currentCoords.length; i++){
-		squares[currentPiece.currentCoords[i].x][currentPiece.currentCoords[i].y].setColour(backgroundColour);
+		blocks[currentPiece.currentCoords[i].x][currentPiece.currentCoords[i].y].setColour(backgroundColour);
 	}
 }
 
 function updatePieceOnBoard(){
 		for(var i = 0; i < currentPiece.currentCoords.length; i++){
-			squares[currentPiece.currentCoords[i].x][currentPiece.currentCoords[i].y].setColour(currentPiece.getColour());
+			blocks[currentPiece.currentCoords[i].x][currentPiece.currentCoords[i].y].setColour(currentPiece.getColour());
 		}
 
 		updateDebugDisplay();
@@ -200,7 +185,7 @@ function checkCollisionLeft(){
 
 function checkCollisionRight(){
 	for(var i = 0; i < currentPiece.currentCoords.length; i++){
-		if(currentPiece.currentCoords[i].x == gameWidth-1)
+		if(currentPiece.currentCoords[i].x == boardWidth-1)
 			return false;
 		else if(collisionMap[currentPiece.currentCoords[i].x + 1][currentPiece.currentCoords[i].y])
 			return false;
@@ -210,9 +195,9 @@ function checkCollisionRight(){
 
 function checkCollisionForPiecePosition(positionCoords){
 	for(var i = 0; i < positionCoords.length; i++){
-		if(positionCoords[i].x < 0 || positionCoords[i].x > gameWidth-1)
+		if(positionCoords[i].x < 0 || positionCoords[i].x > boardWidth-1)
 			return false;
-		else if(positionCoords[i].y < 0 || positionCoords[i].y > gameHeight-1)
+		else if(positionCoords[i].y < 0 || positionCoords[i].y > boardHeight-1)
 			return false;
 		else if(collisionMap[positionCoords[i].x][positionCoords[i].y])
 			return false;
@@ -221,9 +206,9 @@ function checkCollisionForPiecePosition(positionCoords){
 }
 
 function checkCompletedLines(){
-	for(var y = 0; y < gameHeight; y++){
+	for(var y = 0; y < boardHeight; y++){
 		var lineCount = 0;
-		for(var x = 0; x < gameWidth; x++){
+		for(var x = 0; x < boardWidth; x++){
 			if(collisionMap[x][y] == true){
 				lineCount++;
 			}
@@ -237,8 +222,8 @@ function checkCompletedLines(){
 }
 
 function clearLine(lineNumber){
-	for(var x = 0; x < gameWidth; x++){
-		squares[x][lineNumber].setColour(backgroundColour);
+	for(var x = 0; x < boardWidth; x++){
+		blocks[x][lineNumber].setColour(backgroundColour);
 		collisionMap[x][lineNumber] = false;
 	}
 	linesCleared++;
@@ -246,11 +231,11 @@ function clearLine(lineNumber){
 }
 
 function moveLinesDown(startLine){
-	for(var y = startLine+1; y < gameHeight; y++){
-		for(var x = 0; x < gameWidth; x++){
+	for(var y = startLine+1; y < boardHeight; y++){
+		for(var x = 0; x < boardWidth; x++){
 			if(collisionMap[x][y] == true){
-				squares[x][y-1].setColour(squares[x][y].getColour());
-				squares[x][y].setColour(backgroundColour);
+				blocks[x][y-1].setColour(blocks[x][y].getColour());
+				blocks[x][y].setColour(backgroundColour);
 				collisionMap[x][y] = false;
 				collisionMap[x][y-1] = true;
 			}
@@ -268,12 +253,8 @@ function unitPixels(value){
 }
 
 $(window).resize(function() {
-	createBoard();
+	drawBoard();
 });
-
-function changeSquareColour(x, y, colour){
-	document.getElementById("square"+x+"-"+y).style.backgroundColor = colour;
-}
 
 function toggleGreyOverlay(){
 	if($("#greyOverlay").css("display") == "none")
