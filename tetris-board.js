@@ -27,24 +27,31 @@ class Block{
 	}
 
 	draw(){
-		ctx.fillStyle = this.colour;
-		ctx.fillRect(this.xCoord, this.yCoord, blockSize, blockSize);
+		canvas.ctx.fillStyle = this.colour;
+		canvas.ctx.fillRect(this.xCoord, this.yCoord, blockSize, blockSize);
 	}
 
 }
 
+class Canvas{
+	constructor(element){
+		this.element = element;
+		this.ctx = element.getContext("2d");
+	}
+}
+
 function calculateCanvasDimensions(){
-	canvas.height = window.innerHeight-(canvasRelativeVerticalMargin*window.innerHeight * 2);
-	canvasScaleMultiplier = canvas.height/canvasHeightRelative;
+	canvas.element.height = window.innerHeight-(canvasRelativeVerticalMargin*window.innerHeight * 2);
+	canvasScaleMultiplier = canvas.element.height/canvasHeightRelative;
 
 	blockSize = Math.floor(blockSizeRelative * canvasScaleMultiplier);
 	gapSize = Math.floor(gapSizeRelative * canvasScaleMultiplier);
 	if(gapSize < 1) gapSize = 1;
 	if(blockSize < 1) blockSize = 1;
 
-	canvas.height = blockSize*boardHeight + gapSize*(boardHeight+1); 
-	canvas.width = blockSize*boardWidth + gapSize*(boardWidth+1);
-	canvas.style.marginTop = (window.innerHeight - canvas.height)/2 + "px";
+	canvas.element.height = blockSize*boardHeight + gapSize*(boardHeight+1); 
+	canvas.element.width = blockSize*boardWidth + gapSize*(boardWidth+1);
+	canvas.element.style.marginTop = (window.innerHeight - canvas.element.height)/2 + "px";
 }
 
 function createBoard(){
@@ -63,9 +70,9 @@ function drawBoard(){
 		for(var y = 0; y < boardHeight; y++){
 			xCoord = (blockSize+gapSize)*x + gapSize;
 			yCoord = ((blockSize+gapSize)*(boardHeight-1))-(y*(blockSize+gapSize)) + gapSize;
-			ctx.beginPath();
-			ctx.fillStyle = blocks[x][y].getColour();
-			ctx.fillRect(xCoord, yCoord, blockSize, blockSize);
+			canvas.ctx.beginPath();
+			canvas.ctx.fillStyle = blocks[x][y].getColour();
+			canvas.ctx.fillRect(xCoord, yCoord, blockSize, blockSize);
 			blocks[x][y].setXcoord(xCoord);
 			blocks[x][y].setYcoord(yCoord);
 		}
@@ -86,7 +93,7 @@ function createArrays(){
 }
 
 function showBoard(){
-	canvas.style.display = "block";
+	canvas.element.style.display = "block";
 }
 
 function spawnPiece(piece){
@@ -278,8 +285,11 @@ $(window).resize(function() {
 )
 
 function toggleGreyOverlay(){
+	ctx.globalAlpha
+	/*
 	if($("#greyOverlay").css("display") == "none")
 		$("#greyOverlay").css("display", "initial");
 	else
 		$("#greyOverlay").css("display", "none");
+	*/
 }

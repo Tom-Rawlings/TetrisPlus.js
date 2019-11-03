@@ -57,6 +57,7 @@ $(document).ready(start());
 
 //Main Code:
 function start(){
+	canvas = new Canvas(document.getElementById("canvas"));
 	tickTimer = tickRate;
 	randomBag = new RandomBag(pieceArray);
 	createBoard();

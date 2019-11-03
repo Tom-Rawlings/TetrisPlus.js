@@ -17,8 +17,7 @@ var blockSize;
 var gapSize;
 
 var canvasScaleMultiplier = 1.0;
-var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
+var canvas;
 var blocks = [];
 var collisionMap = [];
 
