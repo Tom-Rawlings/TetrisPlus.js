@@ -192,39 +192,21 @@ class Piece{
 	}
 
 	moveDown(){
-		
-		clearPieceFromBoard();
-
 		for(var i = 0; i < this.currentCoords.length; i++){
 			this.currentCoords[i].y--;
 		}
-
-		updatePieceOnBoard();
-		
 	}
 
 	moveLeft(){
-
-		clearPieceFromBoard();
-
 		for(var i = 0; i < this.currentCoords.length; i++){
 			this.currentCoords[i].x--;
 		}
-		
-
-		updatePieceOnBoard();
 	}
 
 	moveRight(){
-
-		clearPieceFromBoard();
-
 		for(var i = 0; i < this.currentCoords.length; i++){
 			this.currentCoords[i].x++;
 		}
-
-		updatePieceOnBoard();
-
 	}
 
 }

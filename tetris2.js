@@ -126,8 +126,34 @@ function setupTouchButton(){
 }
 
 
-document.onkeydown = checkKeyDown;
+var Key = {
+  pressed: {},
 
+  LEFT: 37,
+  UP: 38,
+  RIGHT: 39,
+  DOWN: 40,
+  ESCAPE: 27,
+
+  isDown: function(keyCode) {
+    return this.pressed[keyCode];
+  },
+  
+  onKeydown: function(event) {
+    this.pressed[event.keyCode] = true;
+  },
+  
+  onKeyup: function(event) {
+    delete this.pressed[event.keyCode];
+  }
+}
+
+window.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false);
+window.addEventListener('keydown', function(event) { Key.onKeydown(event); }, false);
+
+//document.onkeydown = checkKeyDown;
+
+/*
 function checkKeyDown(e) {
 
     e = e || window.event;
@@ -174,6 +200,7 @@ function checkKeyDown(e) {
     }
 
 }
+*/
 
 
 function addHtml(id, htmlToAdd){

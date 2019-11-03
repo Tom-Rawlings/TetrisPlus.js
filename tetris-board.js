@@ -37,9 +37,6 @@ function calculateCanvasDimensions(){
 	canvas.height = window.innerHeight-(canvasRelativeVerticalMargin*window.innerHeight * 2);
 	canvasScaleMultiplier = canvas.height/canvasHeightRelative;
 
-
-
-
 	blockSize = Math.floor(blockSizeRelative * canvasScaleMultiplier);
 	gapSize = Math.floor(gapSizeRelative * canvasScaleMultiplier);
 	if(gapSize < 1) gapSize = 1;
@@ -140,12 +137,34 @@ function updatePieceOnBoard(){
 */
 function movePieceDown(){
 	if(checkCollisionDown()){
+		clearPieceFromBoard();
 		currentPiece.moveDown();
+		updatePieceOnBoard();
 		return true;
 	}else{
 		setPieceInPlace();
 		return false;
 	}
+}
+
+function movePieceLeft(){
+	if(checkCollisionLeft()){
+		clearPieceFromBoard();
+		currentPiece.moveLeft();
+		updatePieceOnBoard();
+	}
+}
+
+function movePieceRight(){
+	if(checkCollisionRight()){
+		clearPieceFromBoard();
+		currentPiece.moveRight();
+		updatePieceOnBoard();
+	}
+}
+
+function rotatePiece(){
+	currentPiece.rotate();
 }
 
 function setPieceInPlace(){
@@ -245,12 +264,6 @@ function moveLinesDown(startLine){
 
 //-- End of Collision checking
 
-
-
-//Adds "px" unit for html and ensure value never goes below 1
-function unitPixels(value){
-	return value > 1 ? value + "px" : 1 + "px";
-}
 
 $(window).resize(function() {
 	drawBoard();
