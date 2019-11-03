@@ -34,11 +34,15 @@ game = {
 		return function() {var oldTime = time; time = Date.now(); return oldTime;}
 	})(),
 
+	resetTickTimer : function(){
+		tickTimer = tickRate;
+	},
+
 	decreaseTickTimer : function (previousTime) {
 		tickTimer -= (Date.now() - previousTime);
 		if(tickTimer <= 0){
 			movePieceDown();
-			tickTimer = tickRate;
+			game.resetTickTimer();
 		} 
 		//console.log("timer = " + tickTimer/1000); 
 	},

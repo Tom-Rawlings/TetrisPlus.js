@@ -140,6 +140,7 @@ function movePieceDown(){
 		clearPieceFromBoard();
 		currentPiece.moveDown();
 		updatePieceOnBoard();
+		game.resetTickTimer();
 		return true;
 	}else{
 		setPieceInPlace();
