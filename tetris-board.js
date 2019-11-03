@@ -259,7 +259,7 @@ function checkCompletedLines(){
 
 function clearLine(lineNumber){
 	for(var x = 0; x < boardWidth; x++){
-		blocks[x][lineNumber].setColour(backgroundColour);
+		blocks[x][lineNumber].setColour(emptyBlockColour);
 		collisionMap[x][lineNumber] = false;
 	}
 	linesCleared++;
@@ -271,7 +271,7 @@ function moveLinesDown(startLine){
 		for(var x = 0; x < boardWidth; x++){
 			if(collisionMap[x][y] == true){
 				blocks[x][y-1].setColour(blocks[x][y].getColour());
-				blocks[x][y].setColour(backgroundColour);
+				blocks[x][y].setColour(emptyBlockColour);
 				collisionMap[x][y] = false;
 				collisionMap[x][y-1] = true;
 			}
