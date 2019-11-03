@@ -5,24 +5,25 @@ var game;
 game = {
 	update : function(){
 		var previousTime = game.lastUpdateTime();
-		//Process input
-		//Single hit keys: up, escape
 
-		if (Key.isDownSingleShot(Key.UP)){
+		//Process input
+		if (Key.getKeyDown(Key.UP)){
 			rotatePiece();
 		}
-		if (Key.isDown(Key.LEFT)){
+		if (Key.getKeyDown(Key.LEFT)){
 			movePieceLeft();
 		}
-		if (Key.isDown(Key.DOWN)){
+		if (Key.getKeyDown(Key.DOWN)){
 			movePieceDown();
 		}
-		if (Key.isDown(Key.RIGHT)){
+		if (Key.getKeyDown(Key.RIGHT)){
 			movePieceRight();
 		}
-		if (Key.isDown(Key.ESCAPE)){
+		if (Key.getKeyDown(Key.ESCAPE)){
 			clearInterval(instance);
 		}
+		Key.clear();
+
 		//Update graphics
 		drawBoard();
 		game.decreaseTickTimer(previousTime);

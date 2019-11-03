@@ -135,33 +135,38 @@ var Key = {
   DOWN: 40,
   ESCAPE: 27,
 
-  singleShot: {},
-  keysDown: {},
+  down: {},
+  up: {},
 
-  isDown: function(keyCode) {
+  getKey: function(keyCode) {
     return this.pressed[keyCode];
   },
 
-  isDownSingleShot: function(keyCode){
-    if(this.singleShot[keyCode]){
-      delete this.singleShot[keyCode];
-      return true;
-    }
-    else return false;
+  getKeyDown: function(keyCode){
+    return this.down[keyCode];
+  },
 
+  getKeyUp: function(keyCode){
+    return this.up[keyCode];
+  },
+
+  clear: function(){
+    this.down = {};
+    this.up = {};
   },
   
   onKeydown: function(event) {
-    this.pressed[event.keyCode] = true;
-    if(this.keysDown[event.keyCode] != true){
-      this.singleShot[event.keyCode] = true;
+    if(this.pressed[event.keyCode] != true){
+      this.down[event.keyCode] = true;
     }
-    this.keysDown[event.keyCode] = true;
+    this.pressed[event.keyCode] = true;
   },
   
   onKeyup: function(event) {
+    if(this.pressed[event.keyCode] == true){
+      this.up[event.keyCode] = true;
+    }
     delete this.pressed[event.keyCode];
-    delete this.keysDown[event.keyCode];
   }
 }
 
