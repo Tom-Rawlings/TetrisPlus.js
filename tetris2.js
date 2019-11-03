@@ -28,6 +28,7 @@ var currentPiece;
 
 var tickRate = 700;
 var targetFrameRate = 60;
+var pausedFrameRate = 10;
 var gameTime = 0;
 var isPaused = false;
 var useTouch = false;

@@ -20,7 +20,7 @@ function updateDebugDisplay(){
 	debugMap("collisionMap", collisionMap);
 
 	//TESTING STUFF
-	debug("Frame Rate", frameRate);
+	debug("Frame Rate", game.frameRate);
 	debug("document height", $(document).height());
 	debug("canvas height", canvas.height);
 	debug("canvas width", canvas.width);

@@ -138,8 +138,6 @@ function updatePieceOnBoard(){
 		for(var i = 0; i < currentPiece.currentCoords.length; i++){
 			blocks[currentPiece.currentCoords[i].x][currentPiece.currentCoords[i].y].setColour(currentPiece.getColour());
 		}
-
-		updateDebugDisplay();
 }
 
 function drawPiece(){

@@ -1,8 +1,7 @@
 "use strict";
 var instance;
 var tickTimer = tickRate;
-var frameCounter = 0;
-var frameRate = 0;
+var frameCounter
 var game;
 game = {
 	update : function(){
@@ -43,6 +42,7 @@ game = {
 			drawPauseState();
 		}
 		frameCounter++;
+		updateDebugDisplay();
 	},
 
 	lastUpdateTime : (function(){
@@ -62,6 +62,9 @@ game = {
 		} 
 	},
 
+	frameRate : 0,
+	frameRateUpdate : setInterval(function(){game.frameRate = frameCounter*2; frameCounter = 0;}, 500),
+
 	stop : function(){
 		clearInterval(instance);
 	}
@@ -69,12 +72,6 @@ game = {
 };
 
 $(document).ready(start());
-
-var frameCounter = setInterval(clearFrameCounter, 1000);
-function clearFrameCounter(){
-	frameRate = frameCounter;
-	frameCounter = 0;
-} 
 
 //Main Code:
 function start(){
@@ -99,9 +96,15 @@ function gameOver(){
 function togglePause(){
 	if(isPaused){
 		isPaused = false;
+		clearInterval(instance);
+		instance = setInterval(game.update, (1000/targetFrameRate));
 	}
 	else{
 		isPaused = true;
+		if(instance != null){
+			clearInterval(instance);
+			instance = setInterval(game.update, (1000/pausedFrameRate));
+		}
 	}
 }
 
