@@ -33,9 +33,12 @@ game = {
 		//Update graphics
 		
 		drawBoard();
+		drawPiece();
 		drawScore();
 		if(!isPaused){
 			game.decreaseTickTimer(previousTime);
+		}else{
+			drawPauseState();
 		}
 		
 	},
@@ -55,7 +58,6 @@ game = {
 			movePieceDown();
 			game.resetTickTimer();
 		} 
-		//console.log("timer = " + tickTimer/1000); 
 	},
 
 	stop : function(){
@@ -82,23 +84,16 @@ function start(){
 
 function gameOver(){
 	game.stop();
-	toggleOverlayBackground();
+	drawOverlay();
 	overlayTextCentre("Game Over", 19);
 }
 
 function togglePause(){
-	toggleOverlayBackground();
 	if(isPaused){
-		//instance = setInterval(game.update, (1000/targetFrameRate));
 		isPaused = false;
-		//$("#centreMessage").html("");
 	}
 	else{
-		//clearInterval(instance);
 		isPaused = true;
-		overlayTextCentre("Paused", 30);
-		//addHtml("#centreMessage", "Paused");
 	}
-	
 }
 

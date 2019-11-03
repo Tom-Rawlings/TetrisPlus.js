@@ -11,7 +11,7 @@ class Block{
 
 	setColour (colour){
 	 	this.colour = colour;
-		this.draw();
+		//this.draw();
 	}
 
 	getColour(){
@@ -140,6 +140,12 @@ function updatePieceOnBoard(){
 		}
 
 		updateDebugDisplay();
+}
+
+function drawPiece(){
+	for(var i = 0; i < currentPiece.currentCoords.length; i++){
+		blocks[currentPiece.currentCoords[i].x][currentPiece.currentCoords[i].y].draw();
+	}
 }
 
 /*
@@ -304,6 +310,11 @@ function toggleOverlayBackground(){
 		drawOverlay();
 		overlayOn = true;
 	}
+}
+
+function drawPauseState(){
+	drawOverlay();
+	overlayTextCentre("Paused", 30);
 }
 
 function drawOverlay(){
