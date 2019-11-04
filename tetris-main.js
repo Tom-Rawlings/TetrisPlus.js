@@ -9,23 +9,18 @@ game = {
 		//Process input
 		if(!isPaused){
 			if (Key.getKeyDown(Key.UP)){
-				rotatePiece();
+				TetrisPlus.board.rotatePiece();
 			}
 			if (Key.getKeyDown(Key.LEFT)){
-				movePieceLeft();
+				TetrisPlus.board.movePieceLeft();
 			}
-			/*
-			if (Key.getKeyDown(Key.DOWN)){
-				movePieceDown();
-			}else{*/
-				if(Key.getKey(Key.DOWN)){
-					userMoveDown();
-				}
-			
-			
+
+			if(Key.getKey(Key.DOWN)){
+				TetrisPlus.board.userMoveDown();
+			}
 
 			if (Key.getKeyDown(Key.RIGHT)){
-				movePieceRight();
+				TetrisPlus.board.movePieceRight();
 			}
 		}
 
@@ -45,15 +40,15 @@ game = {
 		}
 		game.frameCounter++;
 		//console.log("Frame rate = " + game.frameRate);
-		debug.updateDebugDisplay();
+		TetrisPlus.debug.updateDebugDisplay();
 	},
 
 	drawGraphics : function(){
-		drawBoard();
-		drawPiece();
-		drawScore();
+		TetrisPlus.board.drawBoard();
+		TetrisPlus.board.drawPiece();
+		TetrisPlus.board.drawScore();
 		if(isPaused){
-			drawPauseState();
+			TetrisPlus.board.drawPauseState();
 		}
 	},
 
@@ -69,7 +64,7 @@ game = {
 	decreaseTickTimer : function (previousTime) {
 		tickTimer -= (Date.now() - previousTime);
 		if(tickTimer <= 0){
-			movePieceDown();
+			TetrisPlus.board.movePieceDown();
 			game.resetTickTimer();
 		} 
 	},
@@ -84,29 +79,29 @@ game = {
 
 };
 
-$(document).ready(start());
 
-var userMoveDown = Helper.throttle(function(){movePieceDown();}, 100);
 
 //Main Code:
-function start(){
+TetrisPlus.start = function(){
 	canvas = new Canvas(document.getElementById("canvas"));
 	tickTimer = tickRate;
 	randomBag = new RandomBag(pieceArray);
-	createBoard();
-	window.addEventListener('resize', resize);
+	TetrisPlus.board.createBoard();
+	window.addEventListener('resize', this.board.resize);
 	if(useTouch){
 		setupTouchButton();
 	}
-	spawnPiece(new Piece(randomBag.getNextLetter()));
-	debug.toggleDebugDisplay();
+	TetrisPlus.board.spawnPiece(new Piece(randomBag.getNextLetter()));
+	TetrisPlus.debug.toggleDebugDisplay();
 	instance = setInterval(game.update, (1000/targetFrameRate));
 }
 
+$(document).ready(TetrisPlus.start());
+
 function gameOver(){
 	game.stop();
-	drawOverlay();
-	overlayTextCentre("Game Over", 19);
+	TetrisPlus.board.drawOverlay();
+	TetrisPlus.board.overlayTextCentre("Game Over", 19);
 }
 
 function togglePause(){

@@ -1,6 +1,5 @@
 "use strict";
-//Spawn locations
-var Pieces = {
+TetrisPlus.Pieces = {
 	I : {
 		spawnCoords : [new Coord2d(3, 18), new Coord2d(4, 18), new Coord2d(5, 18), new Coord2d(6, 18)],
 		rotations : [
@@ -75,54 +74,43 @@ var Pieces = {
 
 };
 
-
-
-var colourPieceI = "#f7d308";
-var colourPieceO = "#47e6ff";
-var colourPieceJ = "#5a65ad";
-var colourPieceL = "#ef7921";
-var colourPieces = "#42b642";
-var colourPieceZ = "#ef2029";
-var colourPieceT = "#ad4d9c";
-
 class Piece{
 	constructor(pieceLetter){
 		this.pieceLetter = pieceLetter;
-		this.spawnCoords = Array.from(Pieces.Z.spawnCoords);
-		this.rotations = Array.from(Pieces.Z.rotations);
+		this.spawnCoords = Array.from(TetrisPlus.Pieces.Z.spawnCoords);
+		this.rotations = Array.from(TetrisPlus.Pieces.Z.rotations);
 		this.currentRotation = 0;
-		this.colour = colourPieceZ;
+		this.colour = TetrisPlus.Pieces.Z.colour;
 		switch (this.pieceLetter){
 			case 'I':
-				//this.spawnCoords = Array.from(Pieces.spawnCoordsPieceI);
-				this.spawnCoords = Array.from(Pieces.I.spawnCoords);
-				this.rotations = Array.from(Pieces.I.rotations);
-				this.colour = Pieces.I.colour;
+				this.spawnCoords = Array.from(TetrisPlus.Pieces.I.spawnCoords);
+				this.rotations = Array.from(TetrisPlus.Pieces.I.rotations);
+				this.colour = TetrisPlus.Pieces.I.colour;
 				break;
 			case 'O':
-				this.spawnCoords = Array.from(Pieces.O.spawnCoords);
-				this.rotations = Array.from(Pieces.O.rotations);
-				this.colour = Pieces.O.colour;
+				this.spawnCoords = Array.from(TetrisPlus.Pieces.O.spawnCoords);
+				this.rotations = Array.from(TetrisPlus.Pieces.O.rotations);
+				this.colour = TetrisPlus.Pieces.O.colour;
 				break;
 			case 'J':
-				this.spawnCoords = Array.from(Pieces.J.spawnCoords);
-				this.rotations = Array.from(Pieces.J.rotations);
-				this.colour = Pieces.J.colour;
+				this.spawnCoords = Array.from(TetrisPlus.Pieces.J.spawnCoords);
+				this.rotations = Array.from(TetrisPlus.Pieces.J.rotations);
+				this.colour = TetrisPlus.Pieces.J.colour;
 				break;
 			case 'L':
-				this.spawnCoords = Array.from(Pieces.L.spawnCoords);
-				this.rotations = Array.from(Pieces.L.rotations);
-				this.colour = Pieces.L.colour;
+				this.spawnCoords = Array.from(TetrisPlus.Pieces.L.spawnCoords);
+				this.rotations = Array.from(TetrisPlus.Pieces.L.rotations);
+				this.colour = TetrisPlus.Pieces.L.colour;
 				break;
 			case 'S':
-				this.spawnCoords = Array.from(Pieces.S.spawnCoords);
-				this.rotations = Array.from(Pieces.S.rotations);
-				this.colour = Pieces.S.colour;
+				this.spawnCoords = Array.from(TetrisPlus.Pieces.S.spawnCoords);
+				this.rotations = Array.from(TetrisPlus.Pieces.S.rotations);
+				this.colour = TetrisPlus.Pieces.S.colour;
 				break;
 			case 'T':
-				this.spawnCoords = Array.from(Pieces.T.spawnCoords);
-				this.rotations = Array.from(Pieces.T.rotations);
-				this.colour = Pieces.T.colour;
+				this.spawnCoords = Array.from(TetrisPlus.Pieces.T.spawnCoords);
+				this.rotations = Array.from(TetrisPlus.Pieces.T.rotations);
+				this.colour = TetrisPlus.Pieces.T.colour;
 				break;
 		}
 		//this.currentCoords = Array.from(this.spawnCoords);
@@ -184,7 +172,7 @@ class Piece{
 
 		Added to the third [2] square's coords
 		*/
-		clearPieceFromBoard();
+		TetrisPlus.board.clearPieceFromBoard();
 
 		var nextRotation = this.currentRotation;
 		nextRotation++;
@@ -202,14 +190,14 @@ class Piece{
 		}
 
 
-		if(!checkCollisionForPiecePosition(this.currentCoords)){
+		if(!TetrisPlus.board.checkCollisionForPiecePosition(this.currentCoords)){
 			//Revert the coords back as there's no room to rotate
 			this.currentCoords = currentPosition;
 		}else{
 			this.currentRotation = nextRotation;	
 		}
 
-		updatePieceOnBoard();
+		TetrisPlus.board.updatePieceOnBoard();
 	}
 
 	moveDown(){

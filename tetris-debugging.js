@@ -1,4 +1,4 @@
-var debug = {
+TetrisPlus.debug = {
 
 	outputElement : document.getElementById("testing"),
 	isDebugOn : false,
@@ -32,15 +32,15 @@ var debug = {
 		if(currentPiece != null)
 		this.log("currentPiece", currentPiece.toString());
 		
-		addHtml("#testing", this.staticDebugInfo);
-		addHtml("#testing", this.dynamicDebugInfo);
-		addHtml("#testing", randomBag.printContents());
+		this.addHtml("#testing", this.staticDebugInfo);
+		this.addHtml("#testing", this.dynamicDebugInfo);
+		this.addHtml("#testing", randomBag.printContents());
 		dynamicDebugInfo = "";
 	},
 
 	log(name, object){
 		var newHtml = name + " = " + object + "<br>";
-		addHtml("#testing", newHtml);
+		this.addHtml("#testing", newHtml);
 	},
 
 	staticDebug(text){
@@ -63,7 +63,7 @@ var debug = {
 		var trueColour = "#adadad";
 		var falseColour = "#ffffff";
 		var tableHtml = "<table>";
-		addHtml("#testing", name+":<br>");
+		this.addHtml("#testing", name+":<br>");
 		for(var y = boardHeight-1; y >= 0 ; y--){
 			tableHtml += "<tr>";
 			for(var x = 0; x < boardWidth; x++){
@@ -77,7 +77,7 @@ var debug = {
 			tableHtml += "</tr>";
 		}
 		tableHtml += "</table>";
-		addHtml("#testing", tableHtml);
+		this.addHtml("#testing", tableHtml);
 	},
 
 	randomBag_Test(){
@@ -94,6 +94,12 @@ var debug = {
 			arrayString += `${i} : [${coordArray[i].x}][${coordArray[i].y}]\n`;
 		}
 		return arrayString;
+	},
+
+	addHtml(id, htmlToAdd){
+		var currentHtml = $(id).html();
+		currentHtml += htmlToAdd;
+		$(id).html(currentHtml);
 	}
 
 };

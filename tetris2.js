@@ -1,4 +1,6 @@
 "use strict";
+var TetrisPlus = {};
+
 /*more changes*/
 var backgroundColour = "#000000";
 var emptyBlockColour = "#4c5a61";
@@ -28,6 +30,7 @@ var randomBag;
 var currentPiece;
 
 var tickRate = 700;
+var moveDownDelay = 100;
 var targetFrameRate = 60;
 var pausedFrameRate = 5;
 var gameTime = 0;
@@ -176,8 +179,8 @@ var Key = {
 window.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false);
 window.addEventListener('keydown', function(event) { Key.onKeydown(event); }, false);
 
-var Helper = {};
-Helper.debounce = function(func, wait, immediate) {
+TetrisPlus.Helper = {};
+TetrisPlus.Helper.debounce = function(func, wait, immediate) {
 
   var timeout;
 
@@ -207,7 +210,7 @@ Helper.debounce = function(func, wait, immediate) {
   };
 };
 
-Helper.throttle = function(func, wait, options) {
+TetrisPlus.Helper.throttle = function(func, wait, options) {
   var context, args, result;
   var timeout = null;
   var previous = 0;
@@ -238,13 +241,6 @@ Helper.throttle = function(func, wait, options) {
     return result;
   };
 };
-
-
-function addHtml(id, htmlToAdd){
-	var currentHtml = $(id).html();
-	currentHtml += htmlToAdd;
-	$(id).html(currentHtml);
-}
 
 function cloneCoordArray(arrayToClone){
   var clonedArray = new Array();
