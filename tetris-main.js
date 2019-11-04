@@ -1,10 +1,13 @@
 "use strict";
-var instance;
-var tickTimer = tickRate;
-var game;
-game = {
-	update : function(){
-		var previousTime = game.lastUpdateTime();
+
+TetrisPlus.Game = {
+	//update : function(){
+
+		instance : null,
+		tickTimer : tickRate,
+
+		update(){
+		var previousTime = TetrisPlus.Game.lastUpdateTime();
 
 		//Process input
 		if(!isPaused){
@@ -25,25 +28,25 @@ game = {
 		}
 
 		if (Key.getKeyDown(Key.P)){
-			togglePause();
+			TetrisPlus.Game.togglePause();
 		}
 		if (Key.getKeyDown(Key.ESCAPE)){
-			game.stop();
+			TetrisPlus.Game.stop();
 		}
 		Key.clear();
 
 		//Update graphics
-		game.drawGraphics();
+		TetrisPlus.Game.drawGraphics();
 
 		if(!isPaused){
-			game.decreaseTickTimer(previousTime);
+			TetrisPlus.Game.decreaseTickTimer(previousTime);
 		}
-		game.frameCounter++;
+		this.frameCounter++;
 		//console.log("Frame rate = " + game.frameRate);
 		TetrisPlus.debug.updateDebugDisplay();
 	},
 
-	drawGraphics : function(){
+	drawGraphics(){
 		TetrisPlus.board.drawBoard();
 		TetrisPlus.board.drawPiece();
 		TetrisPlus.board.drawScore();
@@ -58,33 +61,54 @@ game = {
 	})(),
 
 	resetTickTimer : function(){
-		tickTimer = tickRate;
+		this.tickTimer = tickRate;
 	},
 
 	decreaseTickTimer : function (previousTime) {
-		tickTimer -= (Date.now() - previousTime);
-		if(tickTimer <= 0){
+		this.tickTimer -= (Date.now() - previousTime);
+		if(this.tickTimer <= 0){
 			TetrisPlus.board.movePieceDown();
-			game.resetTickTimer();
+			this.resetTickTimer();
 		} 
 	},
 
 	frameCounter : 0,
 	frameRate : 0,
-	frameRateUpdate : setInterval(function(){game.frameRate = game.frameCounter*2; game.frameCounter = 0;}, 500),
+	frameRateUpdate : setInterval(function(){this.frameRate = this.frameCounter*2; this.frameCounter = 0;}, 500),
 
-	stop : function(){
-		clearInterval(instance);
+	stop(){
+		clearInterval(this.instance);
+		console.log("stop");
+	},
+
+	
+	gameOver(){
+		this.stop();
+		TetrisPlus.board.drawOverlay();
+		TetrisPlus.board.overlayTextCentre("Game Over", 19);
+	},
+
+	togglePause(){
+		if(isPaused){
+			isPaused = false;
+			clearInterval(this.instance);
+			this.instance = setInterval(this.update, (1000/targetFrameRate));
+		}
+		else{
+			isPaused = true;
+			if(this.instance != null){
+				clearInterval(this.instance);
+				this.instance = setInterval(this.update, (1000/pausedFrameRate));
+			}
+		}
 	}
 
 };
 
 
-
 //Main Code:
-TetrisPlus.start = function(){
-	canvas = new Canvas(document.getElementById("canvas"));
-	tickTimer = tickRate;
+TetrisPlus.start = function(canvasId){
+	canvas = new Canvas(document.getElementById(canvasId));
 	randomBag = new RandomBag(pieceArray);
 	TetrisPlus.board.createBoard();
 	window.addEventListener('resize', this.board.resize);
@@ -93,29 +117,7 @@ TetrisPlus.start = function(){
 	}
 	TetrisPlus.board.spawnPiece(new Piece(randomBag.getNextLetter()));
 	TetrisPlus.debug.toggleDebugDisplay();
-	instance = setInterval(game.update, (1000/targetFrameRate));
+	this.Game.instance = setInterval(this.Game.update, (1000/targetFrameRate));
 }
 
-$(document).ready(TetrisPlus.start());
-
-function gameOver(){
-	game.stop();
-	TetrisPlus.board.drawOverlay();
-	TetrisPlus.board.overlayTextCentre("Game Over", 19);
-}
-
-function togglePause(){
-	if(isPaused){
-		isPaused = false;
-		clearInterval(instance);
-		instance = setInterval(game.update, (1000/targetFrameRate));
-	}
-	else{
-		isPaused = true;
-		if(instance != null){
-			clearInterval(instance);
-			instance = setInterval(game.update, (1000/pausedFrameRate));
-		}
-	}
-}
-
+$(document).ready(TetrisPlus.start("canvas"));

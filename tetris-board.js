@@ -77,7 +77,7 @@ TetrisPlus.board = {
 		}
 		else
 			//game over
-			gameOver();
+			TetrisPlus.Game.gameOver();
 		;
 	},
 
@@ -99,7 +99,7 @@ TetrisPlus.board = {
 			this.clearPieceFromBoard();
 			currentPiece.moveDown();
 			this.updatePieceOnBoard();
-			game.resetTickTimer();
+			TetrisPlus.Game.resetTickTimer();
 			return true;
 		}else{
 			this.setPieceInPlace();
@@ -246,7 +246,7 @@ TetrisPlus.board = {
 	},
 
 	resize : TetrisPlus.Helper.throttle(function() {
-		game.drawGraphics();
+		TetrisPlus.Game.drawGraphics();
 	}, 500),
 
 

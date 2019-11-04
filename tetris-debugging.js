@@ -24,7 +24,7 @@ TetrisPlus.debug = {
 		this.debugMap("collisionMap", collisionMap);
 	
 		//TESTING STUFF
-		this.log("Frame Rate", game.frameRate);
+		this.log("Frame Rate", TetrisPlus.Game.frameRate);
 		this.log("document height", $(document).height());
 		this.log("canvas height", canvas.height);
 		this.log("canvas width", canvas.width);
