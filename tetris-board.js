@@ -283,8 +283,6 @@ var previousResize = Date.now();
 var resizeCounter = 0;
 var resize = Helper.throttle(function() {
 	game.drawGraphics();
-	console.log("Resize triggered: " + (Date.now() -previousResize));
-	console.log("Resize count = " + resizeCounter);
 	previousResize = Date.now();
 	resizeCounter++;
 }, 500);
@@ -292,7 +290,6 @@ var resize = Helper.throttle(function() {
 function drawScore(){
 	var size = 8;
 	size = size*canvasScaleMultiplier;
-	console.log("Size = " + size);
 	canvas.ctx.font = `${size}px Arial`;
 	canvas.ctx.fillStyle = overlayTextColour;
 	canvas.ctx.globalAlpha = 0.7;
@@ -320,12 +317,10 @@ function drawOverlay(){
 	canvas.ctx.globalAlpha = 0.5;
 	canvas.ctx.fillRect(0, 0, canvas.element.width, canvas.element.height);
 	canvas.ctx.globalAlpha = 1.0;
-	console.log("Overlay drawn");
 }
 
 function overlayTextCentre(message, size){
 	size = size*canvasScaleMultiplier;
-	console.log("Size = " + size);
 	canvas.ctx.font = `${size}px Arial`;
 	canvas.ctx.fillStyle = overlayTextColour;
 	canvas.ctx.fillText(message, 0, canvas.element.height/2);

@@ -54,7 +54,6 @@ class Coord2d{
 
 class RandomBag{
 	constructor(pieceArray){
-		//NEED TO COPY ARRAY 
 		this.piecesInBag = Array.from(pieceArray);
 		this.reshuffle();
 	}

@@ -44,7 +44,7 @@ game = {
 			game.decreaseTickTimer(previousTime);
 		}
 		game.frameCounter++;
-		updateDebugDisplay();
+		debug.updateDebugDisplay();
 	},
 
 	drawGraphics : function(){
@@ -98,7 +98,7 @@ function start(){
 		setupTouchButton();
 	}
 	spawnPiece(new Piece(randomBag.getNextLetter()));
-	toggleDebugDisplay();
+	debug.toggleDebugDisplay();
 	instance = setInterval(game.update, (1000/targetFrameRate));
 }
 
