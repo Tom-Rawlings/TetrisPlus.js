@@ -44,6 +44,7 @@ game = {
 			game.decreaseTickTimer(previousTime);
 		}
 		game.frameCounter++;
+		//console.log("Frame rate = " + game.frameRate);
 		debug.updateDebugDisplay();
 	},
 

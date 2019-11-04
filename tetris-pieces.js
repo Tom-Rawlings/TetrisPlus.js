@@ -1,107 +1,128 @@
 "use strict";
 //Spawn locations
-var spawnCoordsPieceI = [new Coord2d(3, 18),
-												 new Coord2d(4, 18),
-												 new Coord2d(5, 18),
-												 new Coord2d(6, 18)];
-var spawnCoordsPieceO = [new Coord2d(4, 19),
-												 new Coord2d(5, 19),
-												 new Coord2d(4, 18),
-												 new Coord2d(5, 18)];
-var spawnCoordsPieceJ = [new Coord2d(3, 19),
-												 new Coord2d(3, 18),
-												 new Coord2d(4, 18),
-												 new Coord2d(5, 18)];
-var spawnCoordsPieceL = [new Coord2d(5, 19),
-												 new Coord2d(3, 18),
-												 new Coord2d(4, 18),
-												 new Coord2d(5, 18)];
-var spawnCoordsPieceS = [new Coord2d(3, 18),
-												 new Coord2d(5, 19),
-												 new Coord2d(4, 19),
-												 new Coord2d(4, 18)];
-var spawnCoordsPieceZ = [new Coord2d(3, 19),
-												 new Coord2d(4, 18),
-												 new Coord2d(4, 19),
-												 new Coord2d(5, 18)];
-var spawnCoordsPieceT = [new Coord2d(4, 19),
-												 new Coord2d(3, 18),
-												 new Coord2d(4, 18),
-												 new Coord2d(5, 18)];
+var Pieces = {
+	I : {
+		spawnCoords : [new Coord2d(3, 18), new Coord2d(4, 18), new Coord2d(5, 18), new Coord2d(6, 18)],
+		rotations : [
+			[new Coord2d(-2, 0), new Coord2d(-1, 0), new Coord2d(0, 0), new Coord2d(1, 0)],
+			[new Coord2d(0, 2), new Coord2d(0, 1),  new Coord2d(0, 0), new Coord2d(0, -1)]
+		],
+		colour : "#f7d308"
+	},
+	
+	O : {
+		spawnCoords : [new Coord2d(4, 19), new Coord2d(5, 19), new Coord2d(4, 18), new Coord2d(5, 18)],
+		rotations : [
+			[new Coord2d(1, 0), new Coord2d(1, 1), new Coord2d(0, 0), new Coord2d(0, 1)]
+		],
+		colour : "#47e6ff"
+	},
+	
+	J : {
+		spawnCoords : [new Coord2d(3, 19), new Coord2d(3, 18), new Coord2d(4, 18), new Coord2d(5, 18)],
+		rotations : [
+			[new Coord2d(-1, 1), new Coord2d(-1, 0), new Coord2d(0, 0), new Coord2d(1, 0)],
+			[new Coord2d(0, -1),  new Coord2d(0, 1),  new Coord2d(0, 0), new Coord2d(1, 1)],
+			[new Coord2d(-1, 0),  new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, -1)],
+			[new Coord2d(-1, -1), new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(0, 1)]
+		],
+		colour : "#5a65ad"
+	},
 
-var rotationsPieceI = [[new Coord2d(-2, 0), new Coord2d(-1, 0), new Coord2d(0, 0), new Coord2d(1, 0)],
-											[new Coord2d(0, 2), new Coord2d(0, 1),  new Coord2d(0, 0), new Coord2d(0, -1)]];
+	L : {
+		spawnCoords : [new Coord2d(5, 19), new Coord2d(3, 18), new Coord2d(4, 18), new Coord2d(5, 18)],
+		rotations : [
+			[new Coord2d(-1, 0), new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, 1)],
+			[new Coord2d(0, 1),   new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, -1)],
+			[new Coord2d(-1, -1), new Coord2d(-1, 0), new Coord2d(0, 0), new Coord2d(1, 0)],
+			[new Coord2d(-1, 1),  new Coord2d(0, 1),  new Coord2d(0, 0), new Coord2d(0, -1)]
+		],
+		colour : "#ef7921"
+	},
 
-var rotationsPieceJ = [[new Coord2d(-1, 1), new Coord2d(-1, 0), new Coord2d(0, 0), new Coord2d(1, 0)],
-											[new Coord2d(0, -1),  new Coord2d(0, 1),  new Coord2d(0, 0), new Coord2d(1, 1)],
-											[new Coord2d(-1, 0),  new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, -1)],
-											[new Coord2d(-1, -1), new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(0, 1)]];
+	S : {
+		spawnCoords : [new Coord2d(3, 18), new Coord2d(5, 19), new Coord2d(4, 19), new Coord2d(4, 18)],
+		rotations : [
+			[new Coord2d(-1, -1), new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, 0)],
+			[new Coord2d(0, 1),    new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, -1)],
+			[new Coord2d(-1, -1),  new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, 0)],
+			[new Coord2d(0, 1),    new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, -1)]
+		],
+		colour : "#42b642"
+	},
 
-var rotationsPieceL = [[new Coord2d(-1, 0), new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, 1)],
-											[new Coord2d(0, 1),   new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, -1)],
-											[new Coord2d(-1, -1), new Coord2d(-1, 0), new Coord2d(0, 0), new Coord2d(1, 0)],
-											[new Coord2d(-1, 1),  new Coord2d(0, 1),  new Coord2d(0, 0), new Coord2d(0, -1)]];
+	Z : {
+		spawnCoords : [new Coord2d(3, 19), new Coord2d(4, 18), new Coord2d(4, 19), new Coord2d(5, 18)],
+		rotations : [
+			[new Coord2d(-1, 0), new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, -1)],
+			[new Coord2d(0, -1),  new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, 1)],
+			[new Coord2d(-1, 0),  new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, -1)],
+			[new Coord2d(0, -1),  new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, 1)]
+		],
+		colour : "#ef2029"
+	},
 
-var rotationsPieceS = [[new Coord2d(-1, -1), new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, 0)],
-											[new Coord2d(0, 1),    new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, -1)],
-											[new Coord2d(-1, -1),  new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, 0)],
-											[new Coord2d(0, 1),    new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, -1)]];
+	T : {
+		spawnCoords : [new Coord2d(4, 19), new Coord2d(3, 18), new Coord2d(4, 18), new Coord2d(5, 18)],
+		rotations : [
+			[new Coord2d(-1, 0), new Coord2d(0, 1),  new Coord2d(0, 0), new Coord2d(1, 0)],
+			[new Coord2d(0, 1),   new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(0, -1)],
+			[new Coord2d(-1, 0),  new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, 0)],
+			[new Coord2d(-1, 0),  new Coord2d(0, 1),  new Coord2d(0, 0), new Coord2d(0, -1)]
+		],
+		colour : "#ad4d9c"
+	}
 
-var rotationsPieceZ = [[new Coord2d(-1, 0), new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, -1)],
-											[new Coord2d(0, -1),  new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, 1)],
-											[new Coord2d(-1, 0),  new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, -1)],
-											[new Coord2d(0, -1),  new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, 1)]];
+};
 
-var rotationsPieceT = [[new Coord2d(-1, 0), new Coord2d(0, 1),  new Coord2d(0, 0), new Coord2d(1, 0)],
-											[new Coord2d(0, 1),   new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(0, -1)],
-											[new Coord2d(-1, 0),  new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, 0)],
-											[new Coord2d(-1, 0),  new Coord2d(0, 1),  new Coord2d(0, 0), new Coord2d(0, -1)]];
+
 
 var colourPieceI = "#f7d308";
 var colourPieceO = "#47e6ff";
 var colourPieceJ = "#5a65ad";
 var colourPieceL = "#ef7921";
-var colourPieceS = "#42b642";
+var colourPieces = "#42b642";
 var colourPieceZ = "#ef2029";
 var colourPieceT = "#ad4d9c";
 
 class Piece{
 	constructor(pieceLetter){
 		this.pieceLetter = pieceLetter;
-		this.spawnCoords = Array.from(spawnCoordsPieceZ);
-		this.rotations = Array.from(rotationsPieceZ);
+		this.spawnCoords = Array.from(Pieces.Z.spawnCoords);
+		this.rotations = Array.from(Pieces.Z.rotations);
 		this.currentRotation = 0;
 		this.colour = colourPieceZ;
 		switch (this.pieceLetter){
 			case 'I':
-				this.spawnCoords = Array.from(spawnCoordsPieceI);
-				this.rotations = Array.from(rotationsPieceI);
-				this.colour = colourPieceI
+				//this.spawnCoords = Array.from(Pieces.spawnCoordsPieceI);
+				this.spawnCoords = Array.from(Pieces.I.spawnCoords);
+				this.rotations = Array.from(Pieces.I.rotations);
+				this.colour = Pieces.I.colour;
 				break;
 			case 'O':
-				this.spawnCoords = Array.from(spawnCoordsPieceO);
-				this.rotations = [[new Coord2d(1, 0), new Coord2d(1, 1), new Coord2d(0, 0), new Coord2d(0, 1)]];
-				this.colour = colourPieceO;
+				this.spawnCoords = Array.from(Pieces.O.spawnCoords);
+				this.rotations = Array.from(Pieces.O.rotations);
+				this.colour = Pieces.O.colour;
 				break;
 			case 'J':
-				this.spawnCoords = Array.from(spawnCoordsPieceJ);
-				this.rotations = Array.from(rotationsPieceJ);
-				this.colour = colourPieceJ;
+				this.spawnCoords = Array.from(Pieces.J.spawnCoords);
+				this.rotations = Array.from(Pieces.J.rotations);
+				this.colour = Pieces.J.colour;
 				break;
 			case 'L':
-				this.spawnCoords = Array.from(spawnCoordsPieceL);
-				this.rotations = Array.from(rotationsPieceL);
-				this.colour = colourPieceL;
+				this.spawnCoords = Array.from(Pieces.L.spawnCoords);
+				this.rotations = Array.from(Pieces.L.rotations);
+				this.colour = Pieces.L.colour;
 				break;
 			case 'S':
-				this.spawnCoords = Array.from(spawnCoordsPieceS);
-				this.rotations = Array.from(rotationsPieceS);
-				this.colour = colourPieceS;
+				this.spawnCoords = Array.from(Pieces.S.spawnCoords);
+				this.rotations = Array.from(Pieces.S.rotations);
+				this.colour = Pieces.S.colour;
 				break;
 			case 'T':
-				this.spawnCoords = Array.from(spawnCoordsPieceT);
-				this.rotations = Array.from(rotationsPieceT);
-				this.colour = colourPieceT;
+				this.spawnCoords = Array.from(Pieces.T.spawnCoords);
+				this.rotations = Array.from(Pieces.T.rotations);
+				this.colour = Pieces.T.colour;
 				break;
 		}
 		//this.currentCoords = Array.from(this.spawnCoords);

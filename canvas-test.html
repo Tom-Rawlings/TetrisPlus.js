@@ -13,6 +13,9 @@
 
 	<body>
 
+    <div id="infoBox">
+      Hello
+    </div>
     <canvas id="canvas" width="50vh" height="50vh">
 
     </canvas>
@@ -48,6 +51,53 @@
       var xCoord, yCoord;
 
       createBoard();
+      testArray();
+
+      function testArray(){
+        var infoBox = document.getElementById("infoBox");
+      
+        class Coord2d{
+          constructor(x, y){
+              this.x = x;
+              this.y = y;
+          }
+
+          clone(){
+              return new Coord2d(this.x, this.y);
+          }
+        }
+        var spawnCoordsPieceJ = [new Coord2d(3, 19),
+												 new Coord2d(3, 18),
+												 new Coord2d(4, 18),
+                         new Coord2d(5, 18)];
+                         
+        var output = "Class Array:<br/>";
+        for(var i = 0; i < spawnCoordsPieceJ.length; i++){
+          output+= "x=" + spawnCoordsPieceJ[i].x + " , " + "y=" + spawnCoordsPieceJ[i].y + "<br/>";
+        }
+        output += "<br/><br/>Test Array1:<br/>";
+        var _array = [
+          [3,19],
+          [3,18],
+          [4,18],
+          [5,18]  
+        ]
+        for(var i = 0; i < _array.length; i++){
+          output+= "x=" + _array[i][0] + " , " + "y=" + _array[i][1] + "<br/>";
+        }
+        output += "<br/><br/>Test Array2:<br/>";
+        var _array2 = [
+          3,19,
+          3,18,
+          4,18,
+          5,18
+        ]
+        for(var i = 0; i < _array2.length; i+=2){
+          output+= "x=" + _array2[i]+ " , " + "y=" + _array2[i+1] + "<br/>";
+        }
+
+        infoBox.innerHTML= output;
+      }
 
       function createBoard(){
         canvas.height = window.innerHeight-(verticalPadding*window.innerHeight*2);
