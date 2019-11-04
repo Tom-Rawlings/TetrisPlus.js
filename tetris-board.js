@@ -289,13 +289,14 @@ var resize = Helper.throttle(function() {
 	resizeCounter++;
 }, 500);
 
-function drawScore(size){
+function drawScore(){
+	var size = 8;
 	size = size*canvasScaleMultiplier;
 	console.log("Size = " + size);
 	canvas.ctx.font = `${size}px Arial`;
 	canvas.ctx.fillStyle = overlayTextColour;
-	canvas.ctx.globalAlpha = 0.5;
-	canvas.ctx.fillText("Lines Cleared: " + linesCleared, 0, size);
+	canvas.ctx.globalAlpha = 0.7;
+	canvas.ctx.fillText("Lines Cleared: " + linesCleared, 2*canvasScaleMultiplier, size);
 	canvas.ctx.globalAlpha = 1.0;
 }
 

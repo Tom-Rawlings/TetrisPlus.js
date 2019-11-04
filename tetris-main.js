@@ -1,7 +1,6 @@
 "use strict";
 var instance;
 var tickTimer = tickRate;
-var frameCounter
 var game;
 game = {
 	update : function(){
@@ -44,14 +43,14 @@ game = {
 		if(!isPaused){
 			game.decreaseTickTimer(previousTime);
 		}
-		frameCounter++;
+		game.frameCounter++;
 		updateDebugDisplay();
 	},
 
 	drawGraphics : function(){
 		drawBoard();
 		drawPiece();
-		drawScore(8);
+		drawScore();
 		if(isPaused){
 			drawPauseState();
 		}
@@ -74,8 +73,9 @@ game = {
 		} 
 	},
 
+	frameCounter : 0,
 	frameRate : 0,
-	frameRateUpdate : setInterval(function(){game.frameRate = frameCounter*2; frameCounter = 0;}, 500),
+	frameRateUpdate : setInterval(function(){game.frameRate = game.frameCounter*2; game.frameCounter = 0;}, 500),
 
 	stop : function(){
 		clearInterval(instance);
