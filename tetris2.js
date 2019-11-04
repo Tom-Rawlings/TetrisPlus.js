@@ -4,6 +4,7 @@ var backgroundColour = "#000000";
 var emptyBlockColour = "#4c5a61";
 var testColour = "#ff00ee";
 var overlayColour = "#000000";
+var overlayTextColour = "#FFFFFF";
 var boardWidth = 10;
 var boardHeight = 20;
 //--relative sizes--
@@ -28,7 +29,7 @@ var currentPiece;
 
 var tickRate = 700;
 var targetFrameRate = 60;
-var pausedFrameRate = 10;
+var pausedFrameRate = 5;
 var gameTime = 0;
 var isPaused = false;
 var useTouch = false;

@@ -290,12 +290,13 @@ var resize = Helper.throttle(function() {
 }, 500);
 
 function drawScore(size){
-	var colour = "#FFFFFF";
 	size = size*canvasScaleMultiplier;
 	console.log("Size = " + size);
 	canvas.ctx.font = `${size}px Arial`;
-	canvas.ctx.fillStyle = colour;
+	canvas.ctx.fillStyle = overlayTextColour;
+	canvas.ctx.globalAlpha = 0.5;
 	canvas.ctx.fillText("Lines Cleared: " + linesCleared, 0, size);
+	canvas.ctx.globalAlpha = 1.0;
 }
 
 function toggleOverlayBackground(){
@@ -322,10 +323,9 @@ function drawOverlay(){
 }
 
 function overlayTextCentre(message, size){
-	var colour = "#FFFFFF";
 	size = size*canvasScaleMultiplier;
 	console.log("Size = " + size);
 	canvas.ctx.font = `${size}px Arial`;
-	canvas.ctx.fillStyle = colour;
+	canvas.ctx.fillStyle = overlayTextColour;
 	canvas.ctx.fillText(message, 0, canvas.element.height/2);
 }

@@ -51,7 +51,7 @@ game = {
 	drawGraphics : function(){
 		drawBoard();
 		drawPiece();
-		drawScore();
+		drawScore(8);
 		if(isPaused){
 			drawPauseState();
 		}
