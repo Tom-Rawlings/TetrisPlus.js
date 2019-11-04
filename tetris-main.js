@@ -39,17 +39,22 @@ game = {
 		Key.clear();
 
 		//Update graphics
-		
-		drawBoard();
-		drawPiece();
-		drawScore();
+		game.drawGraphics();
+
 		if(!isPaused){
 			game.decreaseTickTimer(previousTime);
-		}else{
-			drawPauseState();
 		}
 		frameCounter++;
 		updateDebugDisplay();
+	},
+
+	drawGraphics : function(){
+		drawBoard();
+		drawPiece();
+		drawScore();
+		if(isPaused){
+			drawPauseState();
+		}
 	},
 
 	lastUpdateTime : (function(){
@@ -88,6 +93,7 @@ function start(){
 	tickTimer = tickRate;
 	randomBag = new RandomBag(pieceArray);
 	createBoard();
+	window.addEventListener('resize', resize);
 	if(useTouch){
 		setupTouchButton();
 	}

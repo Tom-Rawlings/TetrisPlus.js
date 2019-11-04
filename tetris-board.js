@@ -281,15 +281,13 @@ function moveLinesDown(startLine){
 
 var previousResize = Date.now();
 var resizeCounter = 0;
-Helper.debounce(
-$(window).resize(function() {
-	drawBoard();
+var resize = Helper.throttle(function() {
+	game.drawGraphics();
 	console.log("Resize triggered: " + (Date.now() -previousResize));
 	console.log("Resize count = " + resizeCounter);
 	previousResize = Date.now();
 	resizeCounter++;
-}), 1000, false
-);
+}, 500);
 
 function drawScore(size){
 	var colour = "#FFFFFF";
