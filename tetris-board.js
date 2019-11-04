@@ -289,7 +289,7 @@ $(window).resize(function() {
 	previousResize = Date.now();
 	resizeCounter++;
 }), 1000, false
-)
+);
 
 function drawScore(size){
 	var colour = "#FFFFFF";

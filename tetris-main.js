@@ -15,9 +15,16 @@ game = {
 			if (Key.getKeyDown(Key.LEFT)){
 				movePieceLeft();
 			}
+			/*
 			if (Key.getKeyDown(Key.DOWN)){
 				movePieceDown();
-			}
+			}else{*/
+				if(Key.getKey(Key.DOWN)){
+					userMoveDown();
+				}
+			
+			
+
 			if (Key.getKeyDown(Key.RIGHT)){
 				movePieceRight();
 			}
@@ -72,6 +79,8 @@ game = {
 };
 
 $(document).ready(start());
+
+var userMoveDown = Helper.throttle(function(){movePieceDown();}, 100);
 
 //Main Code:
 function start(){
