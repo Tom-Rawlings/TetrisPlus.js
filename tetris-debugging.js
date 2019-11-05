@@ -22,7 +22,7 @@ TetrisPlus.debug = {
 
 	updateDebugDisplay(){
 		$("#testing").html("");
-		this.debugMap("collisionMap", collisionMap);
+		this.debugMap("collisionMap", TetrisPlus.board.collisionMap);
 	
 		//TESTING STUFF
 		this.log("Frame Rate", TetrisPlus.Game.frameRate);
@@ -35,7 +35,7 @@ TetrisPlus.debug = {
 		
 		this.addHtml("#testing", this.staticDebugInfo);
 		this.addHtml("#testing", this.dynamicDebugInfo);
-		this.addHtml("#testing", randomBag.printContents());
+		this.addHtml("#testing", TetrisPlus.Game.randomBag.printContents());
 		this.dynamicDebugInfo = "";
 	},
 
@@ -65,9 +65,9 @@ TetrisPlus.debug = {
 		var falseColour = "#ffffff";
 		var tableHtml = "<table>";
 		this.addHtml("#testing", name+":<br>");
-		for(var y = boardHeight-1; y >= 0 ; y--){
+		for(var y = TetrisPlus.config.boardHeight-1; y >= 0 ; y--){
 			tableHtml += "<tr>";
-			for(var x = 0; x < boardWidth; x++){
+			for(var x = 0; x < TetrisPlus.config.boardWidth; x++){
 				if(map[x][y] == true){
 					tableHtml += '<td style="background-color: '+trueColour+'"></td>';
 				}

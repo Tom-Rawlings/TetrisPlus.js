@@ -1,13 +1,12 @@
 "use strict";
 var TetrisPlus = {};
 
-
-
 /*
   Non-Configurable
 */
 var canvasHeightRelative; 
 var canvasWidthRelative;
+var canvasScaleMultiplier = 1.0;
 
 var blockSize;
 var gapSize;
@@ -16,35 +15,59 @@ var pieceArray = ['I', 'O', 'J', 'L', 'S', 'Z', 'T'];
 var randomBag;
 var currentPiece;
 
-var canvasScaleMultiplier = 1.0;
 
-var blocks = [];
-var collisionMap = [];
 
-var gameTime = 0;
-var isPaused = false;
-var useTouch = false;
-var linesCleared = 0;
+//var blocks = [];
+//var collisionMap = [];
+
+
 
 /*
   Configurable
+
+  var backgroundColour = "#000000";
+  var emptyBlockColour = "#4c5a61";
+  var overlayColour = "#000000";
+  var overlayTextColour = "#FFFFFF";
+  
+  var blockSizeRelative = 10;
+  var gapSizeRelative = 0.5;
+  var canvasRelativeVerticalMargin = 0.05;
+  
+  var boardWidth = 10;
+  var boardHeight = 20;
+  
+  var tickRate = 700;
+  var moveDownDelay = 100;
+  var targetFrameRate = 60;
+  var pausedFrameRate = 5;
 */
-var backgroundColour = "#000000";
-var emptyBlockColour = "#4c5a61";
-var overlayColour = "#000000";
-var overlayTextColour = "#FFFFFF";
 
-var blockSizeRelative = 10;
-var gapSizeRelative = 0.5;
-var canvasRelativeVerticalMargin = 0.05;
 
-var boardWidth = 10;
-var boardHeight = 20;
+TetrisPlus.config = {
+  cavnasId : "canvas",
+  backgroundColour : "#000000",
+  emptyBlockColour : "#4c5a61",
+  overlayColour : "#000000",
+  overlayTextColour : "#FFFFFF",
+  
+  blockSizeRelative : 10,
+  gapSizeRelative : 0.5,
+  canvasRelativeVerticalMargin : 0.05,
+  
+  boardWidth : 10,
+  boardHeight : 20,
+  
+  tickRate : 700,
+  moveDownDelay : 100,
+  targetFrameRate : 60,
+  pausedFrameRate : 5
+}
 
-var tickRate = 700;
-var moveDownDelay = 100;
-var targetFrameRate = 60;
-var pausedFrameRate = 5;
+TetrisPlus.init = function(config){
+  TetrisPlus.Helper.extend(this.config, config);
+  TetrisPlus.start();
+}
 
 
 class Coord2d{
@@ -58,10 +81,6 @@ class Coord2d{
     }
 }
 
-
-//
-//---Random bag stuff---
-//
 
 class RandomBag{
 	constructor(pieceArray){
@@ -252,3 +271,18 @@ function testFunction(){
   TetrisPlus.Helper.extend(config, specialConfig);
   console.log(config.a + config.b + config.c);
 }
+
+
+
+var testObject = {};
+
+(function (testObject){
+	testObject.test = function(){
+		alert("public");
+		test1();
+	}
+	function test1(){
+		alert("private");
+	}
+}(testObject));
+

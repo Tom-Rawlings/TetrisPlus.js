@@ -3,13 +3,17 @@ TetrisPlus.Game = {
 	//update : function(){
 
 		instance : null,
-		tickTimer : tickRate,
+		tickTimer : TetrisPlus.config.tickRate,
+		gameTime : 0,
+		isPaused : false,
+		linesCleared : 0,
+		randomBag : TetrisPlus.makeRandomBag(),
 
 		update(){
 		var previousTime = TetrisPlus.Game.lastUpdateTime();
 
 		//Process input
-		if(!isPaused){
+		if(!this.isPaused){
 			if (Key.getKeyDown(Key.UP)){
 				TetrisPlus.board.rotatePiece();
 			}
@@ -37,11 +41,10 @@ TetrisPlus.Game = {
 		//Update graphics
 		TetrisPlus.Game.drawGraphics();
 
-		if(!isPaused){
+		if(!this.isPaused){
 			TetrisPlus.Game.decreaseTickTimer(previousTime);
 		}
 		TetrisPlus.Game.frameCounter++;
-		//console.log("Frame rate = " + game.frameRate);
 		TetrisPlus.debug.updateDebugDisplay();
 	},
 
@@ -49,7 +52,7 @@ TetrisPlus.Game = {
 		TetrisPlus.board.drawBoard();
 		TetrisPlus.board.drawPiece();
 		TetrisPlus.board.drawScore();
-		if(isPaused){
+		if(this.isPaused){
 			TetrisPlus.board.drawPauseState();
 		}
 	},
@@ -60,7 +63,7 @@ TetrisPlus.Game = {
 	})(),
 
 	resetTickTimer : function(){
-		this.tickTimer = tickRate;
+		this.tickTimer = TetrisPlus.config.tickRate;
 	},
 
 	decreaseTickTimer : function (previousTime) {
@@ -77,7 +80,6 @@ TetrisPlus.Game = {
 
 	stop(){
 		clearInterval(this.instance);
-		console.log("stop");
 	},
 
 	
@@ -91,13 +93,13 @@ TetrisPlus.Game = {
 		if(isPaused){
 			isPaused = false;
 			clearInterval(this.instance);
-			this.instance = setInterval(this.update, (1000/targetFrameRate));
+			this.instance = setInterval(this.update, (1000/TetrisPlus.config.targetFrameRate));
 		}
 		else{
 			isPaused = true;
 			if(this.instance != null){
 				clearInterval(this.instance);
-				this.instance = setInterval(this.update, (1000/pausedFrameRate));
+				this.instance = setInterval(this.update, (1000/TetrisPlus.config.pausedFrameRate));
 			}
 		}
 	}
@@ -106,34 +108,19 @@ TetrisPlus.Game = {
 
 
 //Main Code:
-TetrisPlus.start = function(canvasId){
+TetrisPlus.start = function(){
 	//canvas = new Canvas(document.getElementById(canvasId));
-	canvasHeightRelative = blockSizeRelative*boardHeight + gapSizeRelative*(boardHeight+1); 
-	canvasWidthRelative = blockSizeRelative*boardWidth + gapSizeRelative*(boardWidth+1);
-	this.board.canvas.element = document.getElementById(canvasId);
+	canvasHeightRelative = TetrisPlus.config.blockSizeRelative*TetrisPlus.config.boardHeight + TetrisPlus.config.gapSizeRelative*(TetrisPlus.config.boardHeight+1); 
+	canvasWidthRelative = TetrisPlus.config.blockSizeRelative*TetrisPlus.config.boardWidth + TetrisPlus.config.gapSizeRelative*(TetrisPlus.config.boardWidth+1);
+	this.board.canvas.element = document.getElementById(TetrisPlus.config.cavnasId);
 	this.board.canvas.ctx = this.board.canvas.element.getContext("2d");
-	randomBag = new RandomBag(pieceArray);
+	//randomBag = new RandomBag(pieceArray);
 	this.board.createBoard();
 	window.addEventListener('resize', this.board.resize);
-	if(useTouch){
-		setupTouchButton();
-	}
-	TetrisPlus.board.spawnPiece(new Piece(randomBag.getNextLetter()));
+	TetrisPlus.board.spawnPiece(new Piece(TetrisPlus.Game.randomBag.getNextLetter()));
 	TetrisPlus.debug.toggleDebugDisplay();
-	this.Game.instance = setInterval(this.Game.update, (1000/targetFrameRate));
+	this.Game.instance = setInterval(this.Game.update, (1000/TetrisPlus.config.targetFrameRate));
 }
 
-$(document).ready(TetrisPlus.start("canvas"));
-
-
-var testObject = {};
-
-(function (testObject){
-	testObject.test = function(){
-		alert("public");
-		test1();
-	}
-	function test1(){
-		alert("private");
-	}
-}(testObject));
+//$(document).ready(TetrisPlus.start("canvas"));
+$(document).ready(TetrisPlus.init({}));
