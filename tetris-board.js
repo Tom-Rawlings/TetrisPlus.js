@@ -13,6 +13,42 @@ TetrisPlus.board = {
 	//blocks : [],
 	//collisionMap : [],
 
+	makeBlock : (function(_xCoord, _yCoord, _colour){
+		var block = {};
+		(function () {
+			console.log("_xCoord = " + _xCoord);
+			var xCoord = _xCoord;
+			var yCoord = _yCoord;
+			var colour = _colour;
+			console.log("xCoord = " + xCoord);
+	
+			this.setColour = function(_colour){
+				colour = _colour;
+			 },
+	 
+			 this.getColour = function(){
+			 return colour;
+			 },
+	 
+			this.setXcoord = function(_xCoord){
+				xCoord = _xCoord;
+			},
+	 
+			this.setYcoord = function(_yCoord){
+				yCoord = _yCoord;
+			}
+	 
+			this.draw = function(){
+				TetrisPlus.board.canvas.ctx.fillStyle = this.colour;
+				TetrisPlus.board.canvas.ctx.fillRect(this.xCoord, this.yCoord, blockSize, blockSize);
+			}
+				
+		}).apply( block );
+	
+		return block;
+	
+	}),
+
 	calculateCanvasDimensions(){
 		this.canvas.element.height = window.innerHeight-(TetrisPlus.config.canvasRelativeVerticalMargin*window.innerHeight * 2);
 		canvasScaleMultiplier = this.canvas.element.height/canvasHeightRelative;
@@ -62,7 +98,8 @@ TetrisPlus.board = {
 			this.blocks.push( [] );
 			for(var y = 0; y < TetrisPlus.config.boardHeight; y++){
 				this.collisionMap[x].push(false);
-				this.blocks[x].push(new Block(x, y, TetrisPlus.config.emptyBlockColour));
+				//this.blocks[x].push(new Block(x, y, TetrisPlus.config.emptyBlockColour));
+				this.blocks[x].push(TetrisPlus.board.makeBlock(x, y, TetrisPlus.config.emptyBlockColour));
 			}
 		}
 	},
@@ -292,36 +329,6 @@ TetrisPlus.board = {
 		this.canvas.ctx.fillStyle = TetrisPlus.config.overlayTextColour;
 		this.canvas.ctx.fillText(message, 0, this.canvas.element.height/2);
 	}
-}
 
-
-class Block{
-	constructor(xCoord, yCoord, colour){
-		this.xCoord = xCoord;
-		this.yCoord = yCoord;
-		this.colour = colour;
-	}
-
-	setColour (colour){
-	 	this.colour = colour;
-		//this.draw();
-	}
-
-	getColour(){
-		return this.colour;
-	}
-
-	setXcoord(xCoord){
-		this.xCoord = xCoord;
-	}
-
-	setYcoord(yCoord){
-		this.yCoord = yCoord;
-	}
-
-	draw(){
-		TetrisPlus.board.canvas.ctx.fillStyle = this.colour;
-		TetrisPlus.board.canvas.ctx.fillRect(this.xCoord, this.yCoord, blockSize, blockSize);
-	}
 
 }
