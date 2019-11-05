@@ -108,6 +108,8 @@ TetrisPlus.Game = {
 //Main Code:
 TetrisPlus.start = function(canvasId){
 	//canvas = new Canvas(document.getElementById(canvasId));
+	canvasHeightRelative = blockSizeRelative*boardHeight + gapSizeRelative*(boardHeight+1); 
+	canvasWidthRelative = blockSizeRelative*boardWidth + gapSizeRelative*(boardWidth+1);
 	this.board.canvas.element = document.getElementById(canvasId);
 	this.board.canvas.ctx = this.board.canvas.element.getContext("2d");
 	randomBag = new RandomBag(pieceArray);
@@ -122,3 +124,16 @@ TetrisPlus.start = function(canvasId){
 }
 
 $(document).ready(TetrisPlus.start("canvas"));
+
+
+var testObject = {};
+
+(function (testObject){
+	testObject.test = function(){
+		alert("public");
+		test1();
+	}
+	function test1(){
+		alert("private");
+	}
+}(testObject));

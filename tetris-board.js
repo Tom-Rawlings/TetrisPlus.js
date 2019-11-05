@@ -4,6 +4,12 @@ var overlayOn = false;
 
 
 TetrisPlus.board = {
+
+	canvas : {
+		element : undefined,
+		ctx : undefined
+	},
+
 	calculateCanvasDimensions(){
 		this.canvas.element.height = window.innerHeight-(canvasRelativeVerticalMargin*window.innerHeight * 2);
 		canvasScaleMultiplier = this.canvas.element.height/canvasHeightRelative;
@@ -67,11 +73,6 @@ TetrisPlus.board = {
 		currentPiece = piece;
 	
 		if(this.checkCollisionForPiecePosition(currentPiece.spawnCoords)){
-			/*
-			for(var i = 0; i < currentPiece.spawnCoords.length; i++){
-				blocks[currentPiece.spawnCoords[i].x][currentPiece.spawnCoords[i].y].setColour(currentPiece.getColour());
-			}
-			*/
 			//spawn piece
 			this.updatePieceOnBoard();
 		}
@@ -288,13 +289,7 @@ TetrisPlus.board = {
 		this.canvas.ctx.font = `${size}px Arial`;
 		this.canvas.ctx.fillStyle = overlayTextColour;
 		this.canvas.ctx.fillText(message, 0, this.canvas.element.height/2);
-	},
-
-	canvas : {
-		element : null,
-		ctx : null
 	}
-
 }
 
 
@@ -327,16 +322,4 @@ class Block{
 		TetrisPlus.board.canvas.ctx.fillRect(this.xCoord, this.yCoord, blockSize, blockSize);
 	}
 
-}
-
-TetrisPlus.canvas = {
-	element : null,
-	ctx: null
-}
-
-class Canvas{
-	constructor(element){
-		this.element = element;
-		this.ctx = element.getContext("2d");
-	}
 }

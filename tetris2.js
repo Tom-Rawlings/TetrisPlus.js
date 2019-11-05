@@ -1,42 +1,50 @@
 "use strict";
 var TetrisPlus = {};
 
-/*more changes*/
-var backgroundColour = "#000000";
-var emptyBlockColour = "#4c5a61";
-var testColour = "#ff00ee";
-var overlayColour = "#000000";
-var overlayTextColour = "#FFFFFF";
-var boardWidth = 10;
-var boardHeight = 20;
-//--relative sizes--
-var blockSizeRelative = 10;
-var gapSizeRelative = 0.5;
-var canvasHeightRelative = blockSizeRelative*boardHeight + gapSizeRelative*(boardHeight+1); 
-var canvasWidthRelative = blockSizeRelative*boardWidth + gapSizeRelative*(boardWidth+1);
-var canvasRelativeVerticalMargin = 0.05;
 
-//--Actual sizes--
+
+/*
+  Non-Configurable
+*/
+var canvasHeightRelative; 
+var canvasWidthRelative;
+
 var blockSize;
 var gapSize;
-
-var canvasScaleMultiplier = 1.0;
-//var canvas;
-var blocks = [];
-var collisionMap = [];
 
 var pieceArray = ['I', 'O', 'J', 'L', 'S', 'Z', 'T'];
 var randomBag;
 var currentPiece;
 
-var tickRate = 700;
-var moveDownDelay = 100;
-var targetFrameRate = 60;
-var pausedFrameRate = 5;
+var canvasScaleMultiplier = 1.0;
+
+var blocks = [];
+var collisionMap = [];
+
 var gameTime = 0;
 var isPaused = false;
 var useTouch = false;
 var linesCleared = 0;
+
+/*
+  Configurable
+*/
+var backgroundColour = "#000000";
+var emptyBlockColour = "#4c5a61";
+var overlayColour = "#000000";
+var overlayTextColour = "#FFFFFF";
+
+var blockSizeRelative = 10;
+var gapSizeRelative = 0.5;
+var canvasRelativeVerticalMargin = 0.05;
+
+var boardWidth = 10;
+var boardHeight = 20;
+
+var tickRate = 700;
+var moveDownDelay = 100;
+var targetFrameRate = 60;
+var pausedFrameRate = 5;
 
 
 class Coord2d{
@@ -100,36 +108,6 @@ class RandomBag{
 //
 //---Contol Stuff---
 //
-
-//touch control
-function setupTouchButton(){
-  $("#touchButtonUp").click(
-    function(){
-      currentPiece.rotate();
-    }
-  );
-  $("#touchButtonDown").click(
-    function(){
-      if(movePieceDown()){
-        tickReset();
-      }
-    }
-  );
-  $('#touchButtonLeft').on('click',
-    function(){
-      if(checkCollisionLeft()){
-        currentPiece.moveLeft();
-      }
-    }
-  );
-  $("#touchButtonRight").click(
-    function(){
-      if(checkCollisionRight())
-      currentPiece.moveRight();
-    }
-  );
-}
-
 
 var Key = {
   pressed: {},
@@ -242,10 +220,35 @@ TetrisPlus.Helper.throttle = function(func, wait, options) {
   };
 };
 
+TetrisPlus.Helper.extend = function(a, b){
+  for(var key in b)
+      if(b.hasOwnProperty(key))
+          a[key] = b[key];
+  return a;
+};
+
 function cloneCoordArray(arrayToClone){
   var clonedArray = new Array();
   for(var i = 0; i < arrayToClone.length; i++){
     clonedArray.push(arrayToClone[i].clone());
   }
   return clonedArray;
+}
+
+
+
+
+//Testing
+
+function testFunction(){
+  var config = {
+    a : "hello ",
+    b : "default",
+    c : "!"
+  };
+  var specialConfig = {
+    b : "world"
+  }
+  TetrisPlus.Helper.extend(config, specialConfig);
+  console.log(config.a + config.b + config.c);
 }
