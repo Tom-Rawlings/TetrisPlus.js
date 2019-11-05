@@ -27,7 +27,8 @@ TetrisPlus.makeRandomBag = (function(){
     this.printContents = function(){
       var htmlToPrint = "piecesInBag.length = " + piecesInBag.length;
       for(var i = 0; i < piecesInBag.length; i++){
-        htmlToPrint += new Piece(piecesInBag[i]).printPiece();
+        //htmlToPrint += TetrisPlus.board.currentPiece().printPiece(piecesInBag[i]);
+        htmlToPrint += TetrisPlus.Pieces.printPiece(piecesInBag[i]);
       }
       return htmlToPrint;
     };

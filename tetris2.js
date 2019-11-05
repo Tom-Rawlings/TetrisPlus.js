@@ -1,5 +1,7 @@
 "use strict";
 var TetrisPlus = {};
+TetrisPlus.Game = {};
+TetrisPlus.board = {};
 
 /*
   Non-Configurable
@@ -11,7 +13,7 @@ var canvasScaleMultiplier = 1.0;
 var blockSize;
 var gapSize;
 
-var pieceArray = ['I', 'O', 'J', 'L', 'S', 'Z', 'T'];
+//var pieceArray = ['I', 'O', 'J', 'L', 'S', 'Z', 'T'];
 var randomBag;
 var currentPiece;
 
@@ -62,12 +64,12 @@ TetrisPlus.config = {
   moveDownDelay : 100,
   targetFrameRate : 60,
   pausedFrameRate : 5
-}
+};
 
 TetrisPlus.init = function(config){
   TetrisPlus.Helper.extend(this.config, config);
   TetrisPlus.start();
-}
+};
 
 
 class Coord2d{
@@ -80,47 +82,6 @@ class Coord2d{
         return new Coord2d(this.x, this.y);
     }
 }
-
-
-class RandomBag{
-	constructor(pieceArray){
-		this.piecesInBag = Array.from(pieceArray);
-		this.reshuffle();
-	}
-
-    reshuffle(){
-        this.piecesInBag = Array.from(pieceArray);
-        var randomPiece;
-        var j = 0;
-        for(var i = 0; i < pieceArray.length; i++){
-            j = Math.floor(Math.random() * 7);
-            randomPiece = this.piecesInBag[j];
-            this.piecesInBag[j] = this.piecesInBag[i];
-            this.piecesInBag[i] = randomPiece;
-        }
-    }
-
-	getNextLetter(){
-		var pieceToReturn = 'Z';
-		if(this.piecesInBag.length == 0){
-			this.reshuffle();
-		}
-        pieceToReturn = this.piecesInBag.pop();
-		return pieceToReturn;
-	}
-
-  printContents(){
-    var htmlToPrint = "piecesInBag.length = " + this.piecesInBag.length;
-    for(var i = 0; i < this.piecesInBag.length; i++){
-      htmlToPrint += new Piece(this.piecesInBag[i]).printPiece();
-
-    }
-    return htmlToPrint;
-  }
-
-
-}
-
 
 //-------------------------------------
 
@@ -171,10 +132,7 @@ var Key = {
     }
     delete this.pressed[event.keyCode];
   }
-}
-
-window.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false);
-window.addEventListener('keydown', function(event) { Key.onKeydown(event); }, false);
+};
 
 TetrisPlus.Helper = {};
 TetrisPlus.Helper.debounce = function(func, wait, immediate) {
@@ -245,44 +203,3 @@ TetrisPlus.Helper.extend = function(a, b){
           a[key] = b[key];
   return a;
 };
-
-function cloneCoordArray(arrayToClone){
-  var clonedArray = new Array();
-  for(var i = 0; i < arrayToClone.length; i++){
-    clonedArray.push(arrayToClone[i].clone());
-  }
-  return clonedArray;
-}
-
-
-
-
-//Testing
-
-function testFunction(){
-  var config = {
-    a : "hello ",
-    b : "default",
-    c : "!"
-  };
-  var specialConfig = {
-    b : "world"
-  }
-  TetrisPlus.Helper.extend(config, specialConfig);
-  console.log(config.a + config.b + config.c);
-}
-
-
-
-var testObject = {};
-
-(function (testObject){
-	testObject.test = function(){
-		alert("public");
-		test1();
-	}
-	function test1(){
-		alert("private");
-	}
-}(testObject));
-

@@ -117,8 +117,12 @@ TetrisPlus.start = function(){
 	//randomBag = new RandomBag(pieceArray);
 	this.board.createBoard();
 	window.addEventListener('resize', this.board.resize);
-	TetrisPlus.board.spawnPiece(new Piece(TetrisPlus.Game.randomBag.getNextLetter()));
+	//TetrisPlus.board.spawnPiece(new Piece(TetrisPlus.Game.randomBag.getNextLetter()));
+	TetrisPlus.board.spawnPiece(TetrisPlus.Game.randomBag.getNextLetter());
+	
 	TetrisPlus.debug.toggleDebugDisplay();
+	window.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false);
+	window.addEventListener('keydown', function(event) { Key.onKeydown(event); }, false);
 	this.Game.instance = setInterval(this.Game.update, (1000/TetrisPlus.config.targetFrameRate));
 }
 

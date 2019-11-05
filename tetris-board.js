@@ -3,25 +3,17 @@ var xCoord, yCoord;
 var overlayOn = false;
 
 
-TetrisPlus.board = {
+TetrisPlus.board = {...TetrisPlus.board, ...{
 
-	canvas : {
-		//element : undefined,
-		//ctx : undefined
-	},
-
-	//blocks : [],
-	//collisionMap : [],
+	canvas : {},
 
 	makeBlock : (function(_xCoord, _yCoord, _colour){
 		var block = {};
 		(function () {
-			console.log("_xCoord = " + _xCoord);
 			var xCoord = _xCoord;
 			var yCoord = _yCoord;
 			var colour = _colour;
-			console.log("xCoord = " + xCoord);
-	
+
 			this.setColour = function(_colour){
 				colour = _colour;
 			 },
@@ -39,8 +31,8 @@ TetrisPlus.board = {
 			}
 	 
 			this.draw = function(){
-				TetrisPlus.board.canvas.ctx.fillStyle = this.colour;
-				TetrisPlus.board.canvas.ctx.fillRect(this.xCoord, this.yCoord, blockSize, blockSize);
+				TetrisPlus.board.canvas.ctx.fillStyle = colour;
+				TetrisPlus.board.canvas.ctx.fillRect(xCoord, yCoord, blockSize, blockSize);
 			}
 				
 		}).apply( block );
@@ -98,7 +90,6 @@ TetrisPlus.board = {
 			this.blocks.push( [] );
 			for(var y = 0; y < TetrisPlus.config.boardHeight; y++){
 				this.collisionMap[x].push(false);
-				//this.blocks[x].push(new Block(x, y, TetrisPlus.config.emptyBlockColour));
 				this.blocks[x].push(TetrisPlus.board.makeBlock(x, y, TetrisPlus.config.emptyBlockColour));
 			}
 		}
@@ -108,10 +99,10 @@ TetrisPlus.board = {
 		this.canvas.element.style.display = "block";
 	},
 
-	spawnPiece(piece){
-		currentPiece = piece;
+	spawnPiece(pieceLetter){
+		TetrisPlus.board.currentPiece.setupPiece(pieceLetter);
 	
-		if(this.checkCollisionForPiecePosition(currentPiece.spawnCoords)){
+		if(this.checkCollisionForPiecePosition(TetrisPlus.board.currentPiece.getSpawnCoords())){
 			//spawn piece
 			this.updatePieceOnBoard();
 		}
@@ -122,13 +113,13 @@ TetrisPlus.board = {
 	},
 
 	setPieceInPlace(){
-		for(var i = 0; i < currentPiece.currentCoords.length; i++){
-			this.collisionMap[currentPiece.currentCoords[i].x][currentPiece.currentCoords[i].y] = true;
+		for(var i = 0; i < TetrisPlus.board.currentPiece.getCurrentCoords().length; i++){
+			this.collisionMap[TetrisPlus.board.currentPiece.getCurrentCoords()[i].x][TetrisPlus.board.currentPiece.getCurrentCoords()[i].y] = true;
 		}
 		//Check for completed lines then move everything down
 			this.checkCompletedLines();
 		//
-		this.spawnPiece(new Piece(TetrisPlus.Game.randomBag.getNextLetter()));
+		this.spawnPiece(TetrisPlus.Game.randomBag.getNextLetter());
 	},
 
 	/*
@@ -137,7 +128,7 @@ TetrisPlus.board = {
 	movePieceDown(){
 		if(this.checkCollisionDown()){
 			this.clearPieceFromBoard();
-			currentPiece.moveDown();
+			TetrisPlus.board.currentPiece.moveDown();
 			this.updatePieceOnBoard();
 			TetrisPlus.Game.resetTickTimer();
 			return true;
@@ -155,7 +146,7 @@ TetrisPlus.board = {
 	movePieceLeft(){
 		if(this.checkCollisionLeft()){
 			this.clearPieceFromBoard();
-			currentPiece.moveLeft();
+			TetrisPlus.board.currentPiece.moveLeft();
 			this.updatePieceOnBoard();
 		}
 	},
@@ -163,13 +154,13 @@ TetrisPlus.board = {
 	movePieceRight(){
 		if(this.checkCollisionRight()){
 			this.clearPieceFromBoard();
-			currentPiece.moveRight();
+			TetrisPlus.board.currentPiece.moveRight();
 			this.updatePieceOnBoard();
 		}
 	},
 
 	rotatePiece(){
-		currentPiece.rotate();
+		TetrisPlus.board.currentPiece.rotate();
 	},
 
 	clearBoard(){
@@ -182,20 +173,20 @@ TetrisPlus.board = {
 	},
 	
 	clearPieceFromBoard(){
-		for(var i = 0; i < currentPiece.currentCoords.length; i++){
-			this.blocks[currentPiece.currentCoords[i].x][currentPiece.currentCoords[i].y].setColour(TetrisPlus.config.emptyBlockColour);
+		for(var i = 0; i < TetrisPlus.board.currentPiece.getCurrentCoords().length; i++){
+			this.blocks[TetrisPlus.board.currentPiece.getCurrentCoords()[i].x][TetrisPlus.board.currentPiece.getCurrentCoords()[i].y].setColour(TetrisPlus.config.emptyBlockColour);
 		}
 	},
 	
 	updatePieceOnBoard(){
-			for(var i = 0; i < currentPiece.currentCoords.length; i++){
-				this.blocks[currentPiece.currentCoords[i].x][currentPiece.currentCoords[i].y].setColour(currentPiece.getColour());
+			for(var i = 0; i < TetrisPlus.board.currentPiece.getCurrentCoords().length; i++){
+				this.blocks[TetrisPlus.board.currentPiece.getCurrentCoords()[i].x][TetrisPlus.board.currentPiece.getCurrentCoords()[i].y].setColour(TetrisPlus.board.currentPiece.getColour());
 			}
 	},
 	
 	drawPiece(){
-		for(var i = 0; i < currentPiece.currentCoords.length; i++){
-			this.blocks[currentPiece.currentCoords[i].x][currentPiece.currentCoords[i].y].draw();
+		for(var i = 0; i < TetrisPlus.board.currentPiece.getCurrentCoords().length; i++){
+			this.blocks[TetrisPlus.board.currentPiece.getCurrentCoords()[i].x][TetrisPlus.board.currentPiece.getCurrentCoords()[i].y].draw();
 		}
 	},
 
@@ -204,30 +195,30 @@ TetrisPlus.board = {
 	// Collision checking
 	//
 	checkCollisionDown(){
-		for(var i = 0; i < currentPiece.currentCoords.length; i++){
-			if(currentPiece.currentCoords[i].y == 0)
+		for(var i = 0; i < TetrisPlus.board.currentPiece.getCurrentCoords().length; i++){
+			if(TetrisPlus.board.currentPiece.getCurrentCoords()[i].y == 0)
 				return false;
-			else if(this.collisionMap[currentPiece.currentCoords[i].x][currentPiece.currentCoords[i].y - 1])
+			else if(this.collisionMap[TetrisPlus.board.currentPiece.getCurrentCoords()[i].x][TetrisPlus.board.currentPiece.getCurrentCoords()[i].y - 1])
 				return false;
 		}
 		return true;
 	},
 
 	checkCollisionLeft(){
-		for(var i = 0; i < currentPiece.currentCoords.length; i++){
-			if(currentPiece.currentCoords[i].x == 0)
+		for(var i = 0; i < TetrisPlus.board.currentPiece.getCurrentCoords().length; i++){
+			if(TetrisPlus.board.currentPiece.getCurrentCoords()[i].x == 0)
 				return false;
-			else if(this.collisionMap[currentPiece.currentCoords[i].x - 1][currentPiece.currentCoords[i].y])
+			else if(this.collisionMap[TetrisPlus.board.currentPiece.getCurrentCoords()[i].x - 1][TetrisPlus.board.currentPiece.getCurrentCoords()[i].y])
 				return false;
 		}
 		return true;
 	},
 
 	checkCollisionRight(){
-		for(var i = 0; i < currentPiece.currentCoords.length; i++){
-			if(currentPiece.currentCoords[i].x == TetrisPlus.config.boardWidth-1)
+		for(var i = 0; i < TetrisPlus.board.currentPiece.getCurrentCoords().length; i++){
+			if(TetrisPlus.board.currentPiece.getCurrentCoords()[i].x == TetrisPlus.config.boardWidth-1)
 				return false;
-			else if(this.collisionMap[currentPiece.currentCoords[i].x + 1][currentPiece.currentCoords[i].y])
+			else if(this.collisionMap[TetrisPlus.board.currentPiece.getCurrentCoords()[i].x + 1][TetrisPlus.board.currentPiece.getCurrentCoords()[i].y])
 				return false;
 		}
 		return true;
@@ -331,4 +322,4 @@ TetrisPlus.board = {
 	}
 
 
-}
+}};
