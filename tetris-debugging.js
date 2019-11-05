@@ -1,3 +1,4 @@
+"use strict";
 TetrisPlus.debug = {
 
 	outputElement : document.getElementById("testing"),
@@ -5,7 +6,7 @@ TetrisPlus.debug = {
 	dynamicDebugInfo : "",
 	staticDebugInfo: "",
 
-	toggleDebugDisplay : function(){
+	toggleDebugDisplay(){
 		if(this.isDebugOn == false){
 			//document.get$("#testing").css("display", "initial");
 			this.outputElement.style.display = "initial";
@@ -25,9 +26,9 @@ TetrisPlus.debug = {
 	
 		//TESTING STUFF
 		this.log("Frame Rate", TetrisPlus.Game.frameRate);
-		this.log("document height", $(document).height());
-		this.log("canvas height", canvas.height);
-		this.log("canvas width", canvas.width);
+		this.log("Window innerHeight", window.innerHeight);
+		this.log("canvas height", TetrisPlus.board.canvas.element.height);
+		this.log("canvas width", TetrisPlus.board.canvas.element.width);
 		this.log("canvasScaleMultiplier", canvasScaleMultiplier);
 		if(currentPiece != null)
 		this.log("currentPiece", currentPiece.toString());
@@ -35,7 +36,7 @@ TetrisPlus.debug = {
 		this.addHtml("#testing", this.staticDebugInfo);
 		this.addHtml("#testing", this.dynamicDebugInfo);
 		this.addHtml("#testing", randomBag.printContents());
-		dynamicDebugInfo = "";
+		this.dynamicDebugInfo = "";
 	},
 
 	log(name, object){

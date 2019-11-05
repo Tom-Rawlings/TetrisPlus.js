@@ -1,5 +1,4 @@
 "use strict";
-
 TetrisPlus.Game = {
 	//update : function(){
 
@@ -41,7 +40,7 @@ TetrisPlus.Game = {
 		if(!isPaused){
 			TetrisPlus.Game.decreaseTickTimer(previousTime);
 		}
-		this.frameCounter++;
+		TetrisPlus.Game.frameCounter++;
 		//console.log("Frame rate = " + game.frameRate);
 		TetrisPlus.debug.updateDebugDisplay();
 	},
@@ -74,7 +73,7 @@ TetrisPlus.Game = {
 
 	frameCounter : 0,
 	frameRate : 0,
-	frameRateUpdate : setInterval(function(){this.frameRate = this.frameCounter*2; this.frameCounter = 0;}, 500),
+	frameRateUpdate : setInterval(function(){TetrisPlus.Game.frameRate = TetrisPlus.Game.frameCounter*2; TetrisPlus.Game.frameCounter = 0;}, 500),
 
 	stop(){
 		clearInterval(this.instance);
@@ -108,9 +107,11 @@ TetrisPlus.Game = {
 
 //Main Code:
 TetrisPlus.start = function(canvasId){
-	canvas = new Canvas(document.getElementById(canvasId));
+	//canvas = new Canvas(document.getElementById(canvasId));
+	this.board.canvas.element = document.getElementById(canvasId);
+	this.board.canvas.ctx = this.board.canvas.element.getContext("2d");
 	randomBag = new RandomBag(pieceArray);
-	TetrisPlus.board.createBoard();
+	this.board.createBoard();
 	window.addEventListener('resize', this.board.resize);
 	if(useTouch){
 		setupTouchButton();

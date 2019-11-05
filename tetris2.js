@@ -21,7 +21,7 @@ var blockSize;
 var gapSize;
 
 var canvasScaleMultiplier = 1.0;
-var canvas;
+//var canvas;
 var blocks = [];
 var collisionMap = [];
 

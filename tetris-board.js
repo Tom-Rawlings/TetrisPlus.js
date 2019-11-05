@@ -5,38 +5,38 @@ var overlayOn = false;
 
 TetrisPlus.board = {
 	calculateCanvasDimensions(){
-		canvas.element.height = window.innerHeight-(canvasRelativeVerticalMargin*window.innerHeight * 2);
-		canvasScaleMultiplier = canvas.element.height/canvasHeightRelative;
-	
+		this.canvas.element.height = window.innerHeight-(canvasRelativeVerticalMargin*window.innerHeight * 2);
+		canvasScaleMultiplier = this.canvas.element.height/canvasHeightRelative;
+		console.log("calculateCanvasDimensions");
 		blockSize = Math.floor(blockSizeRelative * canvasScaleMultiplier);
 		gapSize = Math.floor(gapSizeRelative * canvasScaleMultiplier);
 		if(gapSize < 1) gapSize = 1;
 		if(blockSize < 1) blockSize = 1;
 	
-		canvas.element.height = blockSize*boardHeight + gapSize*(boardHeight+1); 
-		canvas.element.width = blockSize*boardWidth + gapSize*(boardWidth+1);
-		canvas.element.style.marginTop = (window.innerHeight - canvas.element.height)/2 + "px";
+		this.canvas.element.height = blockSize*boardHeight + gapSize*(boardHeight+1); 
+		this.canvas.element.width = blockSize*boardWidth + gapSize*(boardWidth+1);
+		this.canvas.element.style.marginTop = (window.innerHeight - this.canvas.element.height)/2 + "px";
 	},
 
 	createBoard(){
 
-		this.createArrays();
+		this.calculateCanvasDimensions();
+		this.setupBoardArrays();
 		this.drawBoard();
 		this.showBoard();
 	
 	},
 
 	drawBoard(){
-		this.calculateCanvasDimensions();
-		canvas.ctx.fillStyle = backgroundColour;
-		canvas.ctx.fillRect(0, 0, canvas.element.width, canvas.element.height);
+		this.canvas.ctx.fillStyle = backgroundColour;
+		this.canvas.ctx.fillRect(0, 0, this.canvas.element.width, this.canvas.element.height);
 		//Make the blocks, activeSquare, and collision maps 
 		for(var x = 0; x < boardWidth; x++){
 			for(var y = 0; y < boardHeight; y++){
 				xCoord = (blockSize+gapSize)*x + gapSize;
 				yCoord = ((blockSize+gapSize)*(boardHeight-1))-(y*(blockSize+gapSize)) + gapSize;
-				canvas.ctx.fillStyle = blocks[x][y].getColour();
-				canvas.ctx.fillRect(xCoord, yCoord, blockSize, blockSize);
+				this.canvas.ctx.fillStyle = blocks[x][y].getColour();
+				this.canvas.ctx.fillRect(xCoord, yCoord, blockSize, blockSize);
 				blocks[x][y].setXcoord(xCoord);
 				blocks[x][y].setYcoord(yCoord);
 			}
@@ -46,7 +46,7 @@ TetrisPlus.board = {
 		}
 	},
 
-	createArrays(){
+	setupBoardArrays(){
 		blocks = [];
 		collisionMap = [];
 		for(var x = 0; x < boardWidth; x++){
@@ -60,7 +60,7 @@ TetrisPlus.board = {
 	},
 
 	showBoard(){
-		canvas.element.style.display = "block";
+		this.canvas.element.style.display = "block";
 	},
 
 	spawnPiece(piece){
@@ -246,6 +246,7 @@ TetrisPlus.board = {
 	},
 
 	resize : TetrisPlus.Helper.throttle(function() {
+		TetrisPlus.board.calculateCanvasDimensions();
 		TetrisPlus.Game.drawGraphics();
 	}, 500),
 
@@ -253,11 +254,11 @@ TetrisPlus.board = {
 	drawScore(){
 		var size = 8;
 		size = size*canvasScaleMultiplier;
-		canvas.ctx.font = `${size}px Arial`;
-		canvas.ctx.fillStyle = overlayTextColour;
-		canvas.ctx.globalAlpha = 0.7;
-		canvas.ctx.fillText("Lines Cleared: " + linesCleared, 2*canvasScaleMultiplier, size);
-		canvas.ctx.globalAlpha = 1.0;
+		this.canvas.ctx.font = `${size}px Arial`;
+		this.canvas.ctx.fillStyle = overlayTextColour;
+		this.canvas.ctx.globalAlpha = 0.7;
+		this.canvas.ctx.fillText("Lines Cleared: " + linesCleared, 2*canvasScaleMultiplier, size);
+		this.canvas.ctx.globalAlpha = 1.0;
 	},
 	
 	toggleOverlayBackground(){
@@ -276,17 +277,22 @@ TetrisPlus.board = {
 	},
 	
 	drawOverlay(){
-		canvas.ctx.fillStyle = overlayColour;
-		canvas.ctx.globalAlpha = 0.5;
-		canvas.ctx.fillRect(0, 0, canvas.element.width, canvas.element.height);
-		canvas.ctx.globalAlpha = 1.0;
+		this.canvas.ctx.fillStyle = overlayColour;
+		this.canvas.ctx.globalAlpha = 0.5;
+		this.canvas.ctx.fillRect(0, 0, canvas.element.width, canvas.element.height);
+		this.canvas.ctx.globalAlpha = 1.0;
 	},
 	
 	overlayTextCentre(message, size){
 		size = size*canvasScaleMultiplier;
-		canvas.ctx.font = `${size}px Arial`;
-		canvas.ctx.fillStyle = overlayTextColour;
-		canvas.ctx.fillText(message, 0, canvas.element.height/2);
+		this.canvas.ctx.font = `${size}px Arial`;
+		this.canvas.ctx.fillStyle = overlayTextColour;
+		this.canvas.ctx.fillText(message, 0, this.canvas.element.height/2);
+	},
+
+	canvas : {
+		element : null,
+		ctx : null
 	}
 
 }
@@ -317,10 +323,15 @@ class Block{
 	}
 
 	draw(){
-		canvas.ctx.fillStyle = this.colour;
-		canvas.ctx.fillRect(this.xCoord, this.yCoord, blockSize, blockSize);
+		TetrisPlus.board.canvas.ctx.fillStyle = this.colour;
+		TetrisPlus.board.canvas.ctx.fillRect(this.xCoord, this.yCoord, blockSize, blockSize);
 	}
 
+}
+
+TetrisPlus.canvas = {
+	element : null,
+	ctx: null
 }
 
 class Canvas{
