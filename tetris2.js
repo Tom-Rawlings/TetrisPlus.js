@@ -1,50 +1,5 @@
 "use strict";
 var TetrisPlus = {};
-TetrisPlus.Game = {};
-TetrisPlus.board = {};
-
-/*
-  Non-Configurable
-*/
-var canvasHeightRelative; 
-var canvasWidthRelative;
-var canvasScaleMultiplier = 1.0;
-
-var blockSize;
-var gapSize;
-
-//var pieceArray = ['I', 'O', 'J', 'L', 'S', 'Z', 'T'];
-var randomBag;
-var currentPiece;
-
-
-
-//var blocks = [];
-//var collisionMap = [];
-
-
-
-/*
-  Configurable
-
-  var backgroundColour = "#000000";
-  var emptyBlockColour = "#4c5a61";
-  var overlayColour = "#000000";
-  var overlayTextColour = "#FFFFFF";
-  
-  var blockSizeRelative = 10;
-  var gapSizeRelative = 0.5;
-  var canvasRelativeVerticalMargin = 0.05;
-  
-  var boardWidth = 10;
-  var boardHeight = 20;
-  
-  var tickRate = 700;
-  var moveDownDelay = 100;
-  var targetFrameRate = 60;
-  var pausedFrameRate = 5;
-*/
-
 
 TetrisPlus.config = {
   cavnasId : "canvas",
@@ -64,11 +19,6 @@ TetrisPlus.config = {
   moveDownDelay : 100,
   targetFrameRate : 60,
   pausedFrameRate : 5
-};
-
-TetrisPlus.init = function(config){
-  TetrisPlus.Helper.extend(this.config, config);
-  TetrisPlus.Game.start();
 };
 
 

@@ -29,9 +29,8 @@ TetrisPlus.debug = {
 		this.log("Window innerHeight", window.innerHeight);
 		this.log("canvas height", TetrisPlus.board.canvas.element.height);
 		this.log("canvas width", TetrisPlus.board.canvas.element.width);
-		this.log("canvasScaleMultiplier", canvasScaleMultiplier);
-		if(currentPiece != null)
-		this.log("currentPiece", currentPiece.toString());
+		this.log("canvasScaleMultiplier", TetrisPlus.board.canvasScaleMultiplier);
+		this.log("currentPiece", TetrisPlus.board.currentPiece.toString());
 		
 		this.addHtml("#testing", this.staticDebugInfo);
 		this.addHtml("#testing", this.dynamicDebugInfo);

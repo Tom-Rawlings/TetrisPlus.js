@@ -6,6 +6,12 @@ var overlayOn = false;
 TetrisPlus.board = {
 
 	canvas : {},
+	canvasHeightRelative : 0, 
+	canvasWidthRelative : 0,
+	canvasScaleMultiplier : 1.0,
+
+	blockSize : 0,
+	gapSize : 0,
 
 	makeBlock : (function(_xCoord, _yCoord, _colour){
 		var block = {};
@@ -32,7 +38,7 @@ TetrisPlus.board = {
 	 
 			this.draw = function(){
 				TetrisPlus.board.canvas.ctx.fillStyle = colour;
-				TetrisPlus.board.canvas.ctx.fillRect(xCoord, yCoord, blockSize, blockSize);
+				TetrisPlus.board.canvas.ctx.fillRect(xCoord, yCoord, this.blockSize, this.blockSize);
 			}
 				
 		}).apply( block );
@@ -43,14 +49,14 @@ TetrisPlus.board = {
 
 	calculateCanvasDimensions(){
 		this.canvas.element.height = window.innerHeight-(TetrisPlus.config.canvasRelativeVerticalMargin*window.innerHeight * 2);
-		canvasScaleMultiplier = this.canvas.element.height/canvasHeightRelative;
-		blockSize = Math.floor(TetrisPlus.config.blockSizeRelative * canvasScaleMultiplier);
-		gapSize = Math.floor(TetrisPlus.config.gapSizeRelative * canvasScaleMultiplier);
-		if(gapSize < 1) gapSize = 1;
-		if(blockSize < 1) blockSize = 1;
+		this.canvasScaleMultiplier = this.canvas.element.height/this.canvasHeightRelative;
+		this.blockSize = Math.floor(TetrisPlus.config.blockSizeRelative * this.canvasScaleMultiplier);
+		this.gapSize = Math.floor(TetrisPlus.config.gapSizeRelative * this.canvasScaleMultiplier);
+		if(this.gapSize < 1) this.gapSize = 1;
+		if(this.blockSize < 1) this.blockSize = 1;
 	
-		this.canvas.element.height = blockSize*TetrisPlus.config.boardHeight + gapSize*(TetrisPlus.config.boardHeight+1); 
-		this.canvas.element.width = blockSize*TetrisPlus.config.boardWidth + gapSize*(TetrisPlus.config.boardWidth+1);
+		this.canvas.element.height = this.blockSize*TetrisPlus.config.boardHeight + this.gapSize*(TetrisPlus.config.boardHeight+1); 
+		this.canvas.element.width = this.blockSize*TetrisPlus.config.boardWidth + this.gapSize*(TetrisPlus.config.boardWidth+1);
 		this.canvas.element.style.marginTop = (window.innerHeight - this.canvas.element.height)/2 + "px";
 	},
 
@@ -69,10 +75,10 @@ TetrisPlus.board = {
 		//Make the blocks, activeSquare, and collision maps 
 		for(var x = 0; x < TetrisPlus.config.boardWidth; x++){
 			for(var y = 0; y < TetrisPlus.config.boardHeight; y++){
-				xCoord = (blockSize+gapSize)*x + gapSize;
-				yCoord = ((blockSize+gapSize)*(TetrisPlus.config.boardHeight-1))-(y*(blockSize+gapSize)) + gapSize;
+				xCoord = (this.blockSize+this.gapSize)*x + this.gapSize;
+				yCoord = ((this.blockSize+this.gapSize)*(TetrisPlus.config.boardHeight-1))-(y*(this.blockSize+this.gapSize)) + this.gapSize;
 				this.canvas.ctx.fillStyle = this.blocks[x][y].getColour();
-				this.canvas.ctx.fillRect(xCoord, yCoord, blockSize, blockSize);
+				this.canvas.ctx.fillRect(xCoord, yCoord, this.blockSize, this.blockSize);
 				this.blocks[x][y].setXcoord(xCoord);
 				this.blocks[x][y].setYcoord(yCoord);
 			}
@@ -284,11 +290,11 @@ TetrisPlus.board = {
 
 	drawScore(){
 		var size = 8;
-		size = size*canvasScaleMultiplier;
+		size = size*this.canvasScaleMultiplier;
 		this.canvas.ctx.font = `${size}px Arial`;
 		this.canvas.ctx.fillStyle = TetrisPlus.config.overlayTextColour;
 		this.canvas.ctx.globalAlpha = 0.7;
-		this.canvas.ctx.fillText("Lines Cleared: " + TetrisPlus.Game.linesCleared, 2*canvasScaleMultiplier, size);
+		this.canvas.ctx.fillText("Lines Cleared: " + TetrisPlus.Game.linesCleared, 2*this.canvasScaleMultiplier, size);
 		this.canvas.ctx.globalAlpha = 1.0;
 	},
 	

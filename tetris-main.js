@@ -9,8 +9,8 @@ TetrisPlus.Game = {
 		randomBag : undefined,
 
 		start(){
-			canvasHeightRelative = TetrisPlus.config.blockSizeRelative*TetrisPlus.config.boardHeight + TetrisPlus.config.gapSizeRelative*(TetrisPlus.config.boardHeight+1); 
-			canvasWidthRelative = TetrisPlus.config.blockSizeRelative*TetrisPlus.config.boardWidth + TetrisPlus.config.gapSizeRelative*(TetrisPlus.config.boardWidth+1);
+			TetrisPlus.board.canvasHeightRelative = TetrisPlus.config.blockSizeRelative*TetrisPlus.config.boardHeight + TetrisPlus.config.gapSizeRelative*(TetrisPlus.config.boardHeight+1); 
+			TetrisPlus.board.canvasWidthRelative = TetrisPlus.config.blockSizeRelative*TetrisPlus.config.boardWidth + TetrisPlus.config.gapSizeRelative*(TetrisPlus.config.boardWidth+1);
 			TetrisPlus.board.canvas.element = document.getElementById(TetrisPlus.config.cavnasId);
 			TetrisPlus.board.canvas.ctx = TetrisPlus.board.canvas.element.getContext("2d");
 			TetrisPlus.board.createBoard();
@@ -75,8 +75,6 @@ TetrisPlus.Game = {
 	FrameCounter : (function(){
 		var frameCounter = 0;
 		var frameRate = 0;
-		//var previousFrameTime = 0;
-		var instance;
 		var timeSinceLastUpdate = 0;
 		var updatePeriod = 500;
 		return {
@@ -90,15 +88,12 @@ TetrisPlus.Game = {
 				if(timeSinceLastUpdate > updatePeriod){
 					this.updateFrameRate(1000/updatePeriod);
 					timeSinceLastUpdate = 0;
-					console.log("timeSinceLastUpdate > 500");
 				}
-				console.log("frameCounter = " + frameCounter);
 			},
 
 			updateFrameRate : function(multiplier){
 				frameRate = frameCounter * multiplier;
 				frameCounter = 0;
-				console.log("frameRate = " + frameRate);
 			},
 
 		}
@@ -148,6 +143,11 @@ TetrisPlus.Game = {
 		}
 	}
 
+};
+
+TetrisPlus.init = function(config){
+  TetrisPlus.Helper.extend(this.config, config);
+  TetrisPlus.Game.start();
 };
 
 $(document).ready(TetrisPlus.init({}));
