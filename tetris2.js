@@ -88,8 +88,8 @@ class Coord2d{
 //
 //---Contol Stuff---
 //
-
-var Key = {
+TetrisPlus.Input = {};
+TetrisPlus.Input.Key = {
   pressed: {},
 
   LEFT: 37,

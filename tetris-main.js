@@ -14,29 +14,29 @@ TetrisPlus.Game = {
 
 		//Process input
 		if(!this.isPaused){
-			if (Key.getKeyDown(Key.UP)){
+			if (TetrisPlus.Input.Key.getKeyDown(TetrisPlus.Input.Key.UP)){
 				TetrisPlus.board.rotatePiece();
 			}
-			if (Key.getKeyDown(Key.LEFT)){
+			if (TetrisPlus.Input.Key.getKeyDown(TetrisPlus.Input.Key.LEFT)){
 				TetrisPlus.board.movePieceLeft();
 			}
 
-			if(Key.getKey(Key.DOWN)){
+			if(TetrisPlus.Input.Key.getKey(TetrisPlus.Input.Key.DOWN)){
 				TetrisPlus.board.userMoveDown();
 			}
 
-			if (Key.getKeyDown(Key.RIGHT)){
+			if (TetrisPlus.Input.Key.getKeyDown(TetrisPlus.Input.Key.RIGHT)){
 				TetrisPlus.board.movePieceRight();
 			}
 		}
 
-		if (Key.getKeyDown(Key.P)){
+		if (TetrisPlus.Input.Key.getKeyDown(TetrisPlus.Input.Key.P)){
 			TetrisPlus.Game.togglePause();
 		}
-		if (Key.getKeyDown(Key.ESCAPE)){
+		if (TetrisPlus.Input.Key.getKeyDown(TetrisPlus.Input.Key.ESCAPE)){
 			TetrisPlus.Game.stop();
 		}
-		Key.clear();
+		TetrisPlus.Input.Key.clear();
 
 		//Update graphics
 		TetrisPlus.Game.drawGraphics();
@@ -121,8 +121,8 @@ TetrisPlus.start = function(){
 	TetrisPlus.board.spawnPiece(TetrisPlus.Game.randomBag.getNextLetter());
 	
 	TetrisPlus.debug.toggleDebugDisplay();
-	window.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false);
-	window.addEventListener('keydown', function(event) { Key.onKeydown(event); }, false);
+	window.addEventListener('keyup', function(event) { TetrisPlus.Input.Key.onKeyup(event); }, false);
+	window.addEventListener('keydown', function(event) { TetrisPlus.Input.Key.onKeydown(event); }, false);
 	this.Game.instance = setInterval(this.Game.update, (1000/TetrisPlus.config.targetFrameRate));
 }
 
