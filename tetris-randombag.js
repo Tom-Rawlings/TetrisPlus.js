@@ -13,7 +13,7 @@ TetrisPlus.makeRandomBag = (function(){
       return pieceToReturn;
     };
     
-    this.reshuffle = function(  ) {
+    this.reshuffle = function() {
       piecesInBag = Array.from(pieces);
       var randomPiece;
       var j = 0;
@@ -23,6 +23,7 @@ TetrisPlus.makeRandomBag = (function(){
           piecesInBag[j] = piecesInBag[i];
           piecesInBag[i] = randomPiece;
       }
+      console.log(piecesInBag);
     };
     this.printContents = function(){
       var htmlToPrint = "piecesInBag.length = " + piecesInBag.length;

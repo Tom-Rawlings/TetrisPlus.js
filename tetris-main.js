@@ -15,7 +15,16 @@ TetrisPlus.Game = {
 			window.addEventListener('keydown', function(event) { TetrisPlus.Input.Key.onKeydown(event); }, false);
 			window.addEventListener('resize', TetrisPlus.board.resize);
 			TetrisPlus.board.showBoard();
+
+			//this.startScreen();
 			this.instance = setInterval(this.update, (1000/TetrisPlus.config.targetFrameRate));
+		},
+
+		startScreen(){
+			TetrisPlus.board.drawBoard();
+			TetrisPlus.board.drawOverlay();
+			TetrisPlus.board.overlayText("Press Space", 15, 10, 90);
+			TetrisPlus.board.overlayText("To Start", 15, 25, 110);
 		},
 
 		update(){
@@ -141,6 +150,12 @@ TetrisPlus.Game = {
 
 TetrisPlus.init = function(config){
 	TetrisPlus.Helper.extend(this.config, config);
+	if(TetrisPlus.config.useDarkTheme){
+		TetrisPlus.Helper.extend(this.config, TetrisPlus.darkTheme);
+	}
+	if(!TetrisPlus.config.useBackgroundGrid){
+		TetrisPlus.config.backgroundColour = TetrisPlus.config.emptyBlockColour;
+	}
 	TetrisPlus.board.canvasHeightRelative = TetrisPlus.config.blockSizeRelative*TetrisPlus.config.boardHeight + TetrisPlus.config.gapSizeRelative*(TetrisPlus.config.boardHeight+1); 
 	TetrisPlus.board.canvasWidthRelative = TetrisPlus.config.blockSizeRelative*TetrisPlus.config.boardWidth + TetrisPlus.config.gapSizeRelative*(TetrisPlus.config.boardWidth+1);
 	TetrisPlus.board.canvas.element = document.getElementById(TetrisPlus.config.cavnasId);
@@ -150,4 +165,4 @@ TetrisPlus.init = function(config){
   TetrisPlus.Game.start();
 };
 
-$(document).ready(TetrisPlus.init({}));
+$(document).ready(TetrisPlus.init({useDarkTheme: true}));

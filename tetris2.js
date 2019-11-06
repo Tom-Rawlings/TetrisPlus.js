@@ -3,10 +3,10 @@ var TetrisPlus = {};
 
 TetrisPlus.config = {
   cavnasId : "canvas",
-  backgroundColour : "#000000",
-  emptyBlockColour : "#4c5a61",
+  backgroundColour : "#DDDDDD",
+  emptyBlockColour : "#FFFFFF",
   overlayColour : "#000000",
-  overlayTextColour : "#FFFFFF",
+  overlayTextColour : "#000000",
   
   blockSizeRelative : 10,
   gapSizeRelative : 0.5,
@@ -18,9 +18,18 @@ TetrisPlus.config = {
   tickRate : 700,
   moveDownDelay : 100,
   targetFrameRate : 60,
-  pausedFrameRate : 5
+  pausedFrameRate : 5,
+
+  useDarkTheme : false,
+  useBackgroundGrid : false
 };
 
+TetrisPlus.darkTheme = {
+  backgroundColour : "#000000",
+  emptyBlockColour : "#4c5a61",
+  overlayColour : "#000000",
+  overlayTextColour : "#FFFFFF",
+};
 
 TetrisPlus.Coord2d = class{
 	constructor(x, y){

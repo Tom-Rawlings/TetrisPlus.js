@@ -321,10 +321,17 @@ TetrisPlus.board = {
 	},
 	
 	overlayTextCentre(message, size){
-		size = size*canvasScaleMultiplier;
+		size = size*TetrisPlus.board.canvasScaleMultiplier;
 		this.canvas.ctx.font = `${size}px Arial`;
 		this.canvas.ctx.fillStyle = TetrisPlus.config.overlayTextColour;
 		this.canvas.ctx.fillText(message, 0, this.canvas.element.height/2);
+	},
+
+	overlayText(message, size, x, y){
+		size = size*TetrisPlus.board.canvasScaleMultiplier;
+		this.canvas.ctx.font = `${size}px Arial`;
+		this.canvas.ctx.fillStyle = TetrisPlus.config.overlayTextColour;
+		this.canvas.ctx.fillText(message, x*TetrisPlus.board.canvasScaleMultiplier, y*TetrisPlus.board.canvasScaleMultiplier);
 	}
 
 
