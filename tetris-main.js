@@ -9,18 +9,12 @@ TetrisPlus.Game = {
 		randomBag : undefined,
 
 		start(){
-			TetrisPlus.board.canvasHeightRelative = TetrisPlus.config.blockSizeRelative*TetrisPlus.config.boardHeight + TetrisPlus.config.gapSizeRelative*(TetrisPlus.config.boardHeight+1); 
-			TetrisPlus.board.canvasWidthRelative = TetrisPlus.config.blockSizeRelative*TetrisPlus.config.boardWidth + TetrisPlus.config.gapSizeRelative*(TetrisPlus.config.boardWidth+1);
-			TetrisPlus.board.canvas.element = document.getElementById(TetrisPlus.config.cavnasId);
-			TetrisPlus.board.canvas.ctx = TetrisPlus.board.canvas.element.getContext("2d");
-			TetrisPlus.board.createBoard();
-			window.addEventListener('resize', TetrisPlus.board.resize);
-			this.randomBag = TetrisPlus.makeRandomBag();
 			TetrisPlus.board.spawnPiece(this.randomBag.getNextLetter());
-			
 			TetrisPlus.debug.toggleDebugDisplay();
 			window.addEventListener('keyup', function(event) { TetrisPlus.Input.Key.onKeyup(event); }, false);
 			window.addEventListener('keydown', function(event) { TetrisPlus.Input.Key.onKeydown(event); }, false);
+			window.addEventListener('resize', TetrisPlus.board.resize);
+			TetrisPlus.board.showBoard();
 			this.instance = setInterval(this.update, (1000/TetrisPlus.config.targetFrameRate));
 		},
 
@@ -146,7 +140,13 @@ TetrisPlus.Game = {
 };
 
 TetrisPlus.init = function(config){
-  TetrisPlus.Helper.extend(this.config, config);
+	TetrisPlus.Helper.extend(this.config, config);
+	TetrisPlus.board.canvasHeightRelative = TetrisPlus.config.blockSizeRelative*TetrisPlus.config.boardHeight + TetrisPlus.config.gapSizeRelative*(TetrisPlus.config.boardHeight+1); 
+	TetrisPlus.board.canvasWidthRelative = TetrisPlus.config.blockSizeRelative*TetrisPlus.config.boardWidth + TetrisPlus.config.gapSizeRelative*(TetrisPlus.config.boardWidth+1);
+	TetrisPlus.board.canvas.element = document.getElementById(TetrisPlus.config.cavnasId);
+	TetrisPlus.board.canvas.ctx = TetrisPlus.board.canvas.element.getContext("2d");
+	TetrisPlus.board.createBoard();
+	TetrisPlus.Game.randomBag = TetrisPlus.makeRandomBag();
   TetrisPlus.Game.start();
 };
 

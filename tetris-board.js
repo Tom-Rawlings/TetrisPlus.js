@@ -64,8 +64,8 @@ TetrisPlus.board = {
 
 		this.calculateCanvasDimensions();
 		this.setupBoardArrays();
-		this.drawBoard();
-		this.showBoard();
+		//this.drawBoard();
+		//this.showBoard();
 	
 	},
 
