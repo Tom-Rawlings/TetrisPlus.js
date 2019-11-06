@@ -8,14 +8,10 @@ TetrisPlus.debug = {
 
 	toggleDebugDisplay(){
 		if(this.isDebugOn == false){
-			//document.get$("#testing").css("display", "initial");
 			this.outputElement.style.display = "initial";
-			//$("#tetrisBoard").css("left", "30%");
 			this.isDebugOn = true;
 		}else{
-			//$("#testing").css("display", "none");
 			this.outputElement.style.display = "none";
-			//$("#tetrisBoard").css("left", "0%");
 			this.isDebugOn = false;
 		}
 	},

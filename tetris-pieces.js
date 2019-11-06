@@ -1,73 +1,73 @@
 "use strict";
 TetrisPlus.Pieces = {
 	I : {
-		spawnCoords : [new Coord2d(3, 18), new Coord2d(4, 18), new Coord2d(5, 18), new Coord2d(6, 18)],
+		spawnCoords : [new TetrisPlus.Coord2d(3, 18), new TetrisPlus.Coord2d(4, 18), new TetrisPlus.Coord2d(5, 18), new TetrisPlus.Coord2d(6, 18)],
 		rotations : [
-			[new Coord2d(-2, 0), new Coord2d(-1, 0), new Coord2d(0, 0), new Coord2d(1, 0)],
-			[new Coord2d(0, 2), new Coord2d(0, 1),  new Coord2d(0, 0), new Coord2d(0, -1)]
+			[new TetrisPlus.Coord2d(-2, 0), new TetrisPlus.Coord2d(-1, 0), new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, 0)],
+			[new TetrisPlus.Coord2d(0, 2), new TetrisPlus.Coord2d(0, 1),  new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(0, -1)]
 		],
 		colour : "#f7d308"
 	},
 	
 	O : {
-		spawnCoords : [new Coord2d(4, 19), new Coord2d(5, 19), new Coord2d(4, 18), new Coord2d(5, 18)],
+		spawnCoords : [new TetrisPlus.Coord2d(4, 19), new TetrisPlus.Coord2d(5, 19), new TetrisPlus.Coord2d(4, 18), new TetrisPlus.Coord2d(5, 18)],
 		rotations : [
-			[new Coord2d(1, 0), new Coord2d(1, 1), new Coord2d(0, 0), new Coord2d(0, 1)]
+			[new TetrisPlus.Coord2d(1, 0), new TetrisPlus.Coord2d(1, 1), new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(0, 1)]
 		],
 		colour : "#47e6ff"
 	},
 	
 	J : {
-		spawnCoords : [new Coord2d(3, 19), new Coord2d(3, 18), new Coord2d(4, 18), new Coord2d(5, 18)],
+		spawnCoords : [new TetrisPlus.Coord2d(3, 19), new TetrisPlus.Coord2d(3, 18), new TetrisPlus.Coord2d(4, 18), new TetrisPlus.Coord2d(5, 18)],
 		rotations : [
-			[new Coord2d(-1, 1), new Coord2d(-1, 0), new Coord2d(0, 0), new Coord2d(1, 0)],
-			[new Coord2d(0, -1),  new Coord2d(0, 1),  new Coord2d(0, 0), new Coord2d(1, 1)],
-			[new Coord2d(-1, 0),  new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, -1)],
-			[new Coord2d(-1, -1), new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(0, 1)]
+			[new TetrisPlus.Coord2d(-1, 1), new TetrisPlus.Coord2d(-1, 0), new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, 0)],
+			[new TetrisPlus.Coord2d(0, -1),  new TetrisPlus.Coord2d(0, 1),  new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, 1)],
+			[new TetrisPlus.Coord2d(-1, 0),  new TetrisPlus.Coord2d(1, 0),  new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, -1)],
+			[new TetrisPlus.Coord2d(-1, -1), new TetrisPlus.Coord2d(0, -1), new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(0, 1)]
 		],
 		colour : "#5a65ad"
 	},
 
 	L : {
-		spawnCoords : [new Coord2d(5, 19), new Coord2d(3, 18), new Coord2d(4, 18), new Coord2d(5, 18)],
+		spawnCoords : [new TetrisPlus.Coord2d(5, 19), new TetrisPlus.Coord2d(3, 18), new TetrisPlus.Coord2d(4, 18), new TetrisPlus.Coord2d(5, 18)],
 		rotations : [
-			[new Coord2d(-1, 0), new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, 1)],
-			[new Coord2d(0, 1),   new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, -1)],
-			[new Coord2d(-1, -1), new Coord2d(-1, 0), new Coord2d(0, 0), new Coord2d(1, 0)],
-			[new Coord2d(-1, 1),  new Coord2d(0, 1),  new Coord2d(0, 0), new Coord2d(0, -1)]
+			[new TetrisPlus.Coord2d(-1, 0), new TetrisPlus.Coord2d(1, 0),  new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, 1)],
+			[new TetrisPlus.Coord2d(0, 1),   new TetrisPlus.Coord2d(0, -1), new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, -1)],
+			[new TetrisPlus.Coord2d(-1, -1), new TetrisPlus.Coord2d(-1, 0), new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, 0)],
+			[new TetrisPlus.Coord2d(-1, 1),  new TetrisPlus.Coord2d(0, 1),  new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(0, -1)]
 		],
 		colour : "#ef7921"
 	},
 
 	S : {
-		spawnCoords : [new Coord2d(3, 18), new Coord2d(5, 19), new Coord2d(4, 19), new Coord2d(4, 18)],
+		spawnCoords : [new TetrisPlus.Coord2d(3, 18), new TetrisPlus.Coord2d(5, 19), new TetrisPlus.Coord2d(4, 19), new TetrisPlus.Coord2d(4, 18)],
 		rotations : [
-			[new Coord2d(-1, -1), new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, 0)],
-			[new Coord2d(0, 1),    new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, -1)],
-			[new Coord2d(-1, -1),  new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, 0)],
-			[new Coord2d(0, 1),    new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, -1)]
+			[new TetrisPlus.Coord2d(-1, -1), new TetrisPlus.Coord2d(0, -1), new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, 0)],
+			[new TetrisPlus.Coord2d(0, 1),    new TetrisPlus.Coord2d(1, 0),  new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, -1)],
+			[new TetrisPlus.Coord2d(-1, -1),  new TetrisPlus.Coord2d(0, -1), new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, 0)],
+			[new TetrisPlus.Coord2d(0, 1),    new TetrisPlus.Coord2d(1, 0),  new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, -1)]
 		],
 		colour : "#42b642"
 	},
 
 	Z : {
-		spawnCoords : [new Coord2d(3, 19), new Coord2d(4, 18), new Coord2d(4, 19), new Coord2d(5, 18)],
+		spawnCoords : [new TetrisPlus.Coord2d(3, 19), new TetrisPlus.Coord2d(4, 18), new TetrisPlus.Coord2d(4, 19), new TetrisPlus.Coord2d(5, 18)],
 		rotations : [
-			[new Coord2d(-1, 0), new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, -1)],
-			[new Coord2d(0, -1),  new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, 1)],
-			[new Coord2d(-1, 0),  new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, -1)],
-			[new Coord2d(0, -1),  new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(1, 1)]
+			[new TetrisPlus.Coord2d(-1, 0), new TetrisPlus.Coord2d(0, -1), new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, -1)],
+			[new TetrisPlus.Coord2d(0, -1),  new TetrisPlus.Coord2d(1, 0),  new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, 1)],
+			[new TetrisPlus.Coord2d(-1, 0),  new TetrisPlus.Coord2d(0, -1), new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, -1)],
+			[new TetrisPlus.Coord2d(0, -1),  new TetrisPlus.Coord2d(1, 0),  new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, 1)]
 		],
 		colour : "#ef2029"
 	},
 
 	T : {
-		spawnCoords : [new Coord2d(4, 19), new Coord2d(3, 18), new Coord2d(4, 18), new Coord2d(5, 18)],
+		spawnCoords : [new TetrisPlus.Coord2d(4, 19), new TetrisPlus.Coord2d(3, 18), new TetrisPlus.Coord2d(4, 18), new TetrisPlus.Coord2d(5, 18)],
 		rotations : [
-			[new Coord2d(-1, 0), new Coord2d(0, 1),  new Coord2d(0, 0), new Coord2d(1, 0)],
-			[new Coord2d(0, 1),   new Coord2d(1, 0),  new Coord2d(0, 0), new Coord2d(0, -1)],
-			[new Coord2d(-1, 0),  new Coord2d(0, -1), new Coord2d(0, 0), new Coord2d(1, 0)],
-			[new Coord2d(-1, 0),  new Coord2d(0, 1),  new Coord2d(0, 0), new Coord2d(0, -1)]
+			[new TetrisPlus.Coord2d(-1, 0), new TetrisPlus.Coord2d(0, 1),  new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, 0)],
+			[new TetrisPlus.Coord2d(0, 1),   new TetrisPlus.Coord2d(1, 0),  new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(0, -1)],
+			[new TetrisPlus.Coord2d(-1, 0),  new TetrisPlus.Coord2d(0, -1), new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(1, 0)],
+			[new TetrisPlus.Coord2d(-1, 0),  new TetrisPlus.Coord2d(0, 1),  new TetrisPlus.Coord2d(0, 0), new TetrisPlus.Coord2d(0, -1)]
 		],
 		colour : "#ad4d9c"
 	},
@@ -222,7 +222,7 @@ TetrisPlus.board.currentPiece = (function(){
 			var currentPosition = this.copyCoords(currentCoords);
 	
 			//Piece pivots based on the its second square
-			var pivotCoords = new Coord2d(currentCoords[2].x, currentCoords[2].y);
+			var pivotCoords = new TetrisPlus.Coord2d(currentCoords[2].x, currentCoords[2].y);
 	
 			for(var i = 0; i < rotations[nextRotation].length; i++){
 				currentCoords[i].x = pivotCoords.x + rotations[nextRotation][i].x;
@@ -261,7 +261,7 @@ TetrisPlus.board.currentPiece = (function(){
 		copyCoords : function(arrayToCopy){
 			var copiedArray = [];
 			for(var i = 0; i < arrayToCopy.length; i++){
-				copiedArray.push(new Coord2d(arrayToCopy[i].x, arrayToCopy[i].y));
+				copiedArray.push(new TetrisPlus.Coord2d(arrayToCopy[i].x, arrayToCopy[i].y));
 			}
 			return copiedArray;
 		},

@@ -22,18 +22,16 @@ TetrisPlus.config = {
 };
 
 
-class Coord2d{
-    constructor(x, y){
-        this.x = x;
-        this.y = y;
-    }
+TetrisPlus.Coord2d = class{
+	constructor(x, y){
+			this.x = x;
+			this.y = y;
+	}
 
-    clone(){
-        return new Coord2d(this.x, this.y);
-    }
+	clone(){
+			return new TetrisPlus.Coord2d(this.x, this.y);
+	}
 }
-
-//-------------------------------------
 
 //
 //---Contol Stuff---
