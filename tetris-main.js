@@ -9,22 +9,27 @@ TetrisPlus.Game = {
 		randomBag : undefined,
 
 		start(){
+			TetrisPlus.board.overlayMessages = [];
+			this.linesCleared = 0;
+			TetrisPlus.board.setupBoardArrays();
+			window.removeEventListener('keydown', TetrisPlus.startInput);
+			this.randomBag.reshuffle();
 			TetrisPlus.board.spawnPiece(this.randomBag.getNextLetter());
 			TetrisPlus.debug.toggleDebugDisplay();
 			window.addEventListener('keyup', function(event) { TetrisPlus.Input.Key.onKeyup(event); }, false);
 			window.addEventListener('keydown', function(event) { TetrisPlus.Input.Key.onKeydown(event); }, false);
-			window.addEventListener('resize', TetrisPlus.board.resize);
-			TetrisPlus.board.showBoard();
 
-			//this.startScreen();
 			this.instance = setInterval(this.update, (1000/TetrisPlus.config.targetFrameRate));
 		},
 
 		startScreen(){
-			TetrisPlus.board.drawBoard();
-			TetrisPlus.board.drawOverlay();
-			TetrisPlus.board.overlayText("Press Space", 15, 10, 90);
-			TetrisPlus.board.overlayText("To Start", 15, 25, 110);
+			TetrisPlus.board.overlayMessages.push({message : "Press Space", size: 15, x: 10, y: 90});
+			TetrisPlus.board.overlayMessages.push({message : "To Start", size: 15, x: 25, y: 110});
+			TetrisPlus.board.overlayMessages.push({message : "Up Arrow: Rotate", size: 7, x: 24, y: 130});
+			TetrisPlus.board.overlayMessages.push({message : "Left Arrow: Move Left", size: 7, x: 18, y: 140});
+			TetrisPlus.board.overlayMessages.push({message : "Right Arrow: Move Right", size: 7, x: 14, y: 150});
+			TetrisPlus.board.overlayMessages.push({message : "Down Arrow: Move Down", size: 7, x: 13, y: 160});
+			this.drawGraphics();
 		},
 
 		update(){
@@ -72,6 +77,9 @@ TetrisPlus.Game = {
 		TetrisPlus.board.drawScore();
 		if(this.isPaused){
 			TetrisPlus.board.drawPauseState();
+		}
+		if(TetrisPlus.board.overlayMessages.length > 0){
+			TetrisPlus.board.drawOverlayMessages();
 		}
 	},
 
@@ -126,9 +134,14 @@ TetrisPlus.Game = {
 
 	
 	gameOver(){
+		//console.log("gameOver");
+		//TetrisPlus.board.drawOverlay();
+		TetrisPlus.board.overlayMessages.push({message : "Game Over", size: 19, x: 0, y: 100});
+		TetrisPlus.board.overlayMessages.push({message : "Press Space", size: 15, x: 10, y: 130});
+		TetrisPlus.board.overlayMessages.push({message : "to Play Again", size: 14, x: 9, y: 150});
+		this.drawGraphics();
 		this.stop();
-		TetrisPlus.board.drawOverlay();
-		TetrisPlus.board.overlayTextCentre("Game Over", 19);
+		window.addEventListener('keydown', TetrisPlus.startInput, false);
 	},
 
 	togglePause(){
@@ -148,6 +161,11 @@ TetrisPlus.Game = {
 
 };
 
+TetrisPlus.startInput = function(){
+	if(event.keyCode == TetrisPlus.Input.Key.SPACE) 
+		TetrisPlus.Game.start(); 
+}
+
 TetrisPlus.init = function(config){
 	TetrisPlus.Helper.extend(this.config, config);
 	if(TetrisPlus.config.useDarkTheme){
@@ -162,7 +180,10 @@ TetrisPlus.init = function(config){
 	TetrisPlus.board.canvas.ctx = TetrisPlus.board.canvas.element.getContext("2d");
 	TetrisPlus.board.createBoard();
 	TetrisPlus.Game.randomBag = TetrisPlus.makeRandomBag();
-  TetrisPlus.Game.start();
+	TetrisPlus.board.showBoard();
+	TetrisPlus.Game.startScreen();
+	window.addEventListener('resize', TetrisPlus.board.resize);
+	window.addEventListener('keydown', TetrisPlus.startInput, false);
 };
 
 $(document).ready(TetrisPlus.init({useDarkTheme: true}));

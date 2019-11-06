@@ -215,10 +215,10 @@ TetrisPlus.board.currentPiece = (function(){
 	
 			var nextRotation = currentRotation;
 			nextRotation++;
-			if(nextRotation >= rotations.length)
+			if(nextRotation >= rotations.length){
 				nextRotation = 0;
+			}
 	
-			//var currentPosition = cloneCoordArray(this.currentCoords);
 			var currentPosition = this.copyCoords(currentCoords);
 	
 			//Piece pivots based on the its second square
@@ -268,4 +268,3 @@ TetrisPlus.board.currentPiece = (function(){
 
 	}
 }());
-

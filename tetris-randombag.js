@@ -1,3 +1,4 @@
+"use strict";
 TetrisPlus.makeRandomBag = (function(){
   var randomBag = {};
   (function () {
@@ -23,12 +24,10 @@ TetrisPlus.makeRandomBag = (function(){
           piecesInBag[j] = piecesInBag[i];
           piecesInBag[i] = randomPiece;
       }
-      console.log(piecesInBag);
     };
     this.printContents = function(){
       var htmlToPrint = "piecesInBag.length = " + piecesInBag.length;
       for(var i = 0; i < piecesInBag.length; i++){
-        //htmlToPrint += TetrisPlus.board.currentPiece().printPiece(piecesInBag[i]);
         htmlToPrint += TetrisPlus.Pieces.printPiece(piecesInBag[i]);
       }
       return htmlToPrint;
