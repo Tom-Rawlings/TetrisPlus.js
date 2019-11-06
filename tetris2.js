@@ -68,7 +68,7 @@ TetrisPlus.config = {
 
 TetrisPlus.init = function(config){
   TetrisPlus.Helper.extend(this.config, config);
-  TetrisPlus.start();
+  TetrisPlus.Game.start();
 };
 
 

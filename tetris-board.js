@@ -3,7 +3,7 @@ var xCoord, yCoord;
 var overlayOn = false;
 
 
-TetrisPlus.board = {...TetrisPlus.board, ...{
+TetrisPlus.board = {
 
 	canvas : {},
 
@@ -310,7 +310,7 @@ TetrisPlus.board = {...TetrisPlus.board, ...{
 	drawOverlay(){
 		this.canvas.ctx.fillStyle = TetrisPlus.config.overlayColour;
 		this.canvas.ctx.globalAlpha = 0.5;
-		this.canvas.ctx.fillRect(0, 0, canvas.element.width, canvas.element.height);
+		this.canvas.ctx.fillRect(0, 0, this.canvas.element.width, this.canvas.element.height);
 		this.canvas.ctx.globalAlpha = 1.0;
 	},
 	
@@ -322,4 +322,4 @@ TetrisPlus.board = {...TetrisPlus.board, ...{
 	}
 
 
-}};
+};
