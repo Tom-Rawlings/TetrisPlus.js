@@ -19,24 +19,24 @@ TetrisPlus.board = {
 
 			this.setColour = function(_colour){
 				colour = _colour;
-			 },
+			};
 	 
-			 this.getColour = function(){
-			 return colour;
-			 },
+			this.getColour = function(){
+				return colour;
+			};
 	 
 			this.setXcoord = function(_xCoord){
 				xCoord = _xCoord;
-			},
+			};
 	 
 			this.setYcoord = function(_yCoord){
 				yCoord = _yCoord;
-			}
+			};
 	 
 			this.draw = function(){
 				TetrisPlus.board.canvas.ctx.fillStyle = colour;
 				TetrisPlus.board.canvas.ctx.fillRect(xCoord, yCoord, this.blockSize, this.blockSize);
-			}
+			};
 				
 		}).apply( block );
 	
@@ -292,7 +292,7 @@ TetrisPlus.board = {
 		var size = 8;
 		size = size*this.canvasScaleMultiplier;
 		this.canvas.ctx.font = `${size}px Arial`;
-		this.canvas.ctx.fillStyle = TetrisPlus.config.overlayTextColour;
+		this.canvas.ctx.fillStyle = TetrisPlus.config.scoreTextColour;
 		this.canvas.ctx.globalAlpha = 0.7;
 		this.canvas.ctx.fillText("Lines Cleared: " + TetrisPlus.Game.linesCleared, 2*this.canvasScaleMultiplier, size);
 		this.canvas.ctx.globalAlpha = 1.0;
@@ -311,6 +311,8 @@ TetrisPlus.board = {
 	drawPauseState(){
 		this.drawOverlay();
 		this.overlayTextCentre("Paused", 30);
+		this.overlayText("Press 'R'", 14, 25, 130);
+		this.overlayText("To Restart", 14, 20, 145);
 	},
 	
 	drawOverlay(){

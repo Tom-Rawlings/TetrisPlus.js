@@ -6,7 +6,8 @@ TetrisPlus.config = {
   backgroundColour : "#DDDDDD",
   emptyBlockColour : "#FFFFFF",
   overlayColour : "#000000",
-  overlayTextColour : "#000000",
+  overlayTextColour : "#FFFFFF",
+  scoreTextColour : "#000000",
   
   blockSizeRelative : 10,
   gapSizeRelative : 0.5,
@@ -42,6 +43,7 @@ TetrisPlus.darkTheme = {
   emptyBlockColour : "#4c5a61",
   overlayColour : "#000000",
   overlayTextColour : "#FFFFFF",
+  scoreTextColour : "#FFFFFF"
 };
 
 TetrisPlus.Coord2d = class{
@@ -53,7 +55,7 @@ TetrisPlus.Coord2d = class{
 	clone(){
 			return new TetrisPlus.Coord2d(this.x, this.y);
 	}
-}
+};
 
 //
 //---Contol Stuff---
@@ -69,6 +71,7 @@ TetrisPlus.Input.Key = {
   ESCAPE: 27,
   SPACE: 32,
   P: 80,
+  R: 82,
 
   down: {},
   up: {},

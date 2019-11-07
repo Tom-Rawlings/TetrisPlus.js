@@ -62,6 +62,14 @@ TetrisPlus.Game = {
 		if (TetrisPlus.Input.Key.getKeyDown(TetrisPlus.Input.Key.ESCAPE)){
 			TetrisPlus.Game.stop();
 		}
+
+		if (TetrisPlus.Input.Key.getKeyDown(TetrisPlus.Input.Key.R)){
+			if(TetrisPlus.Game.isPaused){
+				TetrisPlus.Game.togglePause();
+				TetrisPlus.Game.stop();
+				TetrisPlus.Game.start();
+			}
+		}
 		TetrisPlus.Input.Key.clear();
 
 		//Update graphics

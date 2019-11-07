@@ -108,7 +108,7 @@ TetrisPlus.Pieces = {
 TetrisPlus.board.currentPiece = (function(){
 	var pieceLetter = pieceLetter;
 	var spawnCoords = Array.from(TetrisPlus.Pieces.Z.spawnCoords);
-	var currentCoords = Array.from(spawnCoords);;
+	var currentCoords = Array.from(spawnCoords);
 	var rotations = Array.from(TetrisPlus.Pieces.Z.rotations);
 	var currentRotation = 0;
 	var colour = TetrisPlus.Pieces.Z.colour;
@@ -266,5 +266,5 @@ TetrisPlus.board.currentPiece = (function(){
 			return copiedArray;
 		},
 
-	}
+	};
 }());
