@@ -1,10 +1,11 @@
 # TetrisPlus.js
 
 A configurable version of tetris built with JavaScript using the HTML5 canvas element.
+**[Try the demo here](http://tomrawlings.online/TetrisPlus/demo)**
 
 ## Setup
 
-To embed into your own page, simply link to the minified js file, create a parent div for the game and call:
+To embed into your own page, simply link to TetrisPlus.min.js, create a parent div for the game with an ID and call:
 ```js
 TetrisPlus.init({parentID: 'parentDivId'});
 ```
