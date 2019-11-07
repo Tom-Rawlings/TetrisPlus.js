@@ -2,34 +2,34 @@
 var TetrisPlus = {};
 
 TetrisPlus.config = {
-  parentId : "parentDiv",           //
-  backgroundColour : "#DDDDDD",     //
-  emptyBlockColour : "#FFFFFF",     //
-  overlayColour : "#000000",        //
-  overlayTextColour : "#FFFFFF",    //
-  scoreTextColour : "#000000",      //
-  borderColour : "#000000",         //
+  parentId : "parentDiv",           //ID of the html div that TetrisPlus will occupy.
+  backgroundColour : "#DDDDDD",     //Background colour of the canvas that will be visible as grid between blocks.
+  emptyBlockColour : "#FFFFFF",     //Colour of empty blocks that will make up the tetris board.
+  overlayColour : "#000000",        //Base colour of the transparent overlay used when the game is paused.
+  overlayTextColour : "#FFFFFF",    //Colour of overlayed text such as the introduction message.
+  scoreTextColour : "#000000",      //Colour used to display the number of lines cleared on screen.
+  borderColour : "#000000",         //Colour of border around the generated canvas element.
   
-  blockSizeRelative : 10,           //
-  gapSizeRelative : 0.5,            //
-  canvasRelativeVerticalMargin : 0, //
+  blockSizeRelative : 10,           //Size of the onscreen blocks relative to the gaps inbetween.
+  gapSizeRelative : 0.5,            //Size of the gaps inbetween blocks relative to the blocks themselves.
+  //canvasRelativeVerticalMargin : 0.1, //
   
-  boardWidth : 10,                  //
-  boardHeight : 20,                 //
+  boardWidth : 10,                  //Number of blocks wide the tetris board will be.
+  boardHeight : 20,                 //Number of blocks tall the tetris board will be.
   
-  tickRate : 800,                   //
-  moveDownDelay : 80,               //
-  targetFrameRate : 60,             //
-  pausedFrameRate : 5,              //
+  //tickRate : 800,                   //
+  moveDownDelay : 80,               //Millisecond delay between the piece moving down when holding the down arrow key .
+  targetFrameRate : 60,             //Number of frames per second the game will attempt to run at.
+  //pausedFrameRate : 5,              //Number of frames per second the game will.
 
-  dropSpeeds : [800, 720, 630, 550, //
+  dropSpeeds : [800, 720, 630, 550, //Drop speeds used for difficulty levels in milliseconds.
     470, 380, 300, 220, 130, 100, 80],
-  linesPerLevel : 5,                //
+  linesPerLevel : 5,                //Number of lines needed to be cleared before difficulty level increases.
 
-  useDarkTheme : false,             //
-  useBackgroundGrid : false,        //
+  useDarkTheme : false,             //Whether or not to use the provided dark theme.
+  useBackgroundGrid : false,        //Whether or not to use separate background colour from empty blocks to form grid lines.
 
-  pieceColours : {                  //
+  pieceColours : {                  //Colours used for the pieces.
     I : "#f7d308",
     O : "#47e6ff",
     J : "#5a65ad",
@@ -40,7 +40,7 @@ TetrisPlus.config = {
   }
 };
 
-TetrisPlus.darkTheme = {
+TetrisPlus.darkTheme = {            //Provided dark theme
   backgroundColour : "#000000",
   emptyBlockColour : "#4c5a61",
   overlayColour : "#000000",
@@ -49,6 +49,7 @@ TetrisPlus.darkTheme = {
   borderColour : "#FFFFFF",
 };
 
+//2D coordinate class used for block positions and rotations.
 TetrisPlus.Coord2d = class{
 	constructor(x, y){
 			this.x = x;
@@ -60,13 +61,10 @@ TetrisPlus.Coord2d = class{
 	}
 };
 
-//
-//---Contol Stuff---
-//
+//Key event codes and input manager.
 TetrisPlus.Input = {};
 TetrisPlus.Input.Key = {
-  pressed: {},
-
+  
   LEFT: 37,
   UP: 38,
   RIGHT: 39,
@@ -76,8 +74,9 @@ TetrisPlus.Input.Key = {
   P: 80,
   R: 82,
 
-  down: {},
-  up: {},
+  pressed: {},  //List of keys currently held down.
+  down: {},     //List of keys pressed down since last frame.
+  up: {},       //List of keys released since last frame.
 
   getKey: function(keyCode) {
     return this.pressed[keyCode];
@@ -112,36 +111,31 @@ TetrisPlus.Input.Key = {
 };
 
 TetrisPlus.Helper = {};
+/*
 TetrisPlus.Helper.debounce = function(func, wait, immediate) {
 
   var timeout;
 
   return function() {
-
     var context = this,
       args = arguments; 
-
     var later = function() {
-        
       timeout = null;
-
       if ( !immediate ) {
           func.apply(context, args);
       }
     };
-
     var callNow = immediate && !timeout;
-
     clearTimeout(timeout);
-
     timeout = setTimeout(later, wait || 200);
-
     if ( callNow ) { 
       func.apply(context, args);
     }
   };
 };
+*/
 
+//Method used to throttle moving the piece down and also resizing the canvas
 TetrisPlus.Helper.throttle = function(func, wait, options) {
   var context, args, result;
   var timeout = null;
@@ -174,6 +168,7 @@ TetrisPlus.Helper.throttle = function(func, wait, options) {
   };
 };
 
+//Extends an object. Used for applying user supplied configurations.
 TetrisPlus.Helper.extend = function(a, b){
   for(var key in b)
     if(b.hasOwnProperty(key))

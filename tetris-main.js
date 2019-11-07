@@ -63,13 +63,6 @@ TetrisPlus.Game = {
 			TetrisPlus.Game.stop();
 		}
 
-		if (TetrisPlus.Input.Key.getKeyDown(TetrisPlus.Input.Key.R)){
-			if(TetrisPlus.Game.isPaused){
-				TetrisPlus.Game.togglePause();
-				TetrisPlus.Game.stop();
-				TetrisPlus.Game.start();
-			}
-		}
 		TetrisPlus.Input.Key.clear();
 
 		//Update graphics
@@ -163,16 +156,32 @@ TetrisPlus.Game = {
 			this.isPaused = true;
 			if(this.instance != null){
 				clearInterval(this.instance);
-				this.instance = setInterval(this.update, (1000/TetrisPlus.config.pausedFrameRate));
+				window.addEventListener('keydown', TetrisPlus.startInput, false);
 			}
 		}
 	}
 
 };
 
-TetrisPlus.startInput = function(){
-	if(event.keyCode == TetrisPlus.Input.Key.SPACE) 
-		TetrisPlus.Game.start(); 
+TetrisPlus.startInput = function(event){
+	if(TetrisPlus.Game.isPaused){
+		if(event.keyCode == TetrisPlus.Input.Key.P){
+			window.removeEventListener('keydown', TetrisPlus.startInput);
+			TetrisPlus.Input.Key.clear();
+			TetrisPlus.Game.togglePause();
+		}
+		if(event.keyCode == TetrisPlus.Input.Key.R){
+			window.removeEventListener('keydown', TetrisPlus.startInput);
+			TetrisPlus.Input.Key.clear();
+			TetrisPlus.Game.togglePause();
+			TetrisPlus.Game.stop();
+			TetrisPlus.Game.start();
+		}
+	}else{
+		if(event.keyCode == TetrisPlus.Input.Key.SPACE) 
+			TetrisPlus.Game.start(); 
+	}
+
 };
 
 TetrisPlus.init = function(config){

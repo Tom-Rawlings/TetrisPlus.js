@@ -89,7 +89,7 @@ TetrisPlus.Pieces = {
 						break;
 					}
 				}
-				if(hasMatched == true) //${piece.colour}
+				if(hasMatched == true)
 					htmlToReturn += '<td style="background-color: ' + piece.colour + '"></td>';
 				else
 					htmlToReturn += '<td style="background-color: white"></td>';

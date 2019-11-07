@@ -45,7 +45,7 @@ TetrisPlus.board = {
 	}),
 
 	calculateCanvasDimensions : function(){
-		this.canvas.element.height = this.canvas.parent.offsetHeight-(TetrisPlus.config.canvasRelativeVerticalMargin*this.canvas.parent.offsetHeight * 2);
+		this.canvas.element.height = this.canvas.parent.offsetHeight;//-(TetrisPlus.config.canvasRelativeVerticalMargin*this.canvas.parent.offsetHeight * 2);
 		this.canvasScaleMultiplier = this.canvas.element.height/this.canvasHeightRelative;
 		//this.blockSize = Math.floor(TetrisPlus.config.blockSizeRelative * this.canvasScaleMultiplier);
 		//this.gapSize = Math.floor(TetrisPlus.config.gapSizeRelative * this.canvasScaleMultiplier);
@@ -56,7 +56,6 @@ TetrisPlus.board = {
 	
 		this.canvas.element.height = this.blockSize*TetrisPlus.config.boardHeight + this.gapSize*(TetrisPlus.config.boardHeight+1); 
 		this.canvas.element.width = this.blockSize*TetrisPlus.config.boardWidth + this.gapSize*(TetrisPlus.config.boardWidth+1);
-		//this.canvas.element.style.paddingTop = (this.canvas.parent.offsetHeight - this.canvas.element.height)/2 + "px";
 	},
 
 	createBoard : function(){
