@@ -2,7 +2,7 @@
 var TetrisPlus = {};
 
 TetrisPlus.config = {
-  parentId : "parentDiv",           //ID of the html div that TetrisPlus will occupy.
+  parentId : "game",                //ID of the html div that TetrisPlus will occupy.
   backgroundColour : "#DDDDDD",     //Background colour of the canvas that will be visible as grid between blocks.
   emptyBlockColour : "#FFFFFF",     //Colour of empty blocks that will make up the tetris board.
   overlayColour : "#000000",        //Base colour of the transparent overlay used when the game is paused.
