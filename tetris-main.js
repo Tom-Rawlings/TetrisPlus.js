@@ -18,7 +18,6 @@ TetrisPlus.Game = {
 			window.removeEventListener('keydown', TetrisPlus.startInput);
 			this.randomBag.reshuffle();
 			TetrisPlus.board.spawnPiece(this.randomBag.getNextLetter());
-			TetrisPlus.debug.showDebugDisplay(true);
 			window.addEventListener('keyup', function(event) { TetrisPlus.Input.Key.onKeyup(event); }, false);
 			window.addEventListener('keydown', function(event) { TetrisPlus.Input.Key.onKeydown(event); }, false);
 
@@ -72,7 +71,6 @@ TetrisPlus.Game = {
 			TetrisPlus.Game.decreaseTickTimer(previousTime);
 		}
 		TetrisPlus.Game.FrameCounter.increaseCounter(previousTime);
-		TetrisPlus.debug.updateDebugDisplay();
 	},
 
 	drawGraphics : function(){

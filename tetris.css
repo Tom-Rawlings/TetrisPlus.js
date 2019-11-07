@@ -1,33 +1,6 @@
-html, body{
-    width: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-body{
-	overflow: hidden;
-}
-
-table, td{
-	border: 1px solid black;
-}
-
-td{
-	width: 10px;
-	height: 10px;
-}
-
-#testing{
-	display: none;
-	position: absolute;
-	padding-left: 5px;
-}
 
 #game{
-  /*width: 50vh;*/
 	height: 90vh;
 	margin-top: 5vh;
-	/*height: 400px;*/
   background-color: #DDDDDD;
-  /*border: 2px solid #333333;*/
 }
