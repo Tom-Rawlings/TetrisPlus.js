@@ -10,19 +10,31 @@ TetrisPlus.config = {
   
   blockSizeRelative : 10,
   gapSizeRelative : 0.5,
-  //canvasRelativeVerticalMargin : 0.05,
   canvasRelativeVerticalMargin : 0,
   
   boardWidth : 10,
   boardHeight : 20,
   
-  tickRate : 700,
-  moveDownDelay : 100,
+  tickRate : 800,
+  moveDownDelay : 80,
   targetFrameRate : 60,
   pausedFrameRate : 5,
 
+  dropSpeeds : [800, 720, 630, 550, 470, 380, 300, 220, 130, 100, 80],
+  linesPerLevel : 5,
+
   useDarkTheme : false,
-  useBackgroundGrid : false
+  useBackgroundGrid : false,
+
+  pieceColours : {
+    I : "#f7d308",
+    O : "#47e6ff",
+    J : "#5a65ad",
+    L : "#ef7921",
+    S : "#42b642",
+    Z : "#ef2029",
+    T : "#ad4d9c"
+  }
 };
 
 TetrisPlus.darkTheme = {

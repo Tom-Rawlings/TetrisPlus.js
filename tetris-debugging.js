@@ -6,8 +6,8 @@ TetrisPlus.debug = {
 	dynamicDebugInfo : "",
 	staticDebugInfo: "",
 
-	toggleDebugDisplay(){
-		if(this.isDebugOn == false){
+	showDebugDisplay(bool){
+		if(bool){
 			this.outputElement.style.display = "initial";
 			this.isDebugOn = true;
 		}else{
@@ -27,6 +27,7 @@ TetrisPlus.debug = {
 		this.log("canvas width", TetrisPlus.board.canvas.element.width);
 		this.log("canvasScaleMultiplier", TetrisPlus.board.canvasScaleMultiplier);
 		this.log("currentPiece", TetrisPlus.board.currentPiece.toString());
+		this.log("current level = " + TetrisPlus.Game.currentLevel);
 		
 		this.addHtml("#testing", this.staticDebugInfo);
 		this.addHtml("#testing", this.dynamicDebugInfo);

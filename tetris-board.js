@@ -262,7 +262,10 @@ TetrisPlus.board = {
 			this.collisionMap[x][lineNumber] = false;
 		}
 		TetrisPlus.Game.linesCleared++;
-		$("#score").html("Lines Cleared: " + TetrisPlus.Game.linesCleared);
+		//$("#score").html("Lines Cleared: " + TetrisPlus.Game.linesCleared);
+		//Recalculate game level
+		TetrisPlus.Game.currentLevel = Math.floor(TetrisPlus.Game.linesCleared / TetrisPlus.config.linesPerLevel);
+		TetrisPlus.Game.resetTickTimer();//TetrisPlus.config.dropSpeeds[this.currentLevel]
 	},
 
 	moveLinesDown(startLine){
