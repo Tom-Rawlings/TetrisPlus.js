@@ -75,7 +75,7 @@ TetrisPlus.Pieces = {
 	printPiece : function(pieceLetter){
 		var xOffset = 3;
 		var yOffset = 18;
-		var htmlToReturn = `<table>`;
+		var htmlToReturn = "<table>";
 		var pieces = {"I":this.I, "O":this.O, "J":this.J, "L":this.L, "S":this.S,"Z":this.Z, "T":this.T};
 		var piece = pieces[pieceLetter];
 
@@ -89,10 +89,10 @@ TetrisPlus.Pieces = {
 						break;
 					}
 				}
-				if(hasMatched == true)
-					htmlToReturn += `<td style="background-color: ${piece.colour}"></td>`;
+				if(hasMatched == true) //${piece.colour}
+					htmlToReturn += '<td style="background-color: ' + piece.colour + '"></td>';
 				else
-					htmlToReturn += `<td style="background-color: white"></td>`;
+					htmlToReturn += '<td style="background-color: white"></td>';
 			}
 			htmlToReturn += "</tr>";
 		}
@@ -158,38 +158,6 @@ TetrisPlus.board.currentPiece = (function(){
 
 		toString : function(){
 			return "Piece" + pieceLetter;
-		},
-	
-		/*
-			Returns an HTML table string visually showing the tetris piece.
-		*/
-		printPiece : function(){
-			var xOffset = 3;
-			var yOffset = 18;
-			var htmlToReturn = `<table>`;
-	
-			for(var y = 1; y >= 0 ; y--){
-				htmlToReturn += "<tr>";
-				for(var x = 0; x < 4; x++){
-					var hasMatched = false;
-					for(var i = 0; i < spawnCoords.length; i++){
-						if(x == spawnCoords[i].x - xOffset && y == spawnCoords[i].y - yOffset){
-							hasMatched = true;
-							break;
-						}
-					}
-					if(hasMatched == true)
-						htmlToReturn += `<td style="background-color: ${colour}"></td>`;
-					else
-						htmlToReturn += `<td style="background-color: white"></td>`;
-				}
-				htmlToReturn += "</tr>";
-			}
-	
-			htmlToReturn += "</table>";
-	
-			return htmlToReturn;
-			
 		},
 	
 		getColour : function(){

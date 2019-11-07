@@ -19,10 +19,10 @@ TetrisPlus.makeRandomBag = (function(){
       var randomPiece;
       var j = 0;
       for(var i = 0; i < pieces.length; i++){
-          j = Math.floor(Math.random() * 7);
-          randomPiece = piecesInBag[j];
-          piecesInBag[j] = piecesInBag[i];
-          piecesInBag[i] = randomPiece;
+        j = Math.floor(Math.random() * 7);
+        randomPiece = piecesInBag[j];
+        piecesInBag[j] = piecesInBag[i];
+        piecesInBag[i] = randomPiece;
       }
     };
     this.printContents = function(){

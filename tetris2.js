@@ -2,32 +2,34 @@
 var TetrisPlus = {};
 
 TetrisPlus.config = {
-  parentId : "parentDiv",
-  backgroundColour : "#DDDDDD",
-  emptyBlockColour : "#FFFFFF",
-  overlayColour : "#000000",
-  overlayTextColour : "#FFFFFF",
-  scoreTextColour : "#000000",
+  parentId : "parentDiv",           //
+  backgroundColour : "#DDDDDD",     //
+  emptyBlockColour : "#FFFFFF",     //
+  overlayColour : "#000000",        //
+  overlayTextColour : "#FFFFFF",    //
+  scoreTextColour : "#000000",      //
+  borderColour : "#000000",         //
   
-  blockSizeRelative : 10,
-  gapSizeRelative : 0.5,
-  canvasRelativeVerticalMargin : 0,
+  blockSizeRelative : 10,           //
+  gapSizeRelative : 0.5,            //
+  canvasRelativeVerticalMargin : 0, //
   
-  boardWidth : 10,
-  boardHeight : 20,
+  boardWidth : 10,                  //
+  boardHeight : 20,                 //
   
-  tickRate : 800,
-  moveDownDelay : 80,
-  targetFrameRate : 60,
-  pausedFrameRate : 5,
+  tickRate : 800,                   //
+  moveDownDelay : 80,               //
+  targetFrameRate : 60,             //
+  pausedFrameRate : 5,              //
 
-  dropSpeeds : [800, 720, 630, 550, 470, 380, 300, 220, 130, 100, 80],
-  linesPerLevel : 5,
+  dropSpeeds : [800, 720, 630, 550, //
+    470, 380, 300, 220, 130, 100, 80],
+  linesPerLevel : 5,                //
 
-  useDarkTheme : false,
-  useBackgroundGrid : false,
+  useDarkTheme : false,             //
+  useBackgroundGrid : false,        //
 
-  pieceColours : {
+  pieceColours : {                  //
     I : "#f7d308",
     O : "#47e6ff",
     J : "#5a65ad",
@@ -43,7 +45,8 @@ TetrisPlus.darkTheme = {
   emptyBlockColour : "#4c5a61",
   overlayColour : "#000000",
   overlayTextColour : "#FFFFFF",
-  scoreTextColour : "#FFFFFF"
+  scoreTextColour : "#FFFFFF",
+  borderColour : "#FFFFFF",
 };
 
 TetrisPlus.Coord2d = class{
@@ -115,27 +118,27 @@ TetrisPlus.Helper.debounce = function(func, wait, immediate) {
 
   return function() {
 
-      var context = this,
-          args = arguments; 
+    var context = this,
+      args = arguments; 
 
-      var later = function() {
-          
-          timeout = null;
+    var later = function() {
+        
+      timeout = null;
 
-          if ( !immediate ) {
-              func.apply(context, args);
-          }
-      };
-
-      var callNow = immediate && !timeout;
-
-      clearTimeout(timeout);
-
-      timeout = setTimeout(later, wait || 200);
-
-      if ( callNow ) { 
+      if ( !immediate ) {
           func.apply(context, args);
       }
+    };
+
+    var callNow = immediate && !timeout;
+
+    clearTimeout(timeout);
+
+    timeout = setTimeout(later, wait || 200);
+
+    if ( callNow ) { 
+      func.apply(context, args);
+    }
   };
 };
 
@@ -173,7 +176,7 @@ TetrisPlus.Helper.throttle = function(func, wait, options) {
 
 TetrisPlus.Helper.extend = function(a, b){
   for(var key in b)
-      if(b.hasOwnProperty(key))
-          a[key] = b[key];
+    if(b.hasOwnProperty(key))
+      a[key] = b[key];
   return a;
 };

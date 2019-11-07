@@ -6,7 +6,7 @@ TetrisPlus.debug = {
 	dynamicDebugInfo : "",
 	staticDebugInfo: "",
 
-	showDebugDisplay(bool){
+	showDebugDisplay : function(bool){
 		if(bool){
 			this.outputElement.style.display = "initial";
 			this.isDebugOn = true;
@@ -16,8 +16,8 @@ TetrisPlus.debug = {
 		}
 	},
 
-	updateDebugDisplay(){
-		$("#testing").html("");
+	updateDebugDisplay : function(){
+		this.outputElement.innerHTML = "";
 		this.debugMap("collisionMap", TetrisPlus.board.collisionMap);
 	
 		//TESTING STUFF
@@ -29,38 +29,30 @@ TetrisPlus.debug = {
 		this.log("currentPiece", TetrisPlus.board.currentPiece.toString());
 		this.log("current level = " + TetrisPlus.Game.currentLevel);
 		
-		this.addHtml("#testing", this.staticDebugInfo);
-		this.addHtml("#testing", this.dynamicDebugInfo);
-		this.addHtml("#testing", TetrisPlus.Game.randomBag.printContents());
+		this.addHtml(this.outputElement, this.staticDebugInfo);
+		this.addHtml(this.outputElement, this.dynamicDebugInfo);
+		this.addHtml(this.outputElement, TetrisPlus.Game.randomBag.printContents());
 		this.dynamicDebugInfo = "";
 	},
 
-	log(name, object){
+	log : function(name, object){
 		var newHtml = name + " = " + object + "<br>";
-		this.addHtml("#testing", newHtml);
+		this.addHtml(this.outputElement, newHtml);
 	},
 
-	staticDebug(text){
-		staticDebugInfo += ("\n" + text);
+	staticDebug : function(text){
+		this.staticDebugInfo += ("\n" + text);
 	},
 
-	fixedDebug(id, text){
-		var label = document.getElementById(`${id}`);
-		if(label == null)
-			staticDebugInfo += `<br/><span id="${id}">${text}</span>`;
-		else
-			label.innerHtml = text;
+	dynamicDebug : function(text){
+		this.dynamicDebugInfo += ("\n" + text);
 	},
 
-	dynamicDebug(text){
-		dynamicDebugInfo += ("\n" + text);
-	},
-
-	debugMap(name, map){
+	debugMap : function(name, map){
 		var trueColour = "#adadad";
 		var falseColour = "#ffffff";
 		var tableHtml = "<table>";
-		this.addHtml("#testing", name+":<br>");
+		this.addHtml(this.outputElement, name+":<br>");
 		for(var y = TetrisPlus.config.boardHeight-1; y >= 0 ; y--){
 			tableHtml += "<tr>";
 			for(var x = 0; x < TetrisPlus.config.boardWidth; x++){
@@ -74,29 +66,13 @@ TetrisPlus.debug = {
 			tableHtml += "</tr>";
 		}
 		tableHtml += "</table>";
-		this.addHtml("#testing", tableHtml);
+		this.addHtml(this.outputElement, tableHtml);
 	},
 
-	randomBag_Test(){
-		var bag = new RandomBag(pieceArray);
-		staticDebugInfo = `<br/>pieceArray.length = ${pieceArray.length}`;
-		for(var i = 0; i < pieceArray.length; i++){
-			staticDebugInfo += `<br/>Piece ${i} = ${bag.getNextLetter()}`;
-		}
-	},
-
-	coordArrayToString(coordArray){
-		var arrayString = "";
-		for(var i = 0; i < coordArray.length; i++){
-			arrayString += `${i} : [${coordArray[i].x}][${coordArray[i].y}]\n`;
-		}
-		return arrayString;
-	},
-
-	addHtml(id, htmlToAdd){
-		var currentHtml = $(id).html();
+	addHtml : function(element, htmlToAdd){
+		var currentHtml = element.innerHTML;
 		currentHtml += htmlToAdd;
-		$(id).html(currentHtml);
+		element.innerHTML = currentHtml;
 	}
 
 };

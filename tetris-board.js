@@ -44,7 +44,7 @@ TetrisPlus.board = {
 	
 	}),
 
-	calculateCanvasDimensions(){
+	calculateCanvasDimensions : function(){
 		this.canvas.element.height = this.canvas.parent.offsetHeight-(TetrisPlus.config.canvasRelativeVerticalMargin*this.canvas.parent.offsetHeight * 2);
 		this.canvasScaleMultiplier = this.canvas.element.height/this.canvasHeightRelative;
 		//this.blockSize = Math.floor(TetrisPlus.config.blockSizeRelative * this.canvasScaleMultiplier);
@@ -59,14 +59,14 @@ TetrisPlus.board = {
 		//this.canvas.element.style.paddingTop = (this.canvas.parent.offsetHeight - this.canvas.element.height)/2 + "px";
 	},
 
-	createBoard(){
+	createBoard : function(){
 
 		this.calculateCanvasDimensions();
 		this.setupBoardArrays();
 
 	},
 
-	drawBoard(){
+	drawBoard : function(){
 		this.canvas.ctx.fillStyle = TetrisPlus.config.backgroundColour;
 		this.canvas.ctx.fillRect(0, 0, this.canvas.element.width, this.canvas.element.height);
 		var xCoord = 0;
@@ -84,7 +84,7 @@ TetrisPlus.board = {
 		}
 	},
 
-	setupBoardArrays(){
+	setupBoardArrays : function(){
 		this.blocks = [];
 		this.collisionMap = [];
 		for(var x = 0; x < TetrisPlus.config.boardWidth; x++){
@@ -97,24 +97,24 @@ TetrisPlus.board = {
 		}
 	},
 
-	showBoard(){
+	showBoard : function(){
 		this.canvas.element.style.display = "block";
 	},
 
-	spawnPiece(pieceLetter){
+	spawnPiece : function(pieceLetter){
 		TetrisPlus.board.currentPiece.setupPiece(pieceLetter);
 	
 		if(this.checkCollisionForPiecePosition(TetrisPlus.board.currentPiece.getSpawnCoords())){
 			//spawn piece
 			this.updatePieceOnBoard();
 		}
-		else
+		else{
 			//game over
 			TetrisPlus.Game.gameOver();
-		;
+		}
 	},
 
-	setPieceInPlace(){
+	setPieceInPlace : function(){
 		for(var i = 0; i < TetrisPlus.board.currentPiece.getCurrentCoords().length; i++){
 			this.collisionMap[TetrisPlus.board.currentPiece.getCurrentCoords()[i].x][TetrisPlus.board.currentPiece.getCurrentCoords()[i].y] = true;
 		}
@@ -127,7 +127,7 @@ TetrisPlus.board = {
 	/*
 	Move piece on board
 	*/
-	movePieceDown(){
+	movePieceDown : function(){
 		if(this.checkCollisionDown()){
 			this.clearPieceFromBoard();
 			TetrisPlus.board.currentPiece.moveDown();
@@ -145,7 +145,7 @@ TetrisPlus.board = {
 			TetrisPlus.board.movePieceDown();
 		}, TetrisPlus.config.moveDownDelay),
 
-	movePieceLeft(){
+	movePieceLeft : function(){
 		if(this.checkCollisionLeft()){
 			this.clearPieceFromBoard();
 			TetrisPlus.board.currentPiece.moveLeft();
@@ -153,7 +153,7 @@ TetrisPlus.board = {
 		}
 	},
 
-	movePieceRight(){
+	movePieceRight : function(){
 		if(this.checkCollisionRight()){
 			this.clearPieceFromBoard();
 			TetrisPlus.board.currentPiece.moveRight();
@@ -161,32 +161,32 @@ TetrisPlus.board = {
 		}
 	},
 
-	rotatePiece(){
+	rotatePiece : function(){
 		TetrisPlus.board.currentPiece.rotate();
 	},
 
-	clearBoard(){
+	clearBoard : function(){
 		for(var x = 0; x < TetrisPlus.config.boardWidth; x++){
 			for(var y = 0; y < TetrisPlus.config.boardHeight; y++){
 				this.blocks[x][y].setColour(TetrisPlus.config.emptyBlockColour);
-				this.collisionMap[x][y] = false;;
+				this.collisionMap[x][y] = false;
 			}
 		}
 	},
 	
-	clearPieceFromBoard(){
+	clearPieceFromBoard : function(){
 		for(var i = 0; i < TetrisPlus.board.currentPiece.getCurrentCoords().length; i++){
 			this.blocks[TetrisPlus.board.currentPiece.getCurrentCoords()[i].x][TetrisPlus.board.currentPiece.getCurrentCoords()[i].y].setColour(TetrisPlus.config.emptyBlockColour);
 		}
 	},
 	
-	updatePieceOnBoard(){
+	updatePieceOnBoard : function(){
 			for(var i = 0; i < TetrisPlus.board.currentPiece.getCurrentCoords().length; i++){
 				this.blocks[TetrisPlus.board.currentPiece.getCurrentCoords()[i].x][TetrisPlus.board.currentPiece.getCurrentCoords()[i].y].setColour(TetrisPlus.board.currentPiece.getColour());
 			}
 	},
 	
-	drawPiece(){
+	drawPiece : function(){
 		for(var i = 0; i < TetrisPlus.board.currentPiece.getCurrentCoords().length; i++){
 			this.blocks[TetrisPlus.board.currentPiece.getCurrentCoords()[i].x][TetrisPlus.board.currentPiece.getCurrentCoords()[i].y].draw();
 		}
@@ -196,7 +196,7 @@ TetrisPlus.board = {
 	//
 	// Collision checking
 	//
-	checkCollisionDown(){
+	checkCollisionDown : function(){
 		for(var i = 0; i < TetrisPlus.board.currentPiece.getCurrentCoords().length; i++){
 			if(TetrisPlus.board.currentPiece.getCurrentCoords()[i].y == 0)
 				return false;
@@ -206,7 +206,7 @@ TetrisPlus.board = {
 		return true;
 	},
 
-	checkCollisionLeft(){
+	checkCollisionLeft : function(){
 		for(var i = 0; i < TetrisPlus.board.currentPiece.getCurrentCoords().length; i++){
 			if(TetrisPlus.board.currentPiece.getCurrentCoords()[i].x == 0)
 				return false;
@@ -216,7 +216,7 @@ TetrisPlus.board = {
 		return true;
 	},
 
-	checkCollisionRight(){
+	checkCollisionRight : function(){
 		for(var i = 0; i < TetrisPlus.board.currentPiece.getCurrentCoords().length; i++){
 			if(TetrisPlus.board.currentPiece.getCurrentCoords()[i].x == TetrisPlus.config.boardWidth-1)
 				return false;
@@ -226,7 +226,7 @@ TetrisPlus.board = {
 		return true;
 	},
 
-	checkCollisionForPiecePosition(positionCoords){
+	checkCollisionForPiecePosition : function(positionCoords){
 		for(var i = 0; i < positionCoords.length; i++){
 			if(positionCoords[i].x < 0 || positionCoords[i].x > TetrisPlus.config.boardWidth-1)
 				return false;
@@ -240,7 +240,7 @@ TetrisPlus.board = {
 
 
 	
-	checkCompletedLines(){
+	checkCompletedLines : function(){
 		for(var y = 0; y < TetrisPlus.config.boardHeight; y++){
 			var lineCount = 0;
 			for(var x = 0; x < TetrisPlus.config.boardWidth; x++){
@@ -256,7 +256,7 @@ TetrisPlus.board = {
 		}
 	},
 
-	clearLine(lineNumber){
+	clearLine : function(lineNumber){
 		for(var x = 0; x < TetrisPlus.config.boardWidth; x++){
 			this.blocks[x][lineNumber].setColour(TetrisPlus.config.emptyBlockColour);
 			this.collisionMap[x][lineNumber] = false;
@@ -268,7 +268,7 @@ TetrisPlus.board = {
 		TetrisPlus.Game.resetTickTimer();//TetrisPlus.config.dropSpeeds[this.currentLevel]
 	},
 
-	moveLinesDown(startLine){
+	moveLinesDown : function(startLine){
 		for(var y = startLine+1; y < TetrisPlus.config.boardHeight; y++){
 			for(var x = 0; x < TetrisPlus.config.boardWidth; x++){
 				if(this.collisionMap[x][y] == true){
@@ -288,17 +288,17 @@ TetrisPlus.board = {
 	}, 500),
 
 
-	drawScore(){
+	drawScore : function(){
 		var size = 8;
 		size = size*this.canvasScaleMultiplier;
-		this.canvas.ctx.font = `${size}px Arial`;
+		this.canvas.ctx.font = size + "px Arial";
 		this.canvas.ctx.fillStyle = TetrisPlus.config.scoreTextColour;
 		this.canvas.ctx.globalAlpha = 0.7;
 		this.canvas.ctx.fillText("Lines Cleared: " + TetrisPlus.Game.linesCleared, 2*this.canvasScaleMultiplier, size);
 		this.canvas.ctx.globalAlpha = 1.0;
 	},
 	
-	toggleOverlayBackground(){
+	toggleOverlayBackground : function(){
 		if(overlayOn){
 			overlayOn = false;
 			drawBoard();
@@ -308,37 +308,37 @@ TetrisPlus.board = {
 		}
 	},
 	
-	drawPauseState(){
+	drawPauseState : function(){
 		this.drawOverlay();
 		this.overlayTextCentre("Paused", 30);
 		this.overlayText("Press 'R'", 14, 25, 130);
 		this.overlayText("To Restart", 14, 20, 145);
 	},
 	
-	drawOverlay(){
+	drawOverlay : function(){
 		this.canvas.ctx.fillStyle = TetrisPlus.config.overlayColour;
 		this.canvas.ctx.globalAlpha = 0.5;
 		this.canvas.ctx.fillRect(0, 0, this.canvas.element.width, this.canvas.element.height);
 		this.canvas.ctx.globalAlpha = 1.0;
 	},
 	
-	overlayTextCentre(message, size){
+	overlayTextCentre : function(message, size){
 		size = size*TetrisPlus.board.canvasScaleMultiplier;
-		this.canvas.ctx.font = `${size}px Arial`;
+		this.canvas.ctx.font = size + "px Arial";
 		this.canvas.ctx.fillStyle = TetrisPlus.config.overlayTextColour;
 		this.canvas.ctx.fillText(message, 0, this.canvas.element.height/2);
 	},
 
-	drawOverlayMessages(){
+	drawOverlayMessages : function(){
 		this.drawOverlay();
 		for(var i = 0; i < this.overlayMessages.length; i++){
 			this.overlayText(this.overlayMessages[i].message, this.overlayMessages[i].size, this.overlayMessages[i].x, this.overlayMessages[i].y);
 		}
 	},
 
-	overlayText(message, size, x, y){
+	overlayText : function(message, size, x, y){
 		size = size*TetrisPlus.board.canvasScaleMultiplier;
-		this.canvas.ctx.font = `${size}px Arial`;
+		this.canvas.ctx.font = size + "px Arial";
 		this.canvas.ctx.fillStyle = TetrisPlus.config.overlayTextColour;
 		this.canvas.ctx.fillText(message, x*TetrisPlus.board.canvasScaleMultiplier, y*TetrisPlus.board.canvasScaleMultiplier);
 	}

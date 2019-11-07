@@ -9,7 +9,7 @@ TetrisPlus.Game = {
 		randomBag : undefined,
 		currentLevel : 0,
 
-		start(){
+		start : function(){
 			TetrisPlus.board.overlayMessages = [];
 			this.linesCleared = 0;
 			this.currentLevel = 0;
@@ -25,7 +25,7 @@ TetrisPlus.Game = {
 			this.instance = setInterval(this.update, (1000/TetrisPlus.config.targetFrameRate));
 		},
 
-		startScreen(){
+		startScreen : function(){
 			TetrisPlus.board.overlayMessages.push({message : "Press Space", size: 15, x: 10, y: 90});
 			TetrisPlus.board.overlayMessages.push({message : "To Start", size: 15, x: 25, y: 110});
 			TetrisPlus.board.overlayMessages.push({message : "Up Arrow: Rotate", size: 7, x: 24, y: 130});
@@ -35,7 +35,7 @@ TetrisPlus.Game = {
 			this.drawGraphics();
 		},
 
-		update(){
+		update : function(){
 		var previousTime = TetrisPlus.Game.lastUpdateTime();
 
 		//Process input
@@ -82,7 +82,7 @@ TetrisPlus.Game = {
 		TetrisPlus.debug.updateDebugDisplay();
 	},
 
-	drawGraphics(){
+	drawGraphics : function(){
 		TetrisPlus.board.drawBoard();
 		TetrisPlus.board.drawPiece();
 		TetrisPlus.board.drawScore();
@@ -118,13 +118,13 @@ TetrisPlus.Game = {
 				frameCounter = 0;
 			},
 
-		}
+		};
 		
 	}()),
 
 	lastUpdateTime : (function(){
 		var time = Date.now();
-		return function() {var oldTime = time; time = Date.now(); return oldTime;}
+		return function() {var oldTime = time; time = Date.now(); return oldTime;};
 	})(),
 
 	resetTickTimer : function(){
@@ -139,14 +139,12 @@ TetrisPlus.Game = {
 		} 
 	},
 
-	stop(){
+	stop : function(){
 		clearInterval(this.instance);
 	},
 
 	
-	gameOver(){
-		//console.log("gameOver");
-		//TetrisPlus.board.drawOverlay();
+	gameOver : function(){
 		TetrisPlus.board.overlayMessages.push({message : "Game Over", size: 19, x: 0, y: 100});
 		TetrisPlus.board.overlayMessages.push({message : "Press Space", size: 15, x: 10, y: 130});
 		TetrisPlus.board.overlayMessages.push({message : "to Play Again", size: 14, x: 9, y: 150});
@@ -155,7 +153,7 @@ TetrisPlus.Game = {
 		window.addEventListener('keydown', TetrisPlus.startInput, false);
 	},
 
-	togglePause(){
+	togglePause : function(){
 		if(this.isPaused){
 			this.isPaused = false;
 			clearInterval(this.instance);
@@ -175,7 +173,7 @@ TetrisPlus.Game = {
 TetrisPlus.startInput = function(){
 	if(event.keyCode == TetrisPlus.Input.Key.SPACE) 
 		TetrisPlus.Game.start(); 
-}
+};
 
 TetrisPlus.init = function(config){
 	TetrisPlus.Helper.extend(this.config, config);
@@ -192,17 +190,14 @@ TetrisPlus.init = function(config){
 		TetrisPlus.Pieces[keys[i]].colour = TetrisPlus.config.pieceColours[keys[i]];
 	}
 	
-	
-
-
 	TetrisPlus.board.canvasHeightRelative = TetrisPlus.config.blockSizeRelative*TetrisPlus.config.boardHeight + TetrisPlus.config.gapSizeRelative*(TetrisPlus.config.boardHeight+1); 
 	TetrisPlus.board.canvasWidthRelative = TetrisPlus.config.blockSizeRelative*TetrisPlus.config.boardWidth + TetrisPlus.config.gapSizeRelative*(TetrisPlus.config.boardWidth+1);
 	
-	//TetrisPlus.board.canvas.element = document.getElementById(TetrisPlus.config.cavnasId);
 	TetrisPlus.board.canvas.parent = document.getElementById(TetrisPlus.config.parentId);
 	TetrisPlus.board.canvas.element = document.createElement("canvas");
 	TetrisPlus.board.canvas.parent.appendChild(TetrisPlus.board.canvas.element);
 	TetrisPlus.board.canvas.element.style.margin = "0 auto";
+	TetrisPlus.board.canvas.element.style.border = "2px solid " + TetrisPlus.config.borderColour;
 
 	TetrisPlus.board.canvas.ctx = TetrisPlus.board.canvas.element.getContext("2d");
 	TetrisPlus.board.createBoard();
@@ -212,7 +207,3 @@ TetrisPlus.init = function(config){
 	window.addEventListener('resize', TetrisPlus.board.resize);
 	window.addEventListener('keydown', TetrisPlus.startInput, false);
 };
-
-$(document).ready(function(){
-	TetrisPlus.init({});
-});
