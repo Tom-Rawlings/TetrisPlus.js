@@ -22,7 +22,7 @@ TetrisPlus.debug = {
 	
 		//TESTING STUFF
 		this.log("Frame Rate", TetrisPlus.Game.FrameCounter.getFrameRate());
-		this.log("Window innerHeight", window.innerHeight);
+		this.log("parent innerHeight", TetrisPlus.board.canvas.parent.offsetHeight);
 		this.log("canvas height", TetrisPlus.board.canvas.element.height);
 		this.log("canvas width", TetrisPlus.board.canvas.element.width);
 		this.log("canvasScaleMultiplier", TetrisPlus.board.canvasScaleMultiplier);

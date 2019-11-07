@@ -2,7 +2,7 @@
 var TetrisPlus = {};
 
 TetrisPlus.config = {
-  cavnasId : "canvas",
+  parentId : "parentDiv",
   backgroundColour : "#DDDDDD",
   emptyBlockColour : "#FFFFFF",
   overlayColour : "#000000",
@@ -10,7 +10,8 @@ TetrisPlus.config = {
   
   blockSizeRelative : 10,
   gapSizeRelative : 0.5,
-  canvasRelativeVerticalMargin : 0.05,
+  //canvasRelativeVerticalMargin : 0.05,
+  canvasRelativeVerticalMargin : 0,
   
   boardWidth : 10,
   boardHeight : 20,

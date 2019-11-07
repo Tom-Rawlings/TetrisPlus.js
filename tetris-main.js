@@ -176,14 +176,27 @@ TetrisPlus.init = function(config){
 	}
 	TetrisPlus.board.canvasHeightRelative = TetrisPlus.config.blockSizeRelative*TetrisPlus.config.boardHeight + TetrisPlus.config.gapSizeRelative*(TetrisPlus.config.boardHeight+1); 
 	TetrisPlus.board.canvasWidthRelative = TetrisPlus.config.blockSizeRelative*TetrisPlus.config.boardWidth + TetrisPlus.config.gapSizeRelative*(TetrisPlus.config.boardWidth+1);
-	TetrisPlus.board.canvas.element = document.getElementById(TetrisPlus.config.cavnasId);
+	
+	//TetrisPlus.board.canvas.element = document.getElementById(TetrisPlus.config.cavnasId);
+	TetrisPlus.board.canvas.parent = document.getElementById(TetrisPlus.config.parentId);
+	TetrisPlus.board.canvas.element = document.createElement("canvas");
+	TetrisPlus.board.canvas.parent.appendChild(TetrisPlus.board.canvas.element);
+	TetrisPlus.board.canvas.element.style.margin = "0 auto";
+	//TetrisPlus.board.canvas.element.style.padding = TetrisPlus.config.canvasRelativeVerticalMargin*100 + "% 0";
+
+	TetrisPlus.board.canvas.parent.style.height = "70vh";
+
 	TetrisPlus.board.canvas.ctx = TetrisPlus.board.canvas.element.getContext("2d");
 	TetrisPlus.board.createBoard();
 	TetrisPlus.Game.randomBag = TetrisPlus.makeRandomBag();
 	TetrisPlus.board.showBoard();
 	TetrisPlus.Game.startScreen();
+	//window.addEventListener('resize', TetrisPlus.board.resize);
 	window.addEventListener('resize', TetrisPlus.board.resize);
 	window.addEventListener('keydown', TetrisPlus.startInput, false);
 };
 
-$(document).ready(TetrisPlus.init({useDarkTheme: true}));
+$(document).ready(function(){
+	TetrisPlus.init({useDarkTheme: true});
+	//window.addEventListener('resize', resizeParent);
+});
