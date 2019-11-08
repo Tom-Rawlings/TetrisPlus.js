@@ -1,6 +1,7 @@
 # TetrisPlus.js
 
 A configurable version of tetris built with JavaScript using the HTML5 canvas element.
+
 **[Try the demo here](http://tomrawlings.online/TetrisPlus/demo)**
 
 ## Setup
@@ -28,13 +29,10 @@ The game has a number of settings that can be configured. An object with all, or
 	borderColour :  "#000000", //Colour of border around the generated canvas element.
 	blockSizeRelative :  10, //Size of the onscreen blocks relative to the gaps inbetween.
 	gapSizeRelative :  0.5, //Size of the gaps inbetween blocks relative to the blocks themselves.
-	//canvasRelativeVerticalMargin : 0.1, //
 	boardWidth :  10, //Number of blocks wide the tetris board will be.
 	boardHeight :  20, //Number of blocks tall the tetris board will be.
-	//tickRate : 800, //
 	moveDownDelay :  80, //Millisecond delay between the piece moving down when holding the down arrow key .
 	targetFrameRate :  60, //Number of frames per second the game will attempt to run at.
-	//pausedFrameRate : 5, //Number of frames per second the game will.
 	dropSpeeds : [800, 720, 630, 550, //Drop speeds used for difficulty levels in milliseconds.
 	470, 380, 300, 220, 130, 100, 80],
 	linesPerLevel :  5,	//Number of lines needed to be cleared before difficulty level increases.
